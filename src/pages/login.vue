@@ -34,7 +34,8 @@ export default {
   },
   methods: {
     login() {
-      alert("111");
+      console.log(this.user)
+      this.$router.push('/index')
     }
   },
   mounted() {},
