@@ -1,0 +1,13 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    text-decoration: none;
+    font-size: 14px;
+}
+.clearfix:after,
+.layout {
+    content: "";
+    display: block;
+    clear: both;
+}
