@@ -1,6 +1,6 @@
 <template>
 <div>
-    统计
+   数据统计
 </div>
 </template>
 <script>
@@ -20,5 +20,5 @@ computed:{
 }
 }
 </script>
-<style  scoped>
+<style scoped>
 </style>

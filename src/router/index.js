@@ -12,6 +12,8 @@ const detail = () => import("../pages/detail")
 /*三极路由*/
 const allding = () => import("../pages/allDing")
 const cgtj = () => import("../pages/caigoutongji")
+const shenhe = () => import("../pages/shenhe")
+const jianding = () => import("../pages/jianding")
 
 Vue.use(Router)
 
@@ -40,6 +42,13 @@ export default new Router({
           children: [{
             path: 'allding',
             component: allding
+          },{
+            path: "shenhe",
+            component: shenhe
+          },
+          {
+            path: "jianding",
+            component: jianding
           },
           {
             path: "cgtj",

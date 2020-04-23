@@ -1,7 +1,7 @@
 <template>
-  <!-- 定价完成页 -->
+  <!-- 审核页 -->
   <div>
-    <!-- 订单头部填写订单 -->
+    <!-- 审核头部填写订单 -->
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <!-- 采购头部下方下拉菜单及查找 -->
+    <!-- 审核头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -27,7 +27,7 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <!-- 采购头部下方日期下拉列表 -->
+        <!-- 审核头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
             <el-date-picker
@@ -46,9 +46,9 @@
         <el-button type="primary" @click="checkall">查看全部</el-button>
       </div>
     </div>
-    <!-- 采购主体内容 -->
+    <!-- 审核主体内容 -->
     <div class="main">
-      <!-- 采购主体内容列表 -->
+      <!-- 审核主体内容列表 -->
       <div class="list" v-for="(item,index) in data" :key="index">
         <!-- 主体内容列表左 -->
         <div class="mainLeft">
@@ -85,16 +85,20 @@
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-          <div class="zdjia">指导定价：{{item.finPri}}</div>
-          <el-button type="primary" @click="change(index,item.finPri)">修改</el-button>
-          <el-dialog title="修改定价" :visible.sync="dialogVisible" width="30%" :before-close="change">
-            <!-- 直接使用item.finPri所有点开的定价都会为最后一个的定价，解决方法通过自定义ding并在点击修改时传值 -->
-            <span class="dialog-tit">现在定价：&nbsp;{{ding}}</span>
+          <el-button type="primary" @click="change(index,item.finPri)" class="shenhe">审核</el-button>
+          <div class="fuhetishi" v-if="finjd==0">符合入库要求</div>
+          <div class="fuhetishi" style="color:red" v-if="finjd==1">未符合入库要求</div>
+          <div class="xiaoshouPri">销售定价:未定价</div>
 
-            <div class="dialog-gai">
-              <span>修改定价：</span>
-              <el-input placeholder="请输入价格" v-model="dialogPri" clearable class="dialog-input"></el-input>
-            </div>
+          <el-dialog title="鉴定" :visible.sync="dialogVisible" width="30%" :before-close="change">
+            <el-radio-group v-model="jianding" >
+              <div class="yaoqiu">
+                <el-radio label="0" border >符合要求去定价</el-radio>
+              </div>
+              <div class="yaoqiu">
+                <el-radio label="1" border >不符合要求退回</el-radio>
+              </div>
+            </el-radio-group>
             <span slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false" class="dialog-cancle">取 消</el-button>
               <el-button type="primary" @click="dialogSure" class="dialog-sure">确 定</el-button>
@@ -102,7 +106,7 @@
           </el-dialog>
         </div>
       </div>
-      <!-- 采购主体内容下方分页功能 -->
+      <!-- 审核主体内容下方分页功能 -->
       <div class="pages">
         <el-pagination
           background
@@ -246,36 +250,40 @@ export default {
       },
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
-    /*dialog弹框的显示隐藏*/   
+      /*dialog弹框的显示隐藏*/
       dialogVisible: false,
-    /*与上面现在定价绑定*/   
-      ding: "",
-    /*与上方修改定价绑定*/   
-      dialogPri: ""
+      /*接收要求传来的参数，让dialog里的确认通过参数判断下一步操作*/
+      jianding: "",
+      /*最后一步确认鉴定*/
+      finjd: ""
     };
   },
   methods: {
-    gai() {
-      console.log(this.value);
-    },
+    gai() {},
     detail(id) {},
-    handleCurrentChange(val) {
-    },
-    /*上方时间下拉菜单的查看全部*/ 
+    handleCurrentChange(val) {},
+    /*上方时间下拉菜单的查看全部*/
     checkall() {
       console.log(this.value2);
       var data1 = new Date(this.value2[0]).getTime();
       var data2 = new Date(this.value2[1]).getTime();
       console.log(data1 + "-" + data2);
+      console.log(this.value);
     },
     change(index, pri) {
       this.dialogVisible = true;
-      this.ding = pri;
     },
     dialogSure() {
       this.dialogVisible = false;
-      console.log(this.dialogPri)
-    }
+      this.finjd = this.jianding;
+      console.log(this.finjd);
+      //   if (this.finjd == 0) {
+      //     console.log("去定价");
+      //   } else {
+      //     console.log("退回");
+      //   }
+    },
+    yaoqiu() {}
   },
   mounted() {},
   watch: {},
@@ -402,19 +410,18 @@ export default {
 .mainRight {
   padding-right: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  margin-top: 70px;
+  text-align: right;
 }
-.mainRight .zdjia {
-  font-size: 16px;
-  color: #019997;
-  line-height: 40px;
+.mainRight .fuhetishi {
+  font-size: 14px;
 }
-.mainRight /deep/ .el-button {
+.mainRight /deep/ .shenhe {
   width: 80px;
   height: 40px;
-  background-color: #019997;
-  border: 1px solid #019997;
+  background-color: #ef9c00;
+  border: 1px solid #ef9c00;
   margin-left: 20px;
 }
 .mainRight /deep/ .el-input__inner {
@@ -422,38 +429,48 @@ export default {
   border-radius: 0;
 }
 /* 下拉菜单下方主题列表右侧修改及dialog */
-.mainRight .dialog-gai .dialog-input {
-  width: 80% !important;
+.mainRight /deep/ .is-checked .el-radio__inner{
+    background-color: #ef9c00;
+    border-color:#ef9c00;
 }
-.mainRight .dialog-gai {
-  display: flex;
-  margin-top: 20px;
+.mainRight .el-radio-group{
+    width: 100%;
 }
-.mainRight .dialog-gai span {
-  width: 100px;
-  line-height: 40px;
-  font-size: 18px;
-  color: #019997;
-  font-weight: bold;
+.mainRight .yaoqiu /deep/ .el-radio__inne {
+  background: #ef9c00;
+}
+.mainRight .yaoqiu /deep/ span {
+  color: #ef9c00;
+}
+.mainRight .yaoqiu /deep/ .el-radio {
+  width: 100%;
+  margin-bottom: 10px;
+}
+/* dialog弹框标题及下方取消确定按钮 */
+.mainRight .yaoqiu {
+  text-align: center;
+}
+.mainRight /deep/ .is-checked {
+  border-color: #ef9c00;
 }
 .mainRight /deep/ .dialog-footer .dialog-cancle {
   color: white;
   background-color: black;
   border: 1px solid black;
 }
+.mainRight /deep/ .dialog-footer .dialog-sure {
+  background-color: #ef9c00;
+  border: 1px solid #ef9c00;
+}
 .mainRight /deep/ .el-dialog__header {
   text-align: center;
-  background-color: #019997;
+  background-color: #ef9c00;
 }
 .mainRight /deep/ .el-dialog__title {
   color: white;
 }
-.mainRight /deep/ .el-dialog__body{
-    padding: 50px;
-}
-.mainRight /deep/ .dialog-tit {
-  font-size: 18px;
-  font-weight: bold;
+.mainRight /deep/ .el-dialog__body {
+  padding: 50px;
 }
 .pages {
   text-align: center;
@@ -461,10 +478,5 @@ export default {
 .pages .pageButton {
   margin-top: 100px;
 }
-.bianji {
-  font-size: 18px;
-  color: #588cfe;
-  text-align: right;
-  cursor: pointer;
-}
+
 </style>

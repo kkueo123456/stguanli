@@ -1,6 +1,7 @@
 <template>
+<!-- 未定价页 -->
   <div>
-    <!-- 订单头部填写订单 -->
+    <!-- 未定价头部填写订单 -->
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
@@ -8,7 +9,7 @@
         </div>
       </div>
     </div>
-    <!-- 采购头部下方下拉菜单及查找 -->
+    <!-- 未定价头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -26,7 +27,7 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <!-- 采购头部下方日期下拉列表 -->
+        <!-- 未定价头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
             <el-date-picker
@@ -45,9 +46,9 @@
         <el-button type="primary" @click="checkall">查看全部</el-button>
       </div>
     </div>
-    <!-- 采购主体内容 -->
+    <!-- 未定价主体内容 -->
     <div class="main">
-      <!-- 采购主体内容列表 -->
+      <!-- 未定价主体内容列表 -->
       <div class="list" v-for="(item,index) in data" :key="index">
         <!-- 主体内容列表左 -->
         <div class="mainLeft">
@@ -58,6 +59,7 @@
             <!-- 主体内容列表右侧标题及下方标签 -->
             <div class="title">
               <h2 class="listTit">{{item.name}}</h2>
+              <div class="listBq"><span class="listBqji">{{item.mai}}</span></div>
             </div>
             <!-- 主体内容列表右侧信息头下方商品详细信息 -->
             <div class="another">
@@ -86,7 +88,7 @@
           <el-button type="primary">确定</el-button>
         </div>
       </div>
-      <!-- 采购主体内容下方分页功能 -->
+      <!-- 未定价主体内容下方分页功能 -->
       <div class="pages">
         <el-pagination
           background
@@ -145,7 +147,8 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "0",
-          zt: "未鉴定"
+          zt: "未鉴定",
+          mai:'寄'
         },
         {
           img: "",
@@ -161,7 +164,8 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "1",
-          zt: "已退回"
+          zt: "已退回",
+          mai:'寄'
         },
         {
           img: "",
@@ -177,7 +181,8 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "2",
-          zt: "已售出"
+          zt: "已售出",
+          mai:'寄'
         },
         {
           img: "",
@@ -193,7 +198,8 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "2",
-          zt: "入库在售"
+          zt: "入库在售",
+          mai:'寄'
         }
       ],
       pickerOptions: {
@@ -343,11 +349,20 @@ export default {
   font-size: 18px;
   color: #019997;
   margin-right: 20px;
-  margin-bottom: 55px;
+  margin-bottom: 10px;
 }
-.Rightzi .title {
-  display: flex;
+.title .listBq .listBqji{
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  margin-bottom: 25px;
+  text-align: center;
+  color: white;
+  background-color: #169bd5;
+
 }
+
 /* 下拉菜单下方主题样式列表下方信息*/
 .another {
   display: flex;

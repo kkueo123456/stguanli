@@ -24,6 +24,9 @@
           <el-menu-item-group class="caigouliebiao">
             <router-link to="/index/caigou/allding" active-class="active2">>未定价</router-link>
             <router-link to="/index/caigou/cgtj" active-class="active2">>定价完成</router-link>
+            <router-link to="/index/caigou/shenhe" active-class="active2">>审核</router-link>
+            <router-link to="/index/caigou/jianding" active-class="active2">>未鉴定</router-link>
+
           </el-menu-item-group>
         </el-submenu>
         <el-menu-item index="3" class="guanli" style="padding-left:0px">

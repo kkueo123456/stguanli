@@ -334,6 +334,7 @@ export default {
 .detail .spdetail .spdetailRight ul {
   height: 100px;
   display: flex;
+  /* 弹性盒垂直排列 */
   flex-direction: column;
   justify-content: space-between;
   margin-right: 65px;
