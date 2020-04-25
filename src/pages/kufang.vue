@@ -56,9 +56,14 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
+        <div class="slect">
+          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
+        </div>
       </div>
       <div class="navRight">
-        <el-button type="primary">品牌筛选</el-button>
+        <!-- <el-button type="primary">品牌筛选</el-button> -->
       </div>
     </div>
     <!-- 库房主体内容 -->
@@ -106,23 +111,18 @@
         </div>
       </div>
       <!-- 库房主体内容下方分页功能 -->
-      <div class="pages">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="30"
-          :page-size="1"
-          class="pageButton"
-          @current-change="handleCurrentChange"
-        ></el-pagination>
-      </div>
+      <fenye class="pages" @jumpPage='changeye'></fenye>
+    
     </div>
   </div>
 </template>
 <script>
+import fenye from "../components/fenye";
 export default {
   props: [],
-  components: {},
+  components: {
+     fenye
+  },
   data() {
     return {
       search: "",
@@ -205,12 +205,21 @@ export default {
     detail(id) {
       this.$router.push("/detail?id=" + id);
     },
-    handleCurrentChange(val) {
-      console.log(val);
+    // handleCurrentChange(val) {
+    //   console.log(val);
+    // },
+     changeye(val){
+      console.log(val)
     }
   },
   mounted() {},
   watch: {},
+  beforeRouteEnter(to, from, next) {
+    let isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin == 0) {
+      next();
+    }
+  },
   computed: {}
 };
 </script>
@@ -349,8 +358,8 @@ export default {
 }
 .pages {
   text-align: center;
-}
-.pages .pageButton {
   margin-top: 100px;
+
 }
+
 </style>

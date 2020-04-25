@@ -1,7 +1,7 @@
 <template>
-  <!-- 审核页 -->
+  <!-- 退回页 -->
   <div>
-    <!-- 审核头部填写订单 -->
+    <!-- 退回头部填写订单 -->
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <!-- 审核头部下方下拉菜单及查找 -->
+    <!-- 退回头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -27,7 +27,7 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <!-- 审核头部下方日期下拉列表 -->
+        <!-- 退回头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
             <el-date-picker
@@ -46,9 +46,9 @@
         <el-button type="primary" @click="checkall">查看全部</el-button>
       </div>
     </div>
-    <!-- 审核主体内容 -->
+    <!-- 退回主体内容 -->
     <div class="main">
-      <!-- 审核主体内容列表 -->
+      <!-- 退回主体内容列表 -->
       <div class="list" v-for="(item,index) in data" :key="index">
         <!-- 主体内容列表左 -->
         <div class="mainLeft">
@@ -85,28 +85,13 @@
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-          <el-button type="primary" @click="change" class="shenhe">审核</el-button>
-          <div class="fuhetishi" v-if="finjd==0">符合入库要求</div>
-          <div class="fuhetishi" style="color:red" v-if="finjd==1">未符合入库要求</div>
-          <div class="xiaoshouPri">销售定价:未定价</div>
-
-          <el-dialog title="鉴定" :visible.sync="dialogVisible" width="30%" :before-close="change">
-            <el-radio-group v-model="jianding">
-              <div class="yaoqiu">
-                <el-radio label="0" border>符合要求去定价</el-radio>
-              </div>
-              <div class="yaoqiu">
-                <el-radio label="1" border>不符合要求退回</el-radio>
-              </div>
-            </el-radio-group>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogVisible = false" class="dialog-cancle">取 消</el-button>
-              <el-button type="primary" @click="dialogSure" class="dialog-sure">确 定</el-button>
-            </span>
-          </el-dialog>
+          <div></div>
+          <div></div>
+          <div class="back">已退回</div>
+          <div class="weiding">指导定价:未定价</div>
         </div>
       </div>
-      <!-- 审核主体内容下方分页功能 -->
+      <!-- 退回主体内容下方分页功能 -->
       <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
@@ -247,6 +232,7 @@ export default {
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
       /*dialog弹框的显示隐藏*/
+
       dialogVisible: false,
       /*接收要求传来的参数，让dialog里的确认通过参数判断下一步操作*/
       jianding: "",
@@ -264,6 +250,7 @@ export default {
     detail(id) {},
     handleCurrentChange(val) {},
     /*上方时间下拉菜单的查看全部*/
+
     checkall() {
       console.log(this.value2);
       var data1 = new Date(this.value2[0]).getTime();
@@ -271,22 +258,23 @@ export default {
       console.log(data1 + "-" + data2);
       console.log(this.value);
     },
-    change(index, pri) {
+    change() {
       this.dialogVisible = true;
     },
     dialogSure() {
       this.dialogVisible = false;
       this.finjd = this.jianding;
-      console.log(this.finjd);
-      //   if (this.finjd == 0) {
-      //     console.log("去定价");
-      //   } else {
-      //     console.log("退回");
-      //   }
+      if (this.finjd == 0) {
+        console.log("去定价");
+      } else {
+        console.log("退回");
+      }
     },
-    yaoqiu() {},
-    changeye(val){
-      console.log(val)
+    yaoqiu(val) {
+      this.jianding = val;
+    },
+    changeye(val) {
+      console.log(val);
     }
   },
   mounted() {},
@@ -366,7 +354,6 @@ export default {
 .mainLeft {
   display: flex;
 }
-
 .list {
   display: flex;
   justify-content: space-between;
@@ -408,14 +395,15 @@ export default {
   justify-content: space-between;
   text-align: right;
 }
-.mainRight .fuhetishi {
-  font-size: 14px;
+.mainRight .xiaoshouPri {
+  color: #b2b2b2;
+  font-size: 16px;
 }
 .mainRight /deep/ .shenhe {
   width: 80px;
   height: 40px;
-  background-color: #ef9c00;
-  border: 1px solid #ef9c00;
+  background-color: #7cc623;
+  border: 1px solid #7cc623;
   margin-left: 20px;
 }
 .mainRight /deep/ .el-input__inner {
@@ -423,48 +411,15 @@ export default {
   border-radius: 0;
 }
 /* 下拉菜单下方主题列表右侧修改及dialog */
-.mainRight /deep/ .is-checked .el-radio__inner {
-  background-color: #ef9c00;
-  border-color: #ef9c00;
-}
-.mainRight .el-radio-group {
-  width: 100%;
-}
-.mainRight .yaoqiu /deep/ .el-radio__inne {
-  background: #ef9c00;
-}
-.mainRight .yaoqiu /deep/ span {
-  color: #ef9c00;
-}
-.mainRight .yaoqiu /deep/ .el-radio {
-  width: 100%;
-  margin-bottom: 10px;
-}
-/* dialog弹框标题及下方取消确定按钮 */
 .mainRight .yaoqiu {
   text-align: center;
 }
-.mainRight /deep/ .is-checked {
-  border-color: #ef9c00;
+.mainRight .back{
+    font-size: 16px;
 }
-.mainRight /deep/ .dialog-footer .dialog-cancle {
-  color: white;
-  background-color: black;
-  border: 1px solid black;
-}
-.mainRight /deep/ .dialog-footer .dialog-sure {
-  background-color: #ef9c00;
-  border: 1px solid #ef9c00;
-}
-.mainRight /deep/ .el-dialog__header {
-  text-align: center;
-  background-color: #ef9c00;
-}
-.mainRight /deep/ .el-dialog__title {
-  color: white;
-}
-.mainRight /deep/ .el-dialog__body {
-  padding: 50px;
+.mainRight .weiding{
+    font-size: 18px;
+    color: #aeaeae;
 }
 
 </style>

@@ -5,8 +5,11 @@
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
-          <el-button type="primary">+填写采购订单+</el-button>
+          <dingdan></dingdan>
         </div>
+      </div>
+       <div class="headRight">
+        <el-button type="primary">批量定价</el-button>
       </div>
     </div>
     <!-- 未定价头部下方下拉菜单及查找 -->
@@ -84,28 +87,24 @@
         <!-- 主体内容列表右 -->
         <div class="mainRight">
           <span>指导定价:</span>
-          <el-input placeholder="请输入价格" v-model="ding" clearable></el-input>
-          <el-button type="primary">确定</el-button>
+          <el-input placeholder="请输入价格" v-model="item.zhidao" clearable></el-input>
+          <el-button type="primary" @click="sure(item.zhidao,item.id)">确定</el-button>
         </div>
       </div>
       <!-- 未定价主体内容下方分页功能 -->
-      <div class="pages">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="30"
-          :page-size="1"
-          class="pageButton"
-          @current-change="handleCurrentChange"
-        ></el-pagination>
-      </div>
+      <fenye class="pages" @jumpPage='changeye'></fenye>
     </div>
   </div>
 </template>
 <script>
+import fenye from "../components/fenye";
+import dingdan from '../components/dingdan'
 export default {
   props: [],
-  components: {},
+  components: {
+    dingdan,
+    fenye
+  },
   data() {
     return {
       search: "",
@@ -148,7 +147,8 @@ export default {
           finPri: "120000",
           id: "0",
           zt: "未鉴定",
-          mai:'寄'
+          mai:'寄',
+          zhidao:''
         },
         {
           img: "",
@@ -165,7 +165,9 @@ export default {
           finPri: "120000",
           id: "1",
           zt: "已退回",
-          mai:'寄'
+          mai:'寄',
+          zhidao:''
+
         },
         {
           img: "",
@@ -182,7 +184,9 @@ export default {
           finPri: "120000",
           id: "2",
           zt: "已售出",
-          mai:'寄'
+          mai:'寄',
+          zhidao:''
+
         },
         {
           img: "",
@@ -199,7 +203,9 @@ export default {
           finPri: "120000",
           id: "2",
           zt: "入库在售",
-          mai:'寄'
+          mai:'寄',
+          zhidao:''
+
         }
       ],
       pickerOptions: {
@@ -236,21 +242,28 @@ export default {
     };
   },
   methods: {
+     /*添加采购订单*/ 
+    //  dingdan() {
+    //   this.$router.push("/dingdan");
+    // },
     gai() {
       console.log(this.value);
     },
     detail(id) {
       this.$router.push("/detail?id=" + id);
     },
-    handleCurrentChange(val) {
-      console.log(val);
-    },
     checkall(){
       console.log(this.value2)
-      var data1=new Date(this.value2[0]).getTime()
-      var data2=new Date(this.value2[1]).getTime()
-      console.log(data1+'-'+data2)
+ 
+    },
+    sure(val,id){
+      console.log(val)
+      console.log(id)
+    },
+    changeye(val){
+      console.log(val)
     }
+
   },
   mounted() {},
   watch: {},
@@ -263,22 +276,14 @@ export default {
   width: 100%;
   height: 60px;
   padding-top: 10px;
-}
-.headLeft .rongqi .el-button--primary {
-  background-color: #019997;
-  border-color: #019997;
-}
-.headRight {
-  width: 460px;
   display: flex;
   justify-content: space-between;
 }
-.headRight .rongqi .el-button--primary {
-  width: 90px;
+.head .headRight .el-button--primary{
   background-color: #019997;
   border-color: #019997;
-  border-radius: 25px;
 }
+
 /* 头部下方下拉菜单等样式 */
 .nav {
   height: 50px;
@@ -399,12 +404,7 @@ export default {
   border-radius: 0;
 
 }
-.pages {
-  text-align: center;
-}
-.pages .pageButton {
-  margin-top: 100px;
-}
+
 .bianji {
   font-size: 18px;
   color: #588cfe;

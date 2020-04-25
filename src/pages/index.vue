@@ -33,7 +33,8 @@ export default {
   methods: {
     
   },
-  mounted() {},
+  mounted() {
+  },
   watch: {},
   computed: {}
 };

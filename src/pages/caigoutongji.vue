@@ -5,7 +5,7 @@
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
-          <el-button type="primary">+填写采购订单+</el-button>
+          <dingdan></dingdan>
         </div>
       </div>
     </div>
@@ -86,8 +86,8 @@
         <!-- 主体内容列表右 -->
         <div class="mainRight">
           <div class="zdjia">指导定价：{{item.finPri}}</div>
-          <el-button type="primary" @click="change(index,item.finPri)">修改</el-button>
-          <el-dialog title="修改定价" :visible.sync="dialogVisible" width="30%" :before-close="change">
+          <el-button type="primary" @click="changejia(index,item.finPri)">修改</el-button>
+          <el-dialog title="修改定价" :visible.sync="dialogVisible" width="30%" :before-close="changejia">
             <!-- 直接使用item.finPri所有点开的定价都会为最后一个的定价，解决方法通过自定义ding并在点击修改时传值 -->
             <span class="dialog-tit">现在定价：&nbsp;{{ding}}</span>
 
@@ -103,23 +103,19 @@
         </div>
       </div>
       <!-- 采购主体内容下方分页功能 -->
-      <div class="pages">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="30"
-          :page-size="1"
-          class="pageButton"
-          @current-change="handleCurrentChange"
-        ></el-pagination>
-      </div>
+      <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
 </template>
 <script>
+import fenye from "../components/fenye";
+import dingdan from "../components/dingdan";
 export default {
   props: [],
-  components: {},
+  components: {
+    dingdan,
+    fenye
+  },
   data() {
     return {
       search: "",
@@ -246,35 +242,46 @@ export default {
       },
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
-    /*dialog弹框的显示隐藏*/   
+      /*dialog弹框的显示隐藏*/
+
       dialogVisible: false,
-    /*与上面现在定价绑定*/   
+      /*与上面现在定价绑定*/
+
       ding: "",
-    /*与上方修改定价绑定*/   
+      /*与上方修改定价绑定*/
+
       dialogPri: ""
     };
   },
   methods: {
+    /*添加采购订单*/
+
+    dingdan() {
+      this.$router.push("/dingdan");
+    },
     gai() {
       console.log(this.value);
     },
     detail(id) {},
-    handleCurrentChange(val) {
-    },
-    /*上方时间下拉菜单的查看全部*/ 
+    handleCurrentChange(val) {},
+    /*上方时间下拉菜单的查看全部*/
+
     checkall() {
       console.log(this.value2);
       var data1 = new Date(this.value2[0]).getTime();
       var data2 = new Date(this.value2[1]).getTime();
       console.log(data1 + "-" + data2);
     },
-    change(index, pri) {
+    changejia(index, pri) {
       this.dialogVisible = true;
       this.ding = pri;
     },
     dialogSure() {
       this.dialogVisible = false;
-      console.log(this.dialogPri)
+      console.log(this.dialogPri);
+    },
+    changeye(val) {
+      console.log(val);
     }
   },
   mounted() {},
@@ -293,17 +300,7 @@ export default {
   background-color: #019997;
   border-color: #019997;
 }
-.headRight {
-  width: 460px;
-  display: flex;
-  justify-content: space-between;
-}
-.headRight .rongqi .el-button--primary {
-  width: 90px;
-  background-color: #019997;
-  border-color: #019997;
-  border-radius: 25px;
-}
+
 /* 头部下方下拉菜单等样式 */
 .nav {
   height: 50px;
@@ -448,19 +445,14 @@ export default {
 .mainRight /deep/ .el-dialog__title {
   color: white;
 }
-.mainRight /deep/ .el-dialog__body{
-    padding: 50px;
+.mainRight /deep/ .el-dialog__body {
+  padding: 50px;
 }
 .mainRight /deep/ .dialog-tit {
   font-size: 18px;
   font-weight: bold;
 }
-.pages {
-  text-align: center;
-}
-.pages .pageButton {
-  margin-top: 100px;
-}
+
 .bianji {
   font-size: 18px;
   color: #588cfe;

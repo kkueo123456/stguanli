@@ -366,15 +366,5 @@ export default {
   background-color: #ebebeb;
 }
 /* 图片详情 */
-/* .picDetail h3 {
-  font-size: 30px;
-  color: red;
-  margin-bottom: 10px;
-  font-weight: normal;
-}
-.picDetail .pic {
-  height: 500px;
-  background-color: yellowgreen;
-  margin-bottom: 50px;
-} */
+
 </style>

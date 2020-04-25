@@ -5,7 +5,7 @@
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
-          <el-button type="primary">+填写采购订单+</el-button>
+          <dingdan></dingdan>
         </div>
       </div>
     </div>
@@ -85,18 +85,18 @@
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-            <div></div>
+          <div></div>
           <el-button type="primary" @click="change(index,item.finPri)" class="shenhe">鉴定</el-button>
           <div class="xiaoshouPri">销售定价:未定价</div>
 
           <el-dialog title="鉴定" :visible.sync="dialogVisible" width="30%" :before-close="change">
             <!-- 附和要求与不符合要求 -->
-            <el-radio-group v-model="jianding" >
+            <el-radio-group v-model="jianding">
               <div class="yaoqiu">
-                <el-radio label="0" border >真货/符合销售要求</el-radio>
+                <el-radio label="0" border>真货/符合销售要求</el-radio>
               </div>
               <div class="yaoqiu">
-                <el-radio label="1" border >假货/不符合销售要求</el-radio>
+                <el-radio label="1" border>假货/不符合销售要求</el-radio>
               </div>
             </el-radio-group>
             <span slot="footer" class="dialog-footer">
@@ -107,23 +107,19 @@
         </div>
       </div>
       <!-- 审核主体内容下方分页功能 -->
-      <div class="pages">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="30"
-          :page-size="1"
-          class="pageButton"
-          @current-change="handleCurrentChange"
-        ></el-pagination>
-      </div>
+      <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
 </template>
 <script>
+import dingdan from "../components/dingdan";
+import fenye from "../components/fenye";
 export default {
   props: [],
-  components: {},
+  components: {
+    dingdan,
+    fenye
+  },
   data() {
     return {
       search: "",
@@ -260,6 +256,11 @@ export default {
     };
   },
   methods: {
+    /*添加采购订单*/
+
+    dingdan() {
+      this.$router.push("/dingdan");
+    },
     gai() {},
     detail(id) {},
     handleCurrentChange(val) {},
@@ -286,6 +287,9 @@ export default {
     },
     yaoqiu(val) {
       this.jianding = val;
+    },
+     changeye(val){
+      console.log(val)
     }
   },
   mounted() {},
@@ -304,17 +308,7 @@ export default {
   background-color: #019997;
   border-color: #019997;
 }
-.headRight {
-  width: 460px;
-  display: flex;
-  justify-content: space-between;
-}
-.headRight .rongqi .el-button--primary {
-  width: 90px;
-  background-color: #019997;
-  border-color: #019997;
-  border-radius: 25px;
-}
+
 /* 头部下方下拉菜单等样式 */
 .nav {
   height: 50px;
@@ -416,9 +410,9 @@ export default {
   justify-content: space-between;
   text-align: right;
 }
-.mainRight .xiaoshouPri{
-    color: #b2b2b2;
-    font-size: 16px;
+.mainRight .xiaoshouPri {
+  color: #b2b2b2;
+  font-size: 16px;
 }
 .mainRight /deep/ .shenhe {
   width: 80px;
@@ -436,12 +430,12 @@ export default {
   text-align: center;
 }
 /* dialog弹窗内部单选样式 */
-.mainRight /deep/ .is-checked .el-radio__inner{
-    background-color: #7cc623;
-    border-color:#7cc623;
+.mainRight /deep/ .is-checked .el-radio__inner {
+  background-color: #7cc623;
+  border-color: #7cc623;
 }
-.mainRight .el-radio-group{
-    width: 100%;
+.mainRight .el-radio-group {
+  width: 100%;
 }
 .mainRight .yaoqiu /deep/ .el-radio__inne {
   background: #7cc623;
@@ -483,11 +477,4 @@ export default {
 .mainRight /deep/ .el-dialog__body {
   padding: 50px;
 }
-.pages {
-  text-align: center;
-}
-.pages .pageButton {
-  margin-top: 100px;
-}
-
 </style>

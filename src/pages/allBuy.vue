@@ -1,7 +1,7 @@
-<template>
-  <!-- 审核页 -->
+<template >
+  <!-- 采购人员看的全部订单及详情 -->
   <div>
-    <!-- 审核头部填写订单 -->
+    <!-- 订单头部填写订单 -->
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <!-- 审核头部下方下拉菜单及查找 -->
+    <!-- 采购头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -27,7 +27,7 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <!-- 审核头部下方日期下拉列表 -->
+        <!-- 采购头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
             <el-date-picker
@@ -43,12 +43,12 @@
         </div>
       </div>
       <div class="navRight">
-        <el-button type="primary" @click="checkall">查看全部</el-button>
+        <el-button type="primary">查看全部</el-button>
       </div>
     </div>
-    <!-- 审核主体内容 -->
+    <!-- 采购主体内容 -->
     <div class="main">
-      <!-- 审核主体内容列表 -->
+      <!-- 采购主体内容列表 -->
       <div class="list" v-for="(item,index) in data" :key="index">
         <!-- 主体内容列表左 -->
         <div class="mainLeft">
@@ -85,35 +85,25 @@
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-          <el-button type="primary" @click="change" class="shenhe">审核</el-button>
-          <div class="fuhetishi" v-if="finjd==0">符合入库要求</div>
-          <div class="fuhetishi" style="color:red" v-if="finjd==1">未符合入库要求</div>
-          <div class="xiaoshouPri">销售定价:未定价</div>
-
-          <el-dialog title="鉴定" :visible.sync="dialogVisible" width="30%" :before-close="change">
-            <el-radio-group v-model="jianding">
-              <div class="yaoqiu">
-                <el-radio label="0" border>符合要求去定价</el-radio>
-              </div>
-              <div class="yaoqiu">
-                <el-radio label="1" border>不符合要求退回</el-radio>
-              </div>
-            </el-radio-group>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogVisible = false" class="dialog-cancle">取 消</el-button>
-              <el-button type="primary" @click="dialogSure" class="dialog-sure">确 定</el-button>
-            </span>
-          </el-dialog>
+          <div class="bianji" v-if="(item.zt=='未鉴定')">编辑</div>
+          <div class="zhuangtai" v-if="(item.zt!='已售出')">{{item.zt}}</div>
+          <div class="zhuangtai" :style="{color:'red'}" v-if="(item.zt=='已售出')">已售出：{{item.finPri}}</div>
+          <h4
+            class="dingPri"
+            :style="{color:'#ccc'}"
+            v-if="(item.zt=='已退回')||(item.zt=='未鉴定')"
+          >销售定价:未定价</h4>
+          <h4 class="dingPri" v-if="(item.zt=='已售出')||(item.zt=='入库在售')">销售定价:{{item.finPri}}</h4>
         </div>
       </div>
-      <!-- 审核主体内容下方分页功能 -->
-      <fenye class="pages" @jumpPage="changeye"></fenye>
+      <!-- 采购主体内容下方分页功能 -->
+      <fenye class="pages" @jumpPage='changeye'></fenye>
     </div>
   </div>
 </template>
 <script>
-import dingdan from "../components/dingdan";
 import fenye from "../components/fenye";
+import dingdan from "../components/dingdan";
 export default {
   props: [],
   components: {
@@ -159,10 +149,9 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "130000",
+          finPri: "120000",
           id: "0",
-          zt: "未鉴定",
-          mai: "寄"
+          zt: "未鉴定"
         },
         {
           img: "",
@@ -176,10 +165,9 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "150000",
+          finPri: "120000",
           id: "1",
-          zt: "已退回",
-          mai: "寄"
+          zt: "已退回"
         },
         {
           img: "",
@@ -193,10 +181,9 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "420000",
+          finPri: "120000",
           id: "2",
-          zt: "已售出",
-          mai: "寄"
+          zt: "已售出"
         },
         {
           img: "",
@@ -210,15 +197,15 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "6220000",
+          finPri: "120000",
           id: "2",
-          zt: "入库在售",
-          mai: "寄"
+          zt: "入库在售"
         }
       ],
       pickerOptions: {
         shortcuts: [
           {
+            text: "最近一周",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
@@ -227,6 +214,7 @@ export default {
             }
           },
           {
+            text: "最近一个月",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
@@ -235,6 +223,7 @@ export default {
             }
           },
           {
+            text: "最近三个月",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
@@ -246,50 +235,27 @@ export default {
       },
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
-      /*dialog弹框的显示隐藏*/
-      dialogVisible: false,
-      /*接收要求传来的参数，让dialog里的确认通过参数判断下一步操作*/
-      jianding: "",
-      /*最后一步确认鉴定*/
-      finjd: ""
+      isAdmin: ""
     };
   },
   methods: {
-    /*添加采购订单*/
-
-    dingdan() {
-      this.$router.push("/dingdan");
-    },
-    gai() {},
-    detail(id) {},
-    handleCurrentChange(val) {},
-    /*上方时间下拉菜单的查看全部*/
-    checkall() {
-      console.log(this.value2);
-      var data1 = new Date(this.value2[0]).getTime();
-      var data2 = new Date(this.value2[1]).getTime();
-      console.log(data1 + "-" + data2);
+    gai() {
       console.log(this.value);
     },
-    change(index, pri) {
-      this.dialogVisible = true;
+    detail(id) {
+      this.$router.push("/detail?id=" + id);
     },
-    dialogSure() {
-      this.dialogVisible = false;
-      this.finjd = this.jianding;
-      console.log(this.finjd);
-      //   if (this.finjd == 0) {
-      //     console.log("去定价");
-      //   } else {
-      //     console.log("退回");
-      //   }
-    },
-    yaoqiu() {},
     changeye(val){
       console.log(val)
     }
   },
   mounted() {},
+  beforeRouteEnter(to, from, next) {
+   let isAdmin= localStorage.getItem('isAdmin')
+    if(isAdmin==0){
+      next()
+    }
+  },
   watch: {},
   computed: {}
 };
@@ -366,12 +332,12 @@ export default {
 .mainLeft {
   display: flex;
 }
-
 .list {
   display: flex;
   justify-content: space-between;
   position: relative;
 }
+
 /* 下拉菜单下方主题样式列表标题 */
 .listTit {
   font-size: 18px;
@@ -389,7 +355,6 @@ export default {
   color: white;
   background-color: #169bd5;
 }
-
 /* 下拉菜单下方主题样式列表下方信息*/
 .another {
   display: flex;
@@ -403,68 +368,27 @@ export default {
 /* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
   padding-right: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: absolute;
+  right: 0;
+  bottom: 35px;
+}
+.mainRight .zhuangtai {
+  font-size: 18px;
+  color: black;
+  margin-bottom: 10px;
   text-align: right;
 }
-.mainRight .fuhetishi {
-  font-size: 14px;
-}
-.mainRight /deep/ .shenhe {
-  width: 80px;
-  height: 40px;
-  background-color: #ef9c00;
-  border: 1px solid #ef9c00;
-  margin-left: 20px;
-}
-.mainRight /deep/ .el-input__inner {
-  border: 1px solid #019997;
-  border-radius: 0;
-}
-/* 下拉菜单下方主题列表右侧修改及dialog */
-.mainRight /deep/ .is-checked .el-radio__inner {
-  background-color: #ef9c00;
-  border-color: #ef9c00;
-}
-.mainRight .el-radio-group {
-  width: 100%;
-}
-.mainRight .yaoqiu /deep/ .el-radio__inne {
-  background: #ef9c00;
-}
-.mainRight .yaoqiu /deep/ span {
-  color: #ef9c00;
-}
-.mainRight .yaoqiu /deep/ .el-radio {
-  width: 100%;
-  margin-bottom: 10px;
-}
-/* dialog弹框标题及下方取消确定按钮 */
-.mainRight .yaoqiu {
-  text-align: center;
-}
-.mainRight /deep/ .is-checked {
-  border-color: #ef9c00;
-}
-.mainRight /deep/ .dialog-footer .dialog-cancle {
-  color: white;
-  background-color: black;
-  border: 1px solid black;
-}
-.mainRight /deep/ .dialog-footer .dialog-sure {
-  background-color: #ef9c00;
-  border: 1px solid #ef9c00;
-}
-.mainRight /deep/ .el-dialog__header {
-  text-align: center;
-  background-color: #ef9c00;
-}
-.mainRight /deep/ .el-dialog__title {
-  color: white;
-}
-.mainRight /deep/ .el-dialog__body {
-  padding: 50px;
+.mainRight .dingPri {
+  color: #588cfe;
+  font-size: 18px;
+  text-align: right;
 }
 
+
+.bianji {
+  font-size: 18px;
+  color: #588cfe;
+  text-align: right;
+  cursor: pointer;
+}
 </style>

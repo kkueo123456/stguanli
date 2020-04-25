@@ -21,6 +21,7 @@
   </div>
 </template>
 <script>
+import API from '../util/api'
 export default {
   props: [],
   components: {},
@@ -29,13 +30,21 @@ export default {
       user: {
         name: "", //账号
         pass: "" //密码
-      }
+      },
+      isAdmin:0
     };
   },
   methods: {
     login() {
-      console.log(this.user)
+      // this.$axios({
+      //   url:API.login,
+      //   method:"post",
+      //   params:this.user
+      // }).then(res=>{
+      //   console.log(res)
+      // })
       this.$router.push('/index')
+      localStorage.setItem('isAdmin',this.isAdmin)
     }
   },
   mounted() {},
