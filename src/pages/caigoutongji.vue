@@ -321,7 +321,6 @@ export default {
   border: 1px solid #019997;
 }
 .navLeft {
-  width: 890px;
   display: flex;
   justify-content: space-between;
 }
@@ -389,10 +388,12 @@ export default {
 .another {
   display: flex;
 }
+.another .anotherList{
+  margin-right: 20px;
+}
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
-  margin-right: 100px;
   margin-bottom: 10px;
 }
 /* 下拉菜单下方主题样式列表右侧 */
@@ -414,9 +415,11 @@ export default {
   border: 1px solid #019997;
   margin-left: 20px;
 }
+
 .mainRight /deep/ .el-input__inner {
   border: 1px solid #019997;
   border-radius: 0;
+  padding: 0;
 }
 /* 下拉菜单下方主题列表右侧修改及dialog */
 .mainRight .dialog-gai .dialog-input {

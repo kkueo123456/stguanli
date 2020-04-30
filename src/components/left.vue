@@ -18,7 +18,7 @@
             <router-link to="/index/caigou/allBuy" active-class="active2" v-if="isAdmin==0">>全部订单</router-link>
             <router-link to="/index/caigou/allding" active-class="active2">>未定价</router-link>
             <router-link to="/index/caigou/cgtj" active-class="active2">>定价完成</router-link>
-            <router-link to="/index/caigou/shenhe" active-class="active2">>审核</router-link>
+            <!-- <router-link to="/index/caigou/shenhe" active-class="active2">>审核</router-link> -->
             <router-link to="/index/caigou/jianding" active-class="active2">>未鉴定</router-link>
             <router-link to="/index/caigou/tuihui" active-class="active2">>退回</router-link>
           </el-menu-item-group>

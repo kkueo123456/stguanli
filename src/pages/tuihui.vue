@@ -253,10 +253,8 @@ export default {
 
     checkall() {
       console.log(this.value2);
-      var data1 = new Date(this.value2[0]).getTime();
-      var data2 = new Date(this.value2[1]).getTime();
-      console.log(data1 + "-" + data2);
-      console.log(this.value);
+      // var data1 = new Date(this.value2[0]).getTime();
+      // var data2 = new Date(this.value2[1]).getTime();
     },
     change() {
       this.dialogVisible = true;
@@ -314,7 +312,6 @@ export default {
   border: 1px solid #019997;
 }
 .navLeft {
-  width: 890px;
   display: flex;
   justify-content: space-between;
 }
@@ -381,10 +378,13 @@ export default {
 .another {
   display: flex;
 }
+.another .anotherList{
+  margin-right: 20px;
+}
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
-  margin-right: 100px;
+ 
   margin-bottom: 10px;
 }
 /* 下拉菜单下方主题样式列表右侧 */

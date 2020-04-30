@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="navRight">
-        <el-button type="primary">查看全部</el-button>
+        <el-button type="primary" @click="checkall">查看全部</el-button>
       </div>
     </div>
     <!-- 采购主体内容 -->
@@ -85,7 +85,15 @@
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-          <div class="bianji" v-if="(item.zt=='未鉴定')">编辑</div>
+          <div class="bianji" v-if="(item.zt=='未鉴定')" @click="upDate(item.id)">编辑</div>
+          <!-- 编辑里的表单 -->
+          <el-dialog title="编辑列表" :visible.sync="dialogFormVisible">
+            1111111111111111111
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            </div>
+          </el-dialog>
           <div class="zhuangtai" v-if="(item.zt!='已售出')">{{item.zt}}</div>
           <div class="zhuangtai" :style="{color:'red'}" v-if="(item.zt=='已售出')">已售出：{{item.finPri}}</div>
           <h4
@@ -97,7 +105,7 @@
         </div>
       </div>
       <!-- 采购主体内容下方分页功能 -->
-      <fenye class="pages" @jumpPage='changeye'></fenye>
+      <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
 </template>
@@ -183,7 +191,7 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "2",
-          zt: "已售出"
+          zt: "未鉴定"
         },
         {
           img: "",
@@ -235,25 +243,30 @@ export default {
       },
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
-      isAdmin: ""
+      isAdmin: "",
+      dialogFormVisible:false
     };
   },
   methods: {
     gai() {
       console.log(this.value);
     },
-    detail(id) {
-      this.$router.push("/detail?id=" + id);
+ 
+    changeye(val) {
+      console.log(val);
     },
-    changeye(val){
-      console.log(val)
+    upDate(id) {
+      this.dialogFormVisible=true
+    },
+    checkall(){
+      console.log(this.value2)
     }
   },
   mounted() {},
   beforeRouteEnter(to, from, next) {
-   let isAdmin= localStorage.getItem('isAdmin')
-    if(isAdmin==0){
-      next()
+    let isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin == 0) {
+      next();
     }
   },
   watch: {},
@@ -292,7 +305,6 @@ export default {
   border: 1px solid #019997;
 }
 .navLeft {
-  width: 890px;
   display: flex;
   justify-content: space-between;
 }
@@ -383,7 +395,6 @@ export default {
   font-size: 18px;
   text-align: right;
 }
-
 
 .bianji {
   font-size: 18px;

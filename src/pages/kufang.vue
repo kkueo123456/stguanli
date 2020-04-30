@@ -111,8 +111,7 @@
         </div>
       </div>
       <!-- 库房主体内容下方分页功能 -->
-      <fenye class="pages" @jumpPage='changeye'></fenye>
-    
+      <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
 </template>
@@ -121,7 +120,7 @@ import fenye from "../components/fenye";
 export default {
   props: [],
   components: {
-     fenye
+    fenye
   },
   data() {
     return {
@@ -133,19 +132,19 @@ export default {
         },
         {
           value: "1",
-          label: "双皮奶"
+          label: "北京总仓"
         },
         {
           value: "2",
-          label: "蚵仔煎"
+          label: "上海总仓"
         },
         {
           value: "3",
-          label: "龙须面龙须面"
+          label: "河北总仓"
         },
         {
           value: "4",
-          label: "北京烤鸭"
+          label: "天津总仓"
         }
       ],
       value: "0",
@@ -159,11 +158,12 @@ export default {
           lie: "pallas传奇",
           kuan: "Palla clutch",
           time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
+          cangwei: "上海总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "0"
+          id: "0",
+          cw: "2"
         },
         {
           img: "",
@@ -178,7 +178,8 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "1"
+          id: "1",
+          cw: "0"
         },
         {
           img: "",
@@ -189,18 +190,25 @@ export default {
           lie: "pallas传奇",
           kuan: "Palla clutch",
           time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
+          cangwei: "北京总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "2"
+          id: "2",
+          cw: "1"
         }
       ]
     };
   },
   methods: {
     gai() {
-      console.log(this.value);
+      var arr = this.data.filter((item, index) => {
+        if (item.cw == this.value) {
+          return item
+        }
+      });
+      console.log(arr)
+      // this.data=arr
     },
     detail(id) {
       this.$router.push("/detail?id=" + id);
@@ -208,8 +216,8 @@ export default {
     // handleCurrentChange(val) {
     //   console.log(val);
     // },
-     changeye(val){
-      console.log(val)
+    changeye(val) {
+      console.log(val);
     }
   },
   mounted() {},
@@ -335,10 +343,12 @@ export default {
 .another {
   display: flex;
 }
+.another .anotherList{
+  margin-right: 20px;
+}
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
-  margin-right: 100px;
   margin-bottom: 10px;
 }
 .mainRight {
@@ -359,7 +369,5 @@ export default {
 .pages {
   text-align: center;
   margin-top: 100px;
-
 }
-
 </style>

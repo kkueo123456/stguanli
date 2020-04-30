@@ -50,7 +50,6 @@ export default {
       {
         month: "一月",
         sele: 43.3,
-        back: 85.8,
         zong: 193.7
       },
       {

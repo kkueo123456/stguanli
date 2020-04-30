@@ -414,7 +414,7 @@ export default {
 }
 /* 主体有效去 */
 .el-main .layout {
-  width: 1575px;
+  width: 1300px;
   margin: 0 auto;
 }
 .el-main .head .choose {

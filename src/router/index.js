@@ -16,7 +16,7 @@ const dingdan = () => import("../pages/dingdan")
 /*三极路由*/
 const allding = () => import("../pages/allDing")
 const cgtj = () => import("../pages/caigoutongji")
-const shenhe = () => import("../pages/shenhe")
+// const shenhe = () => import("../pages/shenhe")
 const jianding = () => import("../pages/jianding")
 const tuihui = () => import("../pages/tuihui")
 const allBuy = () => import("../pages/allBuy")
@@ -48,9 +48,6 @@ export default new Router({
           children: [{
             path: 'allding',
             component: allding
-          },{
-            path: "shenhe",
-            component: shenhe
           },
           {
             path: "jianding",

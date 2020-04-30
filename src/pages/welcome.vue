@@ -1,6 +1,6 @@
 <template>
 <div class="main">
-    欢迎！！
+    <h2>欢迎来到后台管理系统</h2>
 </div>
 </template>
 <script>
@@ -24,5 +24,8 @@ computed:{
 .main{
     width: 100%;
     height: 100vh;
+}
+.main h2{
+    font-size: 28px;
 }
 </style>
