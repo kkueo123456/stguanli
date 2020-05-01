@@ -350,6 +350,7 @@ export default {
   color: #606060;
   font-size: 13px;
   margin-bottom: 10px;
+  white-space:nowrap;
 }
 .mainRight {
   margin-top: 70px;

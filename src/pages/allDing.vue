@@ -378,10 +378,11 @@ export default {
   color: #606060;
   font-size: 13px;
   margin-bottom: 10px;
+  white-space:nowrap;
 }
 /* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
-  padding-right: 20px;
+  width: 28%;
   display: flex;
   justify-content: space-between;
   margin-top: 70px;
@@ -393,7 +394,6 @@ export default {
   display: inline-block;
 }
 .mainRight /deep/ .el-button {
-  width: 80px;
   height: 40px;
   background-color: #019997;
   border: 1px solid #019997;

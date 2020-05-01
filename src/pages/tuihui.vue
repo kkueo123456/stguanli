@@ -378,13 +378,13 @@ export default {
 .another {
   display: flex;
 }
-.another .anotherList{
+.another .anotherList {
   margin-right: 20px;
 }
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
- 
+  white-space: nowrap;
   margin-bottom: 10px;
 }
 /* 下拉菜单下方主题样式列表右侧 */
@@ -414,12 +414,11 @@ export default {
 .mainRight .yaoqiu {
   text-align: center;
 }
-.mainRight .back{
-    font-size: 16px;
+.mainRight .back {
+  font-size: 16px;
 }
-.mainRight .weiding{
-    font-size: 18px;
-    color: #aeaeae;
+.mainRight .weiding {
+  font-size: 18px;
+  color: #aeaeae;
 }
-
 </style>

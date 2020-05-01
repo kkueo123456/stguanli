@@ -374,12 +374,12 @@ export default {
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
-  margin-right: 100px;
+  margin-right: 20px;
   margin-bottom: 10px;
+  white-space:nowrap;
 }
 /* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
-  padding-right: 20px;
   position: absolute;
   right: 0;
   bottom: 35px;

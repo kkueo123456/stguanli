@@ -402,6 +402,7 @@ export default {
   color: #606060;
   font-size: 13px;
   margin-bottom: 10px;
+  white-space:nowrap;
 }
 /* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
