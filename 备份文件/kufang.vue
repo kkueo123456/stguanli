@@ -1,15 +1,34 @@
 <template>
-  <!-- 退回页 -->
   <div>
-    <!-- 退回头部填写订单 -->
+    <!-- 库房头部搜索及功能 -->
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
-          <dingdan></dingdan>
+          <el-input placeholder="请输入货品编号" v-model="search" clearable></el-input>
+        </div>
+        <div class="rongqi">
+          <el-button type="primary">搜索</el-button>
+        </div>
+        <div class="rongqi">
+          <el-button type="primary">扫码</el-button>
+        </div>
+      </div>
+      <div class="headRight">
+        <div class="rongqi">
+          <el-button type="primary">出库</el-button>
+        </div>
+        <div class="rongqi">
+          <el-button type="primary">调拨</el-button>
+        </div>
+        <div class="rongqi">
+          <el-button type="primary">分销</el-button>
+        </div>
+        <div class="rongqi">
+          <el-button type="primary">盘点</el-button>
         </div>
       </div>
     </div>
-    <!-- 退回头部下方下拉菜单及查找 -->
+    <!-- 库房头部下方下栏菜单及品牌筛选 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -27,28 +46,29 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <!-- 退回头部下方日期下拉列表 -->
         <div class="slect">
-          <div class="block">
-            <el-date-picker
-              v-model="value2"
-              type="datetimerange"
-              :picker-options="pickerOptions"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              align="right"
-            ></el-date-picker>
-          </div>
+          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
+        </div>
+        <div class="slect">
+          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
+        </div>
+        <div class="slect">
+          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
         </div>
       </div>
       <div class="navRight">
-        <el-button type="primary" @click="checkall">查看全部</el-button>
+        <!-- <el-button type="primary">品牌筛选</el-button> -->
       </div>
     </div>
-    <!-- 退回主体内容 -->
+    <!-- 库房主体内容 -->
     <div class="main">
-      <!-- 退回主体内容列表 -->
+      <!-- 库房主体内容列表 -->
       <div class="list" v-for="(item,index) in data" :key="index">
         <!-- 主体内容列表左 -->
         <div class="mainLeft">
@@ -56,53 +76,50 @@
           <div class="leftTu"></div>
           <!-- 主体内容列表右侧信息 -->
           <div class="Rightzi">
-            <!-- 主体内容列表右侧标题及下方标签 -->
+            <!-- 主体内容列表右侧标题及相应标签 -->
             <div class="title">
               <h2 class="listTit">{{item.name}}</h2>
-              <div class="listBq">
-                <span class="listBqji">{{item.mai}}</span>
+              <div class="biaoqianList">
+                <span class="biaoqian" v-for="(item2,index) in item.biaoqian" :key="index">{{item2}}</span>
               </div>
             </div>
             <!-- 主体内容列表右侧信息头下方商品详细信息 -->
             <div class="another">
               <ul class="anotherList">
                 <li class="anotherStyle">品牌:{{item.logo}}</li>
-                <li class="anotherStyle">采购价格:{{item.price}}</li>
+                <li class="anotherStyle">入库价格:{{item.price}}</li>
               </ul>
               <ul class="anotherList">
                 <li class="anotherStyle">系列:{{item.lie}}</li>
-                <li class="anotherStyle">采购时间:{{item.time|timeFilter}}</li>
+                <li class="anotherStyle">入库时间:{{item.time|timeFilter}}</li>
               </ul>
               <ul class="anotherList">
                 <li class="anotherStyle">款式:{{item.kuan}}</li>
-                <li class="anotherStyle">成色:{{item.color}}</li>
+                <li class="anotherStyle">仓位:{{item.cangwei}}</li>
               </ul>
               <ul class="anotherList">
-                <li class="anotherStyle">采购员:{{item.num}}</li>
+                <li class="anotherStyle">成色:{{item.color}}</li>
+                <li class="anotherStyle">编号:{{item.num}}</li>
               </ul>
             </div>
           </div>
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-          <div></div>
-          <div></div>
-          <div class="back">已退回</div>
-          <div class="weiding">指导定价:未定价</div>
+          <div class="detail" @click="detail(item.id)">查看详情</div>
+          <h4 class="dingPri">销售定价:{{item.finPri}}</h4>
         </div>
       </div>
-      <!-- 退回主体内容下方分页功能 -->
+      <!-- 库房主体内容下方分页功能 -->
       <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
 </template>
 <script>
-import dingdan from "../components/dingdan";
 import fenye from "../components/fenye";
 export default {
   props: [],
   components: {
-    dingdan,
     fenye
   },
   data() {
@@ -111,23 +128,23 @@ export default {
       options: [
         {
           value: "0",
-          label: "全部渠道"
+          label: "唐山总仓"
         },
         {
           value: "1",
-          label: "双皮奶"
+          label: "北京总仓"
         },
         {
           value: "2",
-          label: "蚵仔煎"
+          label: "上海总仓"
         },
         {
           value: "3",
-          label: "龙须面龙须面"
+          label: "河北总仓"
         },
         {
           value: "4",
-          label: "北京烤鸭"
+          label: "天津总仓"
         }
       ],
       value: "0",
@@ -141,13 +158,12 @@ export default {
           lie: "pallas传奇",
           kuan: "Palla clutch",
           time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
+          cangwei: "上海总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "130000",
+          finPri: "120000",
           id: "0",
-          zt: "未鉴定",
-          mai: "寄"
+          cw: "2"
         },
         {
           img: "",
@@ -161,10 +177,9 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "150000",
+          finPri: "120000",
           id: "1",
-          zt: "已退回",
-          mai: "寄"
+          cw: "0"
         },
         {
           img: "",
@@ -175,124 +190,81 @@ export default {
           lie: "pallas传奇",
           kuan: "Palla clutch",
           time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
+          cangwei: "北京总仓/C-1-20", 
           color: "95-97新",
           num: "12345678909123",
-          finPri: "420000",
+          finPri: "120000",
           id: "2",
-          zt: "已售出",
-          mai: "寄"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "6220000",
-          id: "2",
-          zt: "入库在售",
-          mai: "寄"
+          cw: "1"
         }
-      ],
-      pickerOptions: {
-        shortcuts: [
-          {
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
-      },
-      value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-      value2: "",
-      /*dialog弹框的显示隐藏*/
-
-      dialogVisible: false,
-      /*接收要求传来的参数，让dialog里的确认通过参数判断下一步操作*/
-      jianding: "",
-      /*最后一步确认鉴定*/
-      finjd: ""
+      ]
     };
   },
   methods: {
-    /*添加采购订单*/
-
-    dingdan() {
-      this.$router.push("/dingdan");
+    gai() {
+      var arr = this.data.filter((item, index) => {
+        if (item.cw == this.value) {
+          return item
+        }
+      });
+      console.log(arr)
+      // this.data=arr
     },
-    gai() {},
-    detail(id) {},
-    handleCurrentChange(val) {},
-    /*上方时间下拉菜单的查看全部*/
-
-    checkall() {
-      console.log(this.value2);
-      // var data1 = new Date(this.value2[0]).getTime();
-      // var data2 = new Date(this.value2[1]).getTime();
+    detail(id) {
+      this.$router.push("/detail?id=" + id);
     },
-    change() {
-      this.dialogVisible = true;
-    },
-    dialogSure() {
-      this.dialogVisible = false;
-      this.finjd = this.jianding;
-      if (this.finjd == 0) {
-        console.log("去定价");
-      } else {
-        console.log("退回");
-      }
-    },
-    yaoqiu(val) {
-      this.jianding = val;
-    },
+    // handleCurrentChange(val) {
+    //   console.log(val);
+    // },
     changeye(val) {
       console.log(val);
     }
   },
   mounted() {},
   watch: {},
+  beforeRouteEnter(to, from, next) {
+    let isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin == 0) {
+      next();
+    }
+  },
   computed: {}
 };
 </script>
 <style  scoped>
-/* 头部样式 */
 .head {
   width: 100%;
   height: 60px;
   padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.head .headLeft {
+  display: flex;
+  justify-content: space-between;
+  width: 460px;
+}
+.headLeft .el-input--suffix /deep/ .el-input__inner {
+  width: 275px;
+  border-radius: 18px;
+  border: 1px solid #019997;
 }
 .headLeft .rongqi .el-button--primary {
   background-color: #019997;
   border-color: #019997;
+  border-radius: 12px;
 }
-
-/* 头部下方下拉菜单等样式 */
+.headRight {
+  width: 460px;
+  display: flex;
+  justify-content: space-between;
+}
+.headRight .rongqi .el-button--primary {
+  width: 90px;
+  background-color: #019997;
+  border-color: #019997;
+  border-radius: 25px;
+}
 .nav {
   height: 50px;
   border-radius: 10px;
@@ -314,11 +286,9 @@ export default {
   border: 1px solid #019997;
 }
 .navLeft {
+  width: 890px;
   display: flex;
   justify-content: space-between;
-}
-.navLeft /deep/ .el-input__inner {
-  border: 1px solid #019997;
 }
 .navRight {
   padding-right: 20px;
@@ -328,21 +298,17 @@ export default {
   border-color: #019997;
   border-radius: 20px;
 }
-/* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
   padding-left: 16px;
   padding-right: 20px;
   padding-bottom: 20px;
 }
-/* 下拉菜单下方主题样式列表 */
 .main .list {
   padding-top: 40px;
   border-bottom: 1px solid #019997;
   padding-bottom: 30px;
 }
-/* 下拉菜单下方主题样式列表左侧图片 */
-
 .main .list .leftTu {
   margin-left: 20px;
   width: 130px;
@@ -356,71 +322,55 @@ export default {
 .list {
   display: flex;
   justify-content: space-between;
-  position: relative;
 }
-/* 下拉菜单下方主题样式列表标题 */
 .listTit {
   font-size: 18px;
   color: #019997;
   margin-right: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 55px;
 }
-.title .listBq .listBqji {
+.Rightzi .title {
+  display: flex;
+}
+.biaoqianList .biaoqian {
   display: inline-block;
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  margin-bottom: 25px;
+  width: 55px;
+  height: 20px;
+  border: 1px solid red;
+  color: red;
+  margin-right: 15px;
   text-align: center;
-  color: white;
-  background-color: #169bd5;
+  line-height: 20px;
 }
-
-/* 下拉菜单下方主题样式列表下方信息*/
 .another {
   display: flex;
 }
-.another .anotherList {
+.another .anotherList{
   margin-right: 20px;
 }
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
-  white-space: nowrap;
   margin-bottom: 10px;
+  white-space:nowrap;
 }
-/* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
+  margin-top: 70px;
   padding-right: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+}
+.mainRight .detail {
+  font-size: 12px;
+  color: #35a3d8;
+  margin-bottom: 15px;
   text-align: right;
+  cursor: pointer;
 }
-.mainRight .xiaoshouPri {
-  color: #b2b2b2;
-  font-size: 16px;
-}
-.mainRight /deep/ .shenhe {
-  width: 80px;
-  height: 40px;
-  background-color: #7cc623;
-  border: 1px solid #7cc623;
-  margin-left: 20px;
-}
-.mainRight /deep/ .el-input__inner {
-  border: 1px solid #019997;
-  border-radius: 0;
-}
-/* 下拉菜单下方主题列表右侧修改及dialog */
-.mainRight .yaoqiu {
-  text-align: center;
-}
-.mainRight .back {
-  font-size: 16px;
-}
-.mainRight .weiding {
+.mainRight .dingPri {
+  color: #588cfe;
   font-size: 18px;
-  color: #aeaeae;
+}
+.pages {
+  text-align: center;
+  margin-top: 100px;
 }
 </style>

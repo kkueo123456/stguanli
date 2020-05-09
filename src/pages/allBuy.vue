@@ -85,15 +85,18 @@
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-          <div class="bianji" v-if="(item.zt=='未鉴定')" @click="upDate(item.id)">编辑</div>
-          <!-- 编辑里的表单 -->
-          <el-dialog title="编辑列表" :visible.sync="dialogFormVisible">
-            1111111111111111111
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-            </div>
-          </el-dialog>
+          <div class="dialogJudge" v-if="item.zt!='已退回'">
+            <el-button type="text" @click="ruku">入库</el-button>
+            <el-button type="text" @click="willBack(item.id)">退回</el-button>
+            <el-dialog title="退回" :visible.sync="dialogJudge" width="30%">
+              <span>确定退回？</span>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogJudge = false">取 消</el-button>
+                <el-button type="primary" @click="confirmBack">确 定</el-button>
+              </span>
+            </el-dialog>
+          </div>
+         
           <div class="zhuangtai" v-if="(item.zt!='已售出')">{{item.zt}}</div>
           <div class="zhuangtai" :style="{color:'red'}" v-if="(item.zt=='已售出')">已售出：{{item.finPri}}</div>
           <h4
@@ -159,7 +162,7 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "0",
-          zt: "未鉴定"
+          zt: "已售出"
         },
         {
           img: "",
@@ -244,22 +247,34 @@ export default {
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
       isAdmin: "",
-      dialogFormVisible:false
+      // dialogFormVisible: false,
+      dialogJudge: false
     };
   },
   methods: {
     gai() {
       console.log(this.value);
     },
- 
+
     changeye(val) {
       console.log(val);
     },
-    upDate(id) {
-      this.dialogFormVisible=true
+    checkall() {
+      console.log(this.value2);
     },
-    checkall(){
-      console.log(this.value2)
+    /*将要退回*/
+
+    willBack(id) {
+      this.dialogJudge = true;
+    },
+    /*确认退回*/
+
+    confirmBack() {
+      this.dialogJudge = false;
+      console.log("退回");
+    },
+    ruku() {
+      console.log("入库");
     }
   },
   mounted() {},
@@ -298,6 +313,8 @@ export default {
 }
 .slect {
   width: 148px;
+  margin-right: 10px;
+
 }
 .slect #inputselect {
   width: 145px;
@@ -376,14 +393,22 @@ export default {
   font-size: 13px;
   margin-right: 20px;
   margin-bottom: 10px;
-  white-space:nowrap;
+  white-space: nowrap;
 }
 /* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
   position: absolute;
   right: 0;
-  bottom: 35px;
+  bottom: 40px;
 }
+/* 右侧上方入库与退回 */
+.dialogJudge{
+  text-align: right;
+}
+.dialogJudge /deep/ .el-dialog{
+  text-align: left;
+}
+/* 右侧状态样式 */
 .mainRight .zhuangtai {
   font-size: 18px;
   color: black;
@@ -395,7 +420,7 @@ export default {
   font-size: 18px;
   text-align: right;
 }
-
+/* 右侧编辑 */
 .bianji {
   font-size: 18px;
   color: #588cfe;

@@ -12,14 +12,20 @@ const tongji = () => import("../pages/tongji")
 const guanli = () => import("../pages/guanli")
 const detail = () => import("../pages/detail")
 const dingdan = () => import("../pages/dingdan")
+const buinformation = () => import("../pages/buinformation")
 
-/*三极路由*/
-const allding = () => import("../pages/allDing")
-const cgtj = () => import("../pages/caigoutongji")
+/*采购的三极路由*/
+// const allding = () => import("../pages/allDing")
+// const cgtj = () => import("../pages/caigoutongji")
 // const shenhe = () => import("../pages/shenhe")
-const jianding = () => import("../pages/jianding")
+const information = () => import("../pages/information")
 const tuihui = () => import("../pages/tuihui")
 const allBuy = () => import("../pages/allBuy")
+
+
+/*待入库的三级路由*/ 
+const buyEnter = () => import("../pages/buyRk")
+const diaoEnter = () => import("../pages/diaoRk")
 
 Vue.use(Router)
 
@@ -40,28 +46,38 @@ export default new Router({
         },
         {
           path: 'ruku',
-          component: ruku
+          component: ruku,
+          children:[{
+            path: "buyEnter",
+            component: buyEnter
+          },
+          {
+            path:'',
+            redirect: 'buyEnter'
+          },
+          {
+            path: "diaoEnter",
+            component: diaoEnter
+          }
+        ]
         },
         {
           path: "caigou",
           component: caigou,
           children: [{
-            path: 'allding',
-            component: allding
-          },
-          {
-            path: "jianding",
-            component: jianding
-          },
-          {
-            path: "cgtj",
-            component: cgtj
-          },{
             path: "tuihui",
             component: tuihui
           },{
             path: "allBuy",
             component: allBuy
+          },
+          {
+            path:'information',
+            component:information
+          },
+          {
+            path:'',
+            redirect: 'allBuy'
           }
           
         ]
@@ -95,6 +111,10 @@ export default new Router({
     {
       path: '/dingdan',
       component: dingdan
+    },
+    {
+      path: '/buquan',
+      component: buinformation
     },
     {
       path: "*",

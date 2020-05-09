@@ -15,13 +15,11 @@
       </div>
       <div class="headRight">
         <div class="rongqi">
-          <el-button type="primary">出库</el-button>
+          <el-button type="primary">入库</el-button>
         </div>
+        <div></div>
         <div class="rongqi">
           <el-button type="primary">调拨</el-button>
-        </div>
-        <div class="rongqi">
-          <el-button type="primary">分销</el-button>
         </div>
         <div class="rongqi">
           <el-button type="primary">盘点</el-button>
@@ -57,13 +55,20 @@
           </select>
         </div>
         <div class="slect">
-          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
-            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
-          </select>
+          <div class="block">
+            <el-date-picker
+              v-model="value2"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              align="right"
+            ></el-date-picker>
+          </div>
         </div>
       </div>
       <div class="navRight">
-        <!-- <el-button type="primary">品牌筛选</el-button> -->
+        <el-button type="primary">查找</el-button>
       </div>
     </div>
     <!-- 库房主体内容 -->
@@ -79,8 +84,11 @@
             <!-- 主体内容列表右侧标题及相应标签 -->
             <div class="title">
               <h2 class="listTit">{{item.name}}</h2>
-              <div class="biaoqianList">
+              <!-- <div class="biaoqianList">
                 <span class="biaoqian" v-for="(item2,index) in item.biaoqian" :key="index">{{item2}}</span>
+              </div>-->
+              <div class="listBq">
+                <span class="listBqji">{{item.mai}}</span>
               </div>
             </div>
             <!-- 主体内容列表右侧信息头下方商品详细信息 -->
@@ -106,7 +114,24 @@
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-          <div class="detail" @click="detail(item.id)">查看详情</div>
+          <!-- 出库及dialog -->
+          <h4 class="mainRight-ck" @click="chuku(item.id)">出库</h4>
+          <el-dialog title="选择出库原因" :visible.sync="centerDialogVisible" width="30%">
+            <el-radio-group v-model="chukuRadio">
+              <el-radio :label="3">想卖</el-radio>
+              <el-radio :label="6">假的，出库</el-radio>
+              <el-radio :label="9">随便选</el-radio>
+            </el-radio-group>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="centerDialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="sure">确 定</el-button>
+            </span>
+          </el-dialog>
+          <!-- 出库下方编辑与查看 -->
+          <div class="mainRightTop">
+            <div class="detail" @click="update(item.id)">编辑</div>
+            <div class="detail" @click="detail(item.id)">查看</div>
+          </div>
           <h4 class="dingPri">销售定价:{{item.finPri}}</h4>
         </div>
       </div>
@@ -197,17 +222,26 @@ export default {
           id: "2",
           cw: "1"
         }
-      ]
+      ],
+      /*选择日期*/
+
+      value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+      value2: "",
+      /*出库的dialog及id*/
+      centerDialogVisible: false,
+      chukuid: "",
+      /*选择出库原因*/ 
+      chukuRadio:''
     };
   },
   methods: {
     gai() {
       var arr = this.data.filter((item, index) => {
         if (item.cw == this.value) {
-          return item
+          return item;
         }
       });
-      console.log(arr)
+      console.log(arr);
       // this.data=arr
     },
     detail(id) {
@@ -218,6 +252,19 @@ export default {
     // },
     changeye(val) {
       console.log(val);
+    },
+    update(id) {
+      console.log("编辑");
+    },
+    /*出库*/
+    chuku(id) {
+      this.centerDialogVisible = true;
+      this.chukuid = id;
+      console.log("出库", id);
+    },
+    sure() {
+      this.centerDialogVisible = false;
+      console.log(this.chukuid,this.chukuRadio);
     }
   },
   mounted() {},
@@ -232,6 +279,7 @@ export default {
 };
 </script>
 <style  scoped>
+/* 头部样式 */
 .head {
   width: 100%;
   height: 60px;
@@ -255,9 +303,9 @@ export default {
   border-radius: 12px;
 }
 .headRight {
-  width: 460px;
+  width: 300px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .headRight .rongqi .el-button--primary {
   width: 90px;
@@ -265,6 +313,7 @@ export default {
   border-color: #019997;
   border-radius: 25px;
 }
+/* 头部下方下拉菜单等样式 */
 .nav {
   height: 50px;
   border-radius: 10px;
@@ -277,6 +326,7 @@ export default {
 }
 .slect {
   width: 148px;
+  margin-right: 10px;
 }
 .slect #inputselect {
   width: 145px;
@@ -288,6 +338,9 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+.navLeft /deep/ .el-input__inner {
+  border: 1px solid #019997;
+}
 .navRight {
   padding-right: 20px;
 }
@@ -296,6 +349,7 @@ export default {
   border-color: #019997;
   border-radius: 20px;
 }
+/* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
   padding-left: 16px;
@@ -307,6 +361,8 @@ export default {
   border-bottom: 1px solid #019997;
   padding-bottom: 30px;
 }
+/* 下拉菜单下方主题样式列表左侧图片 */
+
 .main .list .leftTu {
   margin-left: 20px;
   width: 130px;
@@ -317,6 +373,7 @@ export default {
 .mainLeft {
   display: flex;
 }
+/* 下拉菜单下方主题样式列表标题 */
 .list {
   display: flex;
   justify-content: space-between;
@@ -325,12 +382,20 @@ export default {
   font-size: 18px;
   color: #019997;
   margin-right: 20px;
-  margin-bottom: 55px;
+  margin-bottom: 10px;
 }
-.Rightzi .title {
-  display: flex;
+.title .listBq .listBqji {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  margin-bottom: 25px;
+  text-align: center;
+  color: white;
+  background-color: #169bd5;
 }
-.biaoqianList .biaoqian {
+
+/* .biaoqianList .biaoqian {
   display: inline-block;
   width: 55px;
   height: 20px;
@@ -339,22 +404,32 @@ export default {
   margin-right: 15px;
   text-align: center;
   line-height: 20px;
-}
+} */
+/* 下拉菜单下方主题样式列表下方信息*/
 .another {
   display: flex;
 }
-.another .anotherList{
+.another .anotherList {
   margin-right: 20px;
 }
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
   margin-bottom: 10px;
-  white-space:nowrap;
+  white-space: nowrap;
 }
+/* 下拉菜单下方主题样式列表右侧 */
+
 .mainRight {
-  margin-top: 70px;
   padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.mainRightTop {
+  display: flex;
+  justify-content: flex-end;
 }
 .mainRight .detail {
   font-size: 12px;
@@ -362,10 +437,18 @@ export default {
   margin-bottom: 15px;
   text-align: right;
   cursor: pointer;
+  margin-left: 10px;
 }
+
 .mainRight .dingPri {
   color: #588cfe;
   font-size: 18px;
+}
+.mainRight .mainRight-ck {
+  color: red;
+  font-weight: normal;
+  text-align: end;
+  cursor: pointer;
 }
 .pages {
   text-align: center;
