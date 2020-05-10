@@ -7,31 +7,36 @@
         text-color="#fff"
         active-text-color="#019997"
       >
-        <el-menu-item index="1" class="guanli" style="padding-left:0px" v-if="isAdmin==0">
-          <router-link to="/index/kufang" active-class="active">库&nbsp;&nbsp;&nbsp;&nbsp;房</router-link>
-        </el-menu-item>
+        <el-submenu index="1" class="guanli" style="padding-left:0px">
+          <template slot="title">
+            <router-link to="/index/kufang" active-class="active">库&nbsp;&nbsp;&nbsp;&nbsp;房</router-link>
+          </template>
+          <el-menu-item-group class="caigouliebiao">
+            <router-link to="/index/kufang/zaiku" active-class="active2" v-if="isAdmin==0">>在库货品</router-link>
+            <router-link to="/index/kufang/diaoboF" active-class="active2">>调拨查询</router-link>
+            <router-link to="/index/kufang/xiaoshou" active-class="active2">>销售订单</router-link>
+            <router-link to="/index/kufang/chukuF" active-class="active2">>出库查询</router-link>
+          </el-menu-item-group>
+        </el-submenu>
         <el-submenu index="2" class="guanli" style="padding-left:0px">
           <template slot="title">
             <router-link to="/index/caigou" active-class="active">采&nbsp;&nbsp;&nbsp;&nbsp;购</router-link>
           </template>
           <el-menu-item-group class="caigouliebiao">
             <router-link to="/index/caigou/allBuy" active-class="active2" v-if="isAdmin==0">>全部订单</router-link>
-            <!-- <router-link to="/index/caigou/allding" active-class="active2">>未定价</router-link> -->
-            <!-- <router-link to="/index/caigou/cgtj" active-class="active2">>定价完成</router-link> -->
-            <!-- <router-link to="/index/caigou/shenhe" active-class="active2">>审核</router-link> -->
             <router-link to="/index/caigou/information" active-class="active2">>补全信息</router-link>
             <router-link to="/index/caigou/tuihui" active-class="active2">>退回</router-link>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="3" class="guanli" style="padding-left:0px">
-           <template slot="title">
-          <router-link to="/index/ruku" active-class="active">待&nbsp;入&nbsp;库</router-link>
-           </template>
+          <template slot="title">
+            <router-link to="/index/ruku" active-class="active">待&nbsp;入&nbsp;库</router-link>
+          </template>
           <el-menu-item-group class="caigouliebiao">
-            <router-link to="/index/ruku/buyEnter" active-class="active2" >>采购入库</router-link>
+            <router-link to="/index/ruku/buyEnter" active-class="active2">>采购入库</router-link>
             <router-link to="/index/ruku/diaoEnter" active-class="active2">>调拨入库</router-link>
           </el-menu-item-group>
-          </el-submenu>
+        </el-submenu>
         <el-menu-item index="4" class="guanli" style="padding-left:0px">
           <router-link to="/index/guanli" active-class="active">客户管理</router-link>
         </el-menu-item>
