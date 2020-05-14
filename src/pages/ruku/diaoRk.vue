@@ -43,15 +43,38 @@
         </div>
       </div>
       <div class="navRight">
+        <el-button type="primary" @click="navclear">清空</el-button>
         <el-button type="primary" @click="checkall">查看全部</el-button>
       </div>
     </div>
-  
+    <div class="main">
+      <div class="tabMain">
+        <el-table :data="tabData" border>
+          <el-table-column prop="number" label="调拨单号" :span="2"></el-table-column>
+          <el-table-column prop="fistCang" label="原始仓" :span="2"></el-table-column>
+          <el-table-column prop="finCang" label="接收仓" :span="2"></el-table-column>
+          <el-table-column prop="diaoboPerson" label="调拨员" :span="2"></el-table-column>
+          <el-table-column prop="rukuPerson" label="入库员" :span="2"></el-table-column>
+          <el-table-column prop="zhuangtai" label="接收情况" :span="2"></el-table-column>
+          <el-table-column label="调拨日期" :span="2">
+            <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
+          </el-table-column>
+          <el-table-column fixed="right" label="操作"  :span="2">
+            <template slot-scope="scope">
+              <el-button type="text" @click="look(scope.row.id)">查看</el-button>
+              <!-- <el-button type="text" @click="willDao(scope.row.id)">导出</el-button> -->
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <!-- 库房主体内容下方分页功能 -->
+      <fenye class="pages" @jumpPage="changeye"></fenye>
+    </div>
   </div>
 </template>
 <script>
-import fenye from "../components/fenye";
-import dingdan from "../components/dingdan";
+import fenye from "../../components/fenye";
+import dingdan from "../../components/dingdan";
 export default {
   props: [],
   components: {
@@ -117,7 +140,9 @@ export default {
       },
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
-      isAdmin: ""
+      isAdmin: "",
+      /*表单中的信息*/ 
+      tabData:[]
     };
   },
   methods: {
@@ -130,12 +155,65 @@ export default {
     checkall() {
       console.log(this.value2);
     },
-    Warehouse(){
-        console.log('入库')
-    }
+    /*清空*/
 
+    navclear() {
+      this.search = "";
+      this.value2 = "";
+      this.value1 = "";
+      this.value = "0";
+    },
+    Warehouse() {
+      console.log("入库");
+    },
+    look(id){
+       this.$router.push('/rkdetail?id='+id)
+    }
   },
-  mounted() {},
+  mounted() {
+    this.tabData = [
+      {
+        id: "0",
+        number: "18912367198311",
+        fistCang: "唐山",
+        finCang: "北京",
+        diaoboPerson: "蒲子杰",
+        rukuPerson: "蒲子杰",
+        zhuangtai: "正常",
+        time: "1589163916"
+      },
+      {
+        id: "1",
+        number: "18912367198311",
+        fistCang: "唐山",
+        finCang: "北京",
+        diaoboPerson: "蒲子杰",
+        rukuPerson: "蒲子杰",
+        zhuangtai: "不正常",
+        time: "1589163916"
+      },
+      {
+        id: "2",
+        number: "18912367198311111111111111111111111111111",
+        fistCang: "唐山",
+        finCang: "北京",
+        diaoboPerson: "蒲子杰",
+        rukuPerson: "蒲子杰",
+        zhuangtai: "货运受损严重",
+        time: "158916391611",
+      },
+      {
+        id: "3",
+        number: "18912367198311",
+        fistCang: "唐山",
+        finCang: "北京",
+        diaoboPerson: "蒲子杰",
+        rukuPerson: "蒲子杰",
+        zhuangtai: "滋滋滋滋滋",
+        time: "1589163916"
+      }
+    ];
+  },
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin == 0) {
@@ -175,7 +253,7 @@ export default {
 }
 .slect #inputselect {
   width: 145px;
-  height: 30px;
+  height: 38px;
   border: 1px solid #019997;
 }
 .navLeft {
@@ -184,6 +262,7 @@ export default {
 }
 .navLeft /deep/ .el-input__inner {
   border: 1px solid #019997;
+  width: 320px;
 }
 .navRight {
   padding-right: 20px;
@@ -194,5 +273,26 @@ export default {
   border-radius: 20px;
 }
 /* 下拉菜单下方主题样式 */
-
+.main {
+  background-color: white;
+  padding-left: 16px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  height: 100%;
+  padding-top: 50px;
+}
+/* 表格样式 */
+.tabMain /deep/ .el-table thead {
+  color: #019997;
+}
+.tabMain /deep/ .el-table th.is-leaf {
+  text-align: center;
+}
+.tabMain /deep/ .el-table td {
+  text-align: center;
+}
+.pages {
+  text-align: center;
+  margin-top: 100px;
+}
 </style>

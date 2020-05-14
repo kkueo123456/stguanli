@@ -1,15 +1,15 @@
 <template >
-  <!-- 采购人员看的全部订单及详情 -->
+  <!-- 采购入库 -->
   <div>
-    <!-- 订单头部填写订单 -->
+    <!-- 采购入库头部填写订单 -->
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
-          <dingdan></dingdan>
+          <el-button type="primary" @click="Warehouse">批量入库</el-button>
         </div>
       </div>
     </div>
-    <!-- 补全信息头部下方下拉菜单及查找 -->
+    <!-- 采购入库头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -27,7 +27,7 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <!-- 补全信息头部下方日期下拉列表 -->
+        <!-- 采购入库头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
             <el-date-picker
@@ -47,9 +47,8 @@
         <el-button type="primary" @click="checkall">查看全部</el-button>
       </div>
     </div>
-    <!-- 补全信息主体内容 -->
+    <!-- 采购入库主体内容 -->
     <div class="main">
-      <!-- 补全信息主体内容列表 -->
       <div class="tabMain">
         <el-table :data="data" border>
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
@@ -58,20 +57,38 @@
           <el-table-column prop="kuan" label="款式" :span="2"></el-table-column>
           <el-table-column prop="color" label="成色" :span="2"></el-table-column>
           <el-table-column prop="num" label="编号" :span="2"></el-table-column>
-          <el-table-column prop="man" label="采购员" :span="2"></el-table-column>
           <el-table-column prop="cangwei" label="仓位" :span="2"></el-table-column>
-          <el-table-column prop="finPri" label="指导价格" :span="2"></el-table-column>
-          <el-table-column label="调拨日期" :span="2">
+          <el-table-column prop="finPri" label="销售定价" :span="2"></el-table-column>
+          <el-table-column label="销售日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="150" :span="2">
+          <el-table-column fixed="right" label="操作"  :span="2">
             <template slot-scope="scope">
-              <el-button type="text" @click="upDate(scope.row.id)">编辑</el-button>
+              <el-button type="text" @click="ruku(scope.row.id)">入库</el-button>
+              <el-dialog
+                title="提示"
+                :visible.sync="dialogVisible"
+                width="30%"
+                :modal-append-to-body="false"
+              >
+                <el-select v-model="Cangvalue" placeholder="请选择">
+                  <el-option
+                    v-for="item in Cangoption"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <span slot="footer" class="dialog-footer">
+                  <el-button @click="dialogVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="dialogSure">确 定</el-button>
+                </span>
+              </el-dialog>
             </template>
           </el-table-column>
         </el-table>
       </div>
-      <!-- 补全信息内容下方分页功能 -->
+      <!-- 采购入库内容下方分页功能 -->
       <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
@@ -96,21 +113,22 @@ export default {
         {
           value: "1",
           label: "双皮奶"
-        },
-        {
-          value: "2",
-          label: "蚵仔煎"
-        },
-        {
-          value: "3",
-          label: "龙须面龙须面"
-        },
-        {
-          value: "4",
-          label: "北京烤鸭"
         }
       ],
       value: "0",
+      /*下拉选择仓位*/ 
+      Cangoption:[
+         {
+          value: "0",
+          label: "唐山丰润仓"
+        },
+          {
+          value: "1",
+          label: "唐山开平仓"
+        },
+      ],
+      Cangvalue:'0',
+      /*数据*/ 
       data: [
         {
           img: "",
@@ -124,10 +142,9 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "",
+          finPri: "120000",
           id: "0",
-          zt: "未鉴定",
-          man:'蒲子杰'
+          zt: "未鉴定"
         },
         {
           img: "",
@@ -141,10 +158,9 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "",
+          finPri: "120000",
           id: "1",
-          zt: "已退回",
-          man:'蒲子杰'
+          zt: "已退回"
         },
         {
           img: "",
@@ -160,8 +176,7 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "2",
-          zt: "未鉴定",
-          man:'蒲子杰'
+          zt: "未鉴定"
         },
         {
           img: "",
@@ -176,9 +191,8 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "2",
-          zt: "入库在售",
-          man:'蒲子杰'
+          id: "3",
+          zt: "入库在售"
         }
       ],
       pickerOptions: {
@@ -214,7 +228,11 @@ export default {
       },
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
-      isAdmin: ""
+
+      isAdmin: "",
+      /*入库弹出的dialog及需要的id*/
+      dialogId: "",
+      dialogVisible: false
     };
   },
   methods: {
@@ -225,9 +243,7 @@ export default {
     changeye(val) {
       console.log(val);
     },
-    upDate(id) {
-      this.$router.push("/buquan");
-    },
+
     checkall() {
       console.log(this.value2);
     },
@@ -239,7 +255,26 @@ export default {
       this.value1 = "";
       this.value = "0";
     },
+    /*入库按钮*/
+
+    ruku(id) {
+      this.dialogVisible = true;
+      this.dialogId = id;
+    },
+    /*入库确定*/
+
+    dialogSure() {
+      this.dialogVisible = false;
+      console.log(this.dialogId,'商品id');
+      console.log(this.Cangvalue,'仓位')
+    },
+    /*批量入库*/
+
+    Warehouse() {
+      console.log("批量");
+    }
   },
+
   mounted() {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
@@ -306,7 +341,7 @@ export default {
   padding-right: 20px;
   padding-bottom: 20px;
   height: 100%;
-  padding-top: 50px;
+  padding-top: 30px;
 }
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
@@ -318,8 +353,12 @@ export default {
 .tabMain /deep/ .el-table td {
   text-align: center;
 }
-.pages {
-  text-align: center;
-  margin-top: 100px;
+/* 右侧编辑 */
+.bianji {
+  font-size: 16px;
+  color: red;
+  text-align: right;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 </style>

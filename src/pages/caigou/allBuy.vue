@@ -43,69 +43,35 @@
         </div>
       </div>
       <div class="navRight">
+        <el-button type="primary" @click="navclear">清空</el-button>
         <el-button type="primary" @click="checkall">查看全部</el-button>
       </div>
     </div>
     <!-- 采购主体内容 -->
     <div class="main">
-      <!-- 采购主体内容列表 -->
-      <div class="list" v-for="(item,index) in data" :key="index">
-        <!-- 主体内容列表左 -->
-        <div class="mainLeft">
-          <!-- 主体内容列表左边图片 -->
-          <div class="leftTu"></div>
-          <!-- 主体内容列表右侧信息 -->
-          <div class="Rightzi">
-            <!-- 主体内容列表右侧标题及下方标签 -->
-            <div class="title">
-              <h2 class="listTit">{{item.name}}</h2>
-              <div class="listBq">
-                <span class="listBqji">{{item.mai}}</span>
-              </div>
-            </div>
-            <!-- 主体内容列表右侧信息头下方商品详细信息 -->
-            <div class="another">
-              <ul class="anotherList">
-                <li class="anotherStyle">品牌:{{item.logo}}</li>
-                <li class="anotherStyle">采购价格:{{item.price}}</li>
-              </ul>
-              <ul class="anotherList">
-                <li class="anotherStyle">系列:{{item.lie}}</li>
-                <li class="anotherStyle">采购时间:{{item.time|timeFilter}}</li>
-              </ul>
-              <ul class="anotherList">
-                <li class="anotherStyle">款式:{{item.kuan}}</li>
-                <li class="anotherStyle">成色:{{item.color}}</li>
-              </ul>
-              <ul class="anotherList">
-                <li class="anotherStyle">采购员:{{item.num}}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- 主体内容列表右 -->
-        <div class="mainRight">
-          <div class="dialogJudge" v-if="item.zt!='已退回'">
-            <el-button type="text" @click="ruku">入库</el-button>
-            <el-button type="text" @click="willBack(item.id)">退回</el-button>
-            <el-dialog title="退回" :visible.sync="dialogJudge" width="30%">
-              <span>确定退回？</span>
-              <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogJudge = false">取 消</el-button>
-                <el-button type="primary" @click="confirmBack">确 定</el-button>
-              </span>
-            </el-dialog>
-          </div>
-         
-          <div class="zhuangtai" v-if="(item.zt!='已售出')">{{item.zt}}</div>
-          <div class="zhuangtai" :style="{color:'red'}" v-if="(item.zt=='已售出')">已售出：{{item.finPri}}</div>
-          <h4
-            class="dingPri"
-            :style="{color:'#ccc'}"
-            v-if="(item.zt=='已退回')||(item.zt=='未鉴定')"
-          >销售定价:未定价</h4>
-          <h4 class="dingPri" v-if="(item.zt=='已售出')||(item.zt=='入库在售')">销售定价:{{item.finPri}}</h4>
-        </div>
+      <div class="tabMain">
+        <el-table :data="data" border>
+          <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
+          <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
+
+          <el-table-column prop="num" label="编号" :span="2"></el-table-column>
+          <el-table-column prop="man" label="采购员" :span="2"></el-table-column>
+          <el-table-column prop="cangwei" label="仓位" :span="2"></el-table-column>
+          <el-table-column prop="finPri" label="指导价格" :span="2"></el-table-column>
+          <el-table-column prop="price" label="销售定价" :span="2"></el-table-column>
+          <el-table-column label="状态" :span="2">
+            <template slot-scope="scope">{{scope.row.zt}}</template>
+          </el-table-column>
+          <el-table-column label="调拨日期" :span="2">
+            <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" width="100" :span="2">
+            <el-button type="text" @click="detail(scope.row.id)">查看</el-button>
+            <template slot-scope="scope">
+              <el-button type="text" @click="update(scope.row.id)" v-if="scope.row.zt=='已采购'">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
       <!-- 采购主体内容下方分页功能 -->
       <fenye class="pages" @jumpPage="changeye"></fenye>
@@ -160,9 +126,10 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "120000",
+          finPri: "",
           id: "0",
-          zt: "已售出"
+          zt: "未定价",
+          man: "蒲子杰"
         },
         {
           img: "",
@@ -176,9 +143,10 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "120000",
+          finPri: "",
           id: "1",
-          zt: "已退回"
+          zt: "已采购",
+          man: "蒲子杰"
         },
         {
           img: "",
@@ -194,7 +162,8 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "2",
-          zt: "未鉴定"
+          zt: "已采购",
+          man: "蒲子杰"
         },
         {
           img: "",
@@ -210,7 +179,8 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "2",
-          zt: "入库在售"
+          zt: "入库在售",
+          man: "蒲子杰"
         }
       ],
       pickerOptions: {
@@ -247,7 +217,7 @@ export default {
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
       isAdmin: "",
-      // dialogFormVisible: false,
+
       dialogJudge: false
     };
   },
@@ -262,8 +232,21 @@ export default {
     checkall() {
       console.log(this.value2);
     },
-    /*将要退回*/
+    /*清空*/
 
+    navclear() {
+      this.search = "";
+      this.value2 = "";
+      this.value1 = "";
+      this.value = "0";
+    },
+    // 编辑
+    update(id) {
+      this.$router.push('/detail?id='+id)
+    },
+
+
+    /*将要退回*/
     willBack(id) {
       this.dialogJudge = true;
     },
@@ -272,9 +255,6 @@ export default {
     confirmBack() {
       this.dialogJudge = false;
       console.log("退回");
-    },
-    ruku() {
-      console.log("入库");
     }
   },
   mounted() {},
@@ -314,12 +294,11 @@ export default {
 .slect {
   width: 148px;
   margin-right: 10px;
-
 }
 .slect #inputselect {
-  width: 145px;
-  height: 30px;
+  width: 140px;
   border: 1px solid #019997;
+  height: 38px;
 }
 .navLeft {
   display: flex;
@@ -327,9 +306,10 @@ export default {
 }
 .navLeft /deep/ .el-input__inner {
   border: 1px solid #019997;
+  width: 320px;
 }
 .navRight {
-  padding-right: 20px;
+  padding-right: 10px;
 }
 .navRight .el-button--primary {
   background-color: #019997;
@@ -342,89 +322,17 @@ export default {
   padding-left: 16px;
   padding-right: 20px;
   padding-bottom: 20px;
+  height: 100%;
+  padding-top: 50px;
 }
-/* 下拉菜单下方主题样式列表 */
-.main .list {
-  padding-top: 40px;
-  border-bottom: 1px solid #019997;
-  padding-bottom: 30px;
-}
-/* 下拉菜单下方主题样式列表左侧图片 */
-
-.main .list .leftTu {
-  margin-left: 20px;
-  width: 130px;
-  height: 125px;
-  background-color: tomato;
-  margin-right: 20px;
-}
-.mainLeft {
-  display: flex;
-}
-.list {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-}
-
-/* 下拉菜单下方主题样式列表标题 */
-.listTit {
-  font-size: 18px;
+/* 表格样式 */
+.tabMain /deep/ .el-table thead {
   color: #019997;
-  margin-right: 20px;
-  margin-bottom: 10px;
 }
-.title .listBq .listBqji {
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  margin-bottom: 25px;
+.tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
-  color: white;
-  background-color: #169bd5;
 }
-/* 下拉菜单下方主题样式列表下方信息*/
-.another {
-  display: flex;
-}
-.another .anotherStyle {
-  color: #606060;
-  font-size: 13px;
-  margin-right: 20px;
-  margin-bottom: 10px;
-  white-space: nowrap;
-}
-/* 下拉菜单下方主题样式列表右侧 */
-.mainRight {
-  position: absolute;
-  right: 0;
-  bottom: 40px;
-}
-/* 右侧上方入库与退回 */
-.dialogJudge{
-  text-align: right;
-}
-.dialogJudge /deep/ .el-dialog{
-  text-align: left;
-}
-/* 右侧状态样式 */
-.mainRight .zhuangtai {
-  font-size: 18px;
-  color: black;
-  margin-bottom: 10px;
-  text-align: right;
-}
-.mainRight .dingPri {
-  color: #588cfe;
-  font-size: 18px;
-  text-align: right;
-}
-/* 右侧编辑 */
-.bianji {
-  font-size: 18px;
-  color: #588cfe;
-  text-align: right;
-  cursor: pointer;
+.tabMain /deep/ .el-table td {
+  text-align: center;
 }
 </style>

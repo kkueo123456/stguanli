@@ -27,7 +27,9 @@ axios.interceptors.response.use(res=>{
 })
 Vue.prototype.$axios=axios;
 Vue.config.productionTip = false
-
+//  导入excel插件
+import XLSX from 'xlsx'
+Vue.prototype.XLSX = XLSX
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -37,10 +37,19 @@
             <router-link to="/index/ruku/diaoEnter" active-class="active2">>调拨入库</router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-menu-item index="4" class="guanli" style="padding-left:0px">
+        <el-submenu index="4" class="guanli" style="padding-left:0px">
+          <template slot="title">
+            <router-link to="/index/sellMan" active-class="active">销&nbsp;&nbsp;&nbsp;&nbsp;售</router-link>
+          </template>
+          <el-menu-item-group class="caigouliebiao">
+            <router-link to="/index/sellMan/goods" active-class="active2">>全部货品</router-link>
+            <!-- <router-link to="/index/ruku/diaoEnter" active-class="active2">>调拨入库</router-link> -->
+          </el-menu-item-group>
+        </el-submenu>
+        <el-menu-item index="5" class="guanli" style="padding-left:0px">
           <router-link to="/index/guanli" active-class="active">客户管理</router-link>
         </el-menu-item>
-        <el-menu-item index="5" class="guanli" style="padding-left:0px">
+        <el-menu-item index="6" class="guanli" style="padding-left:0px">
           <router-link to="/index/tongji" active-class="active">数据统计</router-link>
         </el-menu-item>
       </el-menu>

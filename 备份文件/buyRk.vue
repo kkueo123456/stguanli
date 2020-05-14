@@ -1,15 +1,15 @@
 <template >
-  <!-- 采购人员看的全部订单及详情 -->
+  <!-- 采购入库 -->
   <div>
-    <!-- 订单头部填写订单 -->
+    <!-- 采购入库头部填写订单 -->
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
-          <dingdan></dingdan>
+          <el-button type="primary" @click="Warehouse">批量入库</el-button>
         </div>
       </div>
     </div>
-    <!-- 补全信息头部下方下拉菜单及查找 -->
+    <!-- 采购入库头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -27,7 +27,7 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <!-- 补全信息头部下方日期下拉列表 -->
+        <!-- 采购入库头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
             <el-date-picker
@@ -47,31 +47,66 @@
         <el-button type="primary" @click="checkall">查看全部</el-button>
       </div>
     </div>
-    <!-- 补全信息主体内容 -->
+    <!-- 采购入库主体内容 -->
     <div class="main">
-      <!-- 补全信息主体内容列表 -->
-      <div class="tabMain">
-        <el-table :data="data" border>
-          <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
-          <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
-          <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
-          <el-table-column prop="kuan" label="款式" :span="2"></el-table-column>
-          <el-table-column prop="color" label="成色" :span="2"></el-table-column>
-          <el-table-column prop="num" label="编号" :span="2"></el-table-column>
-          <el-table-column prop="man" label="采购员" :span="2"></el-table-column>
-          <el-table-column prop="cangwei" label="仓位" :span="2"></el-table-column>
-          <el-table-column prop="finPri" label="指导价格" :span="2"></el-table-column>
-          <el-table-column label="调拨日期" :span="2">
-            <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
-          </el-table-column>
-          <el-table-column fixed="right" label="操作" width="150" :span="2">
-            <template slot-scope="scope">
-              <el-button type="text" @click="upDate(scope.row.id)">编辑</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+      <!-- 采购入库主体内容列表 -->
+      <div class="list" v-for="(item,index) in data" :key="index">
+        <!-- 主体内容列表左 -->
+        <div class="mainLeft">
+          <!-- 主体内容列表左边图片 -->
+          <div class="leftTu"></div>
+          <!-- 主体内容列表右侧信息 -->
+          <div class="Rightzi">
+            <!-- 主体内容列表右侧标题及下方标签 -->
+            <div class="title">
+              <h2 class="listTit">{{item.name}}</h2>
+              <div class="listBq">
+                <span class="listBqji">{{item.mai}}</span>
+              </div>
+            </div>
+            <!-- 主体内容列表右侧信息头下方商品详细信息 -->
+            <div class="another">
+              <ul class="anotherList">
+                <li class="anotherStyle">品牌:{{item.logo}}</li>
+                <li class="anotherStyle">采购价格:{{item.price}}</li>
+              </ul>
+              <ul class="anotherList">
+                <li class="anotherStyle">系列:{{item.lie}}</li>
+                <li class="anotherStyle">采购时间:{{item.time|timeFilter}}</li>
+              </ul>
+              <ul class="anotherList">
+                <li class="anotherStyle">款式:{{item.kuan}}</li>
+                <li class="anotherStyle">成色:{{item.color}}</li>
+              </ul>
+              <ul class="anotherList">
+                <li class="anotherStyle">采购员:{{item.num}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- 主体内容列表右 -->
+        <div class="mainRight">
+          <div class="bianji" @click="ruku(item.id)">入库</div>
+          <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+          >
+            <span>这是一段信息</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogSure">确 定</el-button>
+            </span>
+          </el-dialog>
+          <h4
+            class="dingPri"
+            :style="{color:'#ccc'}"
+            v-if="(item.zt=='已退回')||(item.zt=='未鉴定')"
+          >销售定价:未定价</h4>
+          <h4 class="dingPri" v-if="(item.zt=='已售出')||(item.zt=='入库在售')">销售定价:{{item.finPri}}</h4>
+        </div>
       </div>
-      <!-- 补全信息内容下方分页功能 -->
+      <!-- 采购入库内容下方分页功能 -->
       <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
@@ -96,18 +131,6 @@ export default {
         {
           value: "1",
           label: "双皮奶"
-        },
-        {
-          value: "2",
-          label: "蚵仔煎"
-        },
-        {
-          value: "3",
-          label: "龙须面龙须面"
-        },
-        {
-          value: "4",
-          label: "北京烤鸭"
         }
       ],
       value: "0",
@@ -124,10 +147,9 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "",
+          finPri: "120000",
           id: "0",
-          zt: "未鉴定",
-          man:'蒲子杰'
+          zt: "未鉴定"
         },
         {
           img: "",
@@ -141,10 +163,9 @@ export default {
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
-          finPri: "",
+          finPri: "120000",
           id: "1",
-          zt: "已退回",
-          man:'蒲子杰'
+          zt: "已退回"
         },
         {
           img: "",
@@ -160,8 +181,7 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "2",
-          zt: "未鉴定",
-          man:'蒲子杰'
+          zt: "未鉴定"
         },
         {
           img: "",
@@ -177,8 +197,7 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "2",
-          zt: "入库在售",
-          man:'蒲子杰'
+          zt: "入库在售"
         }
       ],
       pickerOptions: {
@@ -214,7 +233,11 @@ export default {
       },
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
-      isAdmin: ""
+
+      isAdmin: "",
+      /*入库弹出的dialog及需要的id*/
+      dialogId:'',
+      dialogVisible:false 
     };
   },
   methods: {
@@ -225,9 +248,7 @@ export default {
     changeye(val) {
       console.log(val);
     },
-    upDate(id) {
-      this.$router.push("/buquan");
-    },
+ 
     checkall() {
       console.log(this.value2);
     },
@@ -239,7 +260,22 @@ export default {
       this.value1 = "";
       this.value = "0";
     },
+    /*入库按钮*/ 
+    ruku(id) {
+      this.dialogVisible=true
+      this.dialogId=id
+    },
+    /*入库确定*/ 
+    dialogSure(){
+      this.dialogVisible=false
+      console.log(this.dialogId)
+    },
+    /*批量入库*/ 
+    Warehouse() {
+      console.log("批量");
+    }
   },
+
   mounted() {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
@@ -305,21 +341,77 @@ export default {
   padding-left: 16px;
   padding-right: 20px;
   padding-bottom: 20px;
-  height: 100%;
-  padding-top: 50px;
 }
-/* 表格样式 */
-.tabMain /deep/ .el-table thead {
+/* 下拉菜单下方主题样式列表 */
+.main .list {
+  padding-top: 40px;
+  border-bottom: 1px solid #019997;
+  padding-bottom: 30px;
+}
+/* 下拉菜单下方主题样式列表左侧图片 */
+
+.main .list .leftTu {
+  margin-left: 20px;
+  width: 130px;
+  height: 125px;
+  background-color: tomato;
+  margin-right: 20px;
+}
+.mainLeft {
+  display: flex;
+}
+.list {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* 下拉菜单下方主题样式列表标题 */
+.listTit {
+  font-size: 18px;
   color: #019997;
+  margin-right: 20px;
+  margin-bottom: 10px;
 }
-.tabMain /deep/ .el-table th.is-leaf {
+.title .listBq .listBqji {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  margin-bottom: 25px;
   text-align: center;
+  color: white;
+  background-color: #169bd5;
 }
-.tabMain /deep/ .el-table td {
-  text-align: center;
+/* 下拉菜单下方主题样式列表下方信息*/
+.another {
+  display: flex;
 }
-.pages {
-  text-align: center;
-  margin-top: 100px;
+.another .anotherStyle {
+  color: #606060;
+  font-size: 13px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+/* 下拉菜单下方主题样式列表右侧 */
+.mainRight {
+  position: absolute;
+  right: 0;
+  bottom: 40px;
+}
+/* 右侧状态样式 */
+.mainRight .dingPri {
+  color: #588cfe;
+  font-size: 18px;
+  text-align: right;
+}
+/* 右侧编辑 */
+.bianji {
+  font-size: 16px;
+  color: red;
+  text-align: right;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 </style>

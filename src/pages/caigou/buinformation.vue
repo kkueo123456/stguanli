@@ -304,6 +304,7 @@
           <span>采购员：王小明</span>
           <div>
             <button class="tijiao">申请入库</button>
+            <button class="zancun">暂存</button>
             <button class="tuihui">取消退回</button>
           </div>
         </div>
@@ -558,5 +559,8 @@ export default {
 }
 .footer .tuihui {
   background-color: #4b4b4b;
+}
+.footer .zancun{
+  background-color:rgb(239, 156, 0) ;
 }
 </style>

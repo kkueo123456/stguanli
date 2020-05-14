@@ -1,15 +1,20 @@
-<template >
-  <!-- 采购人员看的全部订单及详情 -->
+<template>
   <div>
-    <!-- 订单头部填写订单 -->
+    <!-- 库房头部搜索及功能 -->
     <div class="head">
       <div class="headLeft">
         <div class="rongqi">
-          <dingdan></dingdan>
+          <el-input placeholder="请输入货品编号" v-model="search" clearable></el-input>
+        </div>
+        <div class="rongqi">
+          <el-button type="primary" @click="headSearch">搜索</el-button>
+        </div>
+        <div class="rongqi">
+          <el-button type="primary">扫码</el-button>
         </div>
       </div>
     </div>
-    <!-- 采购头部下方下拉菜单及查找 -->
+    <!-- 库房头部下方下栏菜单及品牌筛选 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -27,28 +32,33 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <!-- 采购头部下方日期下拉列表 -->
+        <div class="slect">
+          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
+        </div>
         <div class="slect">
           <div class="block">
             <el-date-picker
               v-model="value2"
               type="datetimerange"
-              :picker-options="pickerOptions"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               align="right"
+              @change="timePicker"
             ></el-date-picker>
           </div>
         </div>
       </div>
       <div class="navRight">
-        <el-button type="primary" @click="checkall">查看全部</el-button>
+        <el-button type="primary" @click="navclear">清空</el-button>
+        <el-button type="primary" @click="navFind">品牌筛选</el-button>
       </div>
     </div>
-    <!-- 采购主体内容 -->
+    <!-- 库房主体内容 -->
     <div class="main">
-      <!-- 采购主体内容列表 -->
+      <!-- 库房主体内容列表 -->
       <div class="list" v-for="(item,index) in data" :key="index">
         <!-- 主体内容列表左 -->
         <div class="mainLeft">
@@ -56,9 +66,12 @@
           <div class="leftTu"></div>
           <!-- 主体内容列表右侧信息 -->
           <div class="Rightzi">
-            <!-- 主体内容列表右侧标题及下方标签 -->
+            <!-- 主体内容列表右侧标题及相应标签 -->
             <div class="title">
               <h2 class="listTit">{{item.name}}</h2>
+              <!-- <div class="biaoqianList">
+                <span class="biaoqian" v-for="(item2,index) in item.biaoqian" :key="index">{{item2}}</span>
+              </div>-->
               <div class="listBq">
                 <span class="listBqji">{{item.mai}}</span>
               </div>
@@ -67,59 +80,44 @@
             <div class="another">
               <ul class="anotherList">
                 <li class="anotherStyle">品牌:{{item.logo}}</li>
-                <li class="anotherStyle">采购价格:{{item.price}}</li>
+                <li class="anotherStyle">入库价格:{{item.price}}</li>
               </ul>
               <ul class="anotherList">
                 <li class="anotherStyle">系列:{{item.lie}}</li>
-                <li class="anotherStyle">采购时间:{{item.time|timeFilter}}</li>
+                <li class="anotherStyle">入库时间:{{item.time|timeFilter}}</li>
               </ul>
               <ul class="anotherList">
                 <li class="anotherStyle">款式:{{item.kuan}}</li>
-                <li class="anotherStyle">成色:{{item.color}}</li>
+                <li class="anotherStyle">仓位:{{item.cangwei}}</li>
               </ul>
               <ul class="anotherList">
-                <li class="anotherStyle">采购员:{{item.num}}</li>
+                <li class="anotherStyle">成色:{{item.color}}</li>
+                <li class="anotherStyle">编号:{{item.num}}</li>
               </ul>
             </div>
           </div>
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-          <div class="dialogJudge" v-if="item.zt!='已退回'">
-            <el-button type="text" @click="ruku">入库</el-button>
-            <el-button type="text" @click="willBack(item.id)">退回</el-button>
-            <el-dialog title="退回" :visible.sync="dialogJudge" width="30%">
-              <span>确定退回？</span>
-              <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogJudge = false">取 消</el-button>
-                <el-button type="primary" @click="confirmBack">确 定</el-button>
-              </span>
-            </el-dialog>
+          <!-- 出库及dialog -->
+          <h4 class="mainRight-ck" @click="chakan(item.id)">查看</h4>
+          <!-- 出库下方编辑与查看 -->
+          <div class="mainRightTop">
+            <div class="detail">商品售出</div>
           </div>
-          <div class="bianji" v-if="(item.zt=='未鉴定')" @click="upDate(item.id)">编辑</div>
-          <!-- 编辑里的表单 -->
-          <div class="zhuangtai" v-if="(item.zt!='已售出')">{{item.zt}}</div>
-          <div class="zhuangtai" :style="{color:'red'}" v-if="(item.zt=='已售出')">已售出：{{item.finPri}}</div>
-          <h4
-            class="dingPri"
-            :style="{color:'#ccc'}"
-            v-if="(item.zt=='已退回')||(item.zt=='未鉴定')"
-          >销售定价:未定价</h4>
-          <h4 class="dingPri" v-if="(item.zt=='已售出')||(item.zt=='入库在售')">销售定价:{{item.finPri}}</h4>
+          <h4 class="dingPri">出口时间:{{item.time}}</h4>
         </div>
       </div>
-      <!-- 采购主体内容下方分页功能 -->
+      <!-- 库房主体内容下方分页功能 -->
       <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
 </template>
 <script>
-import fenye from "../components/fenye";
-import dingdan from "../components/dingdan";
+import fenye from "../../components/fenye";
 export default {
   props: [],
   components: {
-    dingdan,
     fenye
   },
   data() {
@@ -128,23 +126,23 @@ export default {
       options: [
         {
           value: "0",
-          label: "全部渠道"
+          label: "唐山总仓"
         },
         {
           value: "1",
-          label: "双皮奶"
+          label: "北京总仓"
         },
         {
           value: "2",
-          label: "蚵仔煎"
+          label: "上海总仓"
         },
         {
           value: "3",
-          label: "龙须面龙须面"
+          label: "河北总仓"
         },
         {
           value: "4",
-          label: "北京烤鸭"
+          label: "天津总仓"
         }
       ],
       value: "0",
@@ -158,12 +156,12 @@ export default {
           lie: "pallas传奇",
           kuan: "Palla clutch",
           time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
+          cangwei: "上海总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
           id: "0",
-          zt: "未鉴定"
+          cw: "2"
         },
         {
           img: "",
@@ -179,7 +177,7 @@ export default {
           num: "12345678909123",
           finPri: "120000",
           id: "1",
-          zt: "已退回"
+          cw: "0"
         },
         {
           img: "",
@@ -190,105 +188,71 @@ export default {
           lie: "pallas传奇",
           kuan: "Palla clutch",
           time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
+          cangwei: "北京总仓/C-1-20",
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
           id: "2",
-          zt: "未鉴定"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "2",
-          zt: "入库在售"
+          cw: "1"
         }
       ],
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: "最近一周",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近一个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近三个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
-      },
+      /*选择日期*/
+
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
-      isAdmin: "",
-      dialogFormVisible: false,
-      dialogJudge: false
+      value3: "",
+      value4: "",
     };
   },
   methods: {
     gai() {
-      console.log(this.value);
+      var arr = this.data.filter((item, index) => {
+        if (item.cw == this.value) {
+          return item;
+        }
+      });
     },
+    /*头部搜索按钮*/
+    headSearch() {
+      console.log("搜索");
+    },
+    /*时间选择器*/
+    timePicker() {
+      console.log(this.value2);
+    },
+    /*清空*/
+
+    navclear() {
+      this.search = "";
+      this.value2 = "";
+      this.value1 = "";
+      this.value = "0";
+    },
+    /*导航查找*/
+    navFind() {
+      console.log(this.value2, "查找");
+    },
+    // handleCurrentChange(val) {
+    //   console.log(val);
+    // },
+    /*翻页功能*/
 
     changeye(val) {
       console.log(val);
     },
-    upDate(id) {
-      this.dialogFormVisible = true;
-    },
-    checkall() {
-      console.log(this.value2);
-    },
-    /*将要退回*/
-
-    willBack(id) {
-      this.dialogJudge = true;
-    },
-    /*确认退回*/
-
-    confirmBack() {
-      this.dialogJudge = false;
-      console.log("退回");
-    },
-    ruku() {
-      console.log("入库");
+    /*查看*/
+    chakan(id) {
+      this.$router.push("/detail?id=" + id);
     }
   },
   mounted() {},
+  watch: {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin == 0) {
       next();
     }
   },
-  watch: {},
   computed: {}
 };
 </script>
@@ -298,10 +262,23 @@ export default {
   width: 100%;
   height: 60px;
   padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.head .headLeft {
+  display: flex;
+  justify-content: space-between;
+  width: 460px;
+}
+.headLeft .el-input--suffix /deep/ .el-input__inner {
+  width: 275px;
+  border-radius: 18px;
+  border: 1px solid #019997;
 }
 .headLeft .rongqi .el-button--primary {
   background-color: #019997;
   border-color: #019997;
+  border-radius: 12px;
 }
 
 /* 头部下方下拉菜单等样式 */
@@ -310,17 +287,17 @@ export default {
   border-radius: 10px;
   background-color: white;
   padding-top: 20px;
-  padding-left: 20px;
+  padding-left: 5px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
 }
 .slect {
-  width: 148px;
+  margin-right: 10px;
 }
 .slect #inputselect {
-  width: 145px;
-  height: 30px;
+  width: 120px;
+  height: 38px;
   border: 1px solid #019997;
 }
 .navLeft {
@@ -329,9 +306,10 @@ export default {
 }
 .navLeft /deep/ .el-input__inner {
   border: 1px solid #019997;
+  width: 320px;
 }
 .navRight {
-  padding-right: 20px;
+  padding-right: 10px;
 }
 .navRight .el-button--primary {
   background-color: #019997;
@@ -345,7 +323,6 @@ export default {
   padding-right: 20px;
   padding-bottom: 20px;
 }
-/* 下拉菜单下方主题样式列表 */
 .main .list {
   padding-top: 40px;
   border-bottom: 1px solid #019997;
@@ -363,13 +340,11 @@ export default {
 .mainLeft {
   display: flex;
 }
+/* 下拉菜单下方主题样式列表标题 */
 .list {
   display: flex;
   justify-content: space-between;
-  position: relative;
 }
-
-/* 下拉菜单下方主题样式列表标题 */
 .listTit {
   font-size: 18px;
   color: #019997;
@@ -386,47 +361,62 @@ export default {
   color: white;
   background-color: #169bd5;
 }
+
+/* .biaoqianList .biaoqian {
+  display: inline-block;
+  width: 55px;
+  height: 20px;
+  border: 1px solid red;
+  color: red;
+  margin-right: 15px;
+  text-align: center;
+  line-height: 20px;
+} */
 /* 下拉菜单下方主题样式列表下方信息*/
 .another {
   display: flex;
 }
+.another .anotherList {
+  margin-right: 20px;
+}
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
-  margin-right: 20px;
   margin-bottom: 10px;
   white-space: nowrap;
 }
 /* 下拉菜单下方主题样式列表右侧 */
+
 .mainRight {
-  position: absolute;
-  right: 0;
-  bottom: 40px;
+  padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-top: 20px;
 }
-/* 右侧上方入库与退回 */
-.dialogJudge{
-  text-align: right;
+.mainRightTop {
+  display: flex;
+  justify-content: flex-end;
 }
-.dialogJudge /deep/ .el-dialog{
-  text-align: left;
-}
-/* 右侧状态样式 */
-.mainRight .zhuangtai {
-  font-size: 18px;
-  color: black;
-  margin-bottom: 10px;
-  text-align: right;
-}
-.mainRight .dingPri {
-  color: #588cfe;
-  font-size: 18px;
-  text-align: right;
-}
-/* 右侧编辑 */
-.bianji {
-  font-size: 18px;
-  color: #588cfe;
+.mainRight .detail {
+  margin-bottom: 15px;
   text-align: right;
   cursor: pointer;
+  margin-left: 10px;
+}
+
+.mainRight .dingPri {
+  color: red;
+  font-size: 18px;
+}
+.mainRight .mainRight-ck {
+  color: #35a3d8;
+  font-weight: normal;
+  text-align: end;
+  cursor: pointer;
+}
+.pages {
+  text-align: center;
+  margin-top: 100px;
 }
 </style>
