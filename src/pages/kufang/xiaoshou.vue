@@ -35,7 +35,7 @@
       </div>
       <div class="navRight">
         <el-button type="primary" @click="navclear">清空</el-button>
-        <el-button type="primary" @click="navFind">查看全部</el-button>
+        <el-button type="primary" @click="navFind">搜索</el-button>
       </div>
     </div>
     <!-- 库房主体内容 -->
@@ -49,6 +49,7 @@
             <span>销售时间:{{item.xstime}}</span>
           </div>
           <div class="listTit-right">
+            <el-button type="text" @click="del(item.xsid)" style="color:red">作废</el-button>
             <el-button type="text" @click="checkDing(item.xsid)">查看订单</el-button>
             <el-button type="text" @click="allchuku(index)">批量出库</el-button>
           </div>
@@ -265,9 +266,16 @@ export default {
     // handleCurrentChange(val) {
     //   console.log(val);
     // },
+    //作废
+    del(id) {
+      this.$message({
+        message: "已作废",
+        type: "error"
+      });
+    },
     /*查看订单*/
     checkDing(id) {
-      console.log(id);
+      this.$router.push("/xiaoshouCheck?id="+id);
     },
     /*批量出库*/
     allchuku(index) {
@@ -287,7 +295,7 @@ export default {
   watch: {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1) {
       next();
     }
   },

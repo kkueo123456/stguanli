@@ -6,10 +6,10 @@
           <span>盛唐库存管理系统</span>
         </h3>
         <div class="center">
-          <el-input v-model="user.name" placeholder="请输入用户名" clearable class="elinput"></el-input>
+          <el-input v-model="user.loginName" placeholder="请输入用户名" clearable class="elinput"></el-input>
         </div>
         <div class="center">
-          <el-input v-model="user.pass" placeholder="请输入密码" show-password clearable></el-input>
+          <el-input v-model="user.password" placeholder="请输入密码" show-password clearable></el-input>
         </div>
         <div class="center">
           <div class="login">
@@ -21,30 +21,47 @@
   </div>
 </template>
 <script>
-import API from '../util/api'
+import API from "../util/api";
 export default {
   props: [],
   components: {},
   data() {
     return {
       user: {
-        name: "", //账号
-        pass: "" //密码
+        loginName: "", //账号
+        password: "" //密码
       },
-      isAdmin:0
+      isAdmin: 0
     };
   },
   methods: {
     login() {
-      // this.$axios({
-      //   url:API.login,
-      //   method:"post",
-      //   params:this.user
-      // }).then(res=>{
-      //   console.log(res)
-      // })
-      this.$router.push('/index')
-      localStorage.setItem('isAdmin',this.isAdmin)
+      this.$axios({
+        url: API.login,
+        method: "post",
+        params: this.user
+      })
+        .then(res => {
+          if (res.Status=="y") {
+            this.isAdmin = res.Data[0].RoleId;
+            localStorage.setItem("isAdmin", this.isAdmin);
+            this.$router.push("/index");
+            this.$message({
+              message: res.Msg,
+              type: "success"
+            });
+          } else {
+            this.$message({
+              message: res.Msg,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err.Msg);
+        });
+      // this.$router.push('/index')
+      // localStorage.setItem("isAdmin", this.isAdmin);
     }
   },
   mounted() {},
@@ -68,7 +85,7 @@ export default {
 }
 .tit span {
   font-size: 45px;
-  letter-spacing:5px;
+  letter-spacing: 5px;
   color: #019997;
 }
 .con {

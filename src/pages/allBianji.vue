@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-header>补全信息</el-header>
+    <el-header>编辑订单</el-header>
     <el-main>
       <div class="layout">
         <!-- 填写订单头部 -->
@@ -8,7 +8,6 @@
           <div class="choose">
             <el-radio v-model="radio" label="1">自主采购</el-radio>
             <el-radio v-model="radio" label="2">客户寄卖</el-radio>
-            <el-radio v-model="radio" label="3">全新商品</el-radio>
           </div>
           <div class="headBottom">
             <div class="rongqi">
@@ -303,7 +302,7 @@
         <div class="footer">
           <span>采购员：王小明</span>
           <div>
-            <button class="tijiao">申请入库</button>
+            <button class="tijiao">提交订单</button>
             <button class="zancun">暂存</button>
             <button class="tuihui">取消退回</button>
           </div>

@@ -24,7 +24,7 @@
       </div>
       <div class="headRight">
         <div class="rongqi">
-          <el-button type="primary">+销售定价+</el-button>
+          <el-button type="primary" @click="jumpSellDing">+销售定价+</el-button>
         </div>
       </div>
     </div>
@@ -163,7 +163,10 @@ export default {
     headSearch() {
       console.log(this.search);
     },
-
+    //销售定价
+    jumpSellDing(){
+        this.$router.push('/sellDing')
+    },
     /*查看信息*/
     detail(id) {
       this.$router.push("/detail?id=" + id);
@@ -192,7 +195,7 @@ export default {
   watch: {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1) {
       next();
     }
   },
@@ -317,7 +320,7 @@ export default {
 .mainRight .dingPri {
   color: #588cfe;
   font-size: 18px;
-  text-align: right;
+  text-align: center;
   margin-top: 25px;
 }
 

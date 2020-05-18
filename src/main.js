@@ -13,23 +13,26 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 //全局过滤器
 import filters from "./filter/index"
-for(var i in filters){
-  Vue.filter(i,filters[i])
+for (var i in filters) {
+  Vue.filter(i, filters[i])
 }
 //挂载store
 import store from './store/index'
 //axios
 import axios from 'axios'
-axios.interceptors.response.use(res=>{
-  console.log("---"+res.config.url+"--------")
-  console.log(res.data);
+axios.interceptors.response.use(res => {
+  console.log("---" + res.config.url + "--------")
+  console.log(res.data)
+  if (res.data.data == -1) {
+    router.push('/login')
+  }
   return res.data;
 })
-Vue.prototype.$axios=axios;
+Vue.prototype.$axios = axios;
 Vue.config.productionTip = false
 //  导入excel插件
-import XLSX from 'xlsx'
-Vue.prototype.XLSX = XLSX
+import XLSX from 'xlsx'
+Vue.prototype.XLSX = XLSX
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

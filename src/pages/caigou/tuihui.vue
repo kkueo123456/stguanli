@@ -33,7 +33,6 @@
             <el-date-picker
               v-model="value2"
               type="datetimerange"
-              :picker-options="pickerOptions"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
@@ -44,7 +43,7 @@
       </div>
       <div class="navRight">
         <el-button type="primary" @click="navclear">清空</el-button>
-        <el-button type="primary" @click="checkall">查看全部</el-button>
+        <el-button type="primary" @click="checkall">搜索</el-button>
       </div>
     </div>
     <!-- 退回主体内容 -->
@@ -62,9 +61,7 @@
           <el-table-column label="调拨日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
-          <el-table-column  prop="zt" fixed="right" label="状态" :span="2">
-        
-          </el-table-column>
+          <el-table-column prop="zt" fixed="right" label="状态" :span="2"></el-table-column>
         </el-table>
       </div>
       <!-- 退回主体内容下方分页功能 -->
@@ -177,37 +174,9 @@ export default {
           mai: "寄"
         }
       ],
-      pickerOptions: {
-        shortcuts: [
-          {
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
-      },
+      
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-      value2: "",
-    
+      value2: ""
     };
   },
   methods: {
@@ -239,6 +208,12 @@ export default {
     }
   },
   mounted() {},
+  beforeRouteEnter(to, from, next) {
+    let isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin == 1 || isAdmin == 3) {
+      next();
+    }
+  },
   watch: {},
   computed: {}
 };

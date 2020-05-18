@@ -23,6 +23,25 @@
         </div>
         <div class="rongqi">
           <el-button type="primary" @click="pandian">盘点</el-button>
+          <el-dialog
+            title="请选择仓位"
+            :visible.sync="pandianDialog"
+            width="30%"
+            :modal-append-to-body="false"
+          >
+            <el-select v-model="Cangvalue" placeholder="请选择">
+              <el-option
+                v-for="item in Cangoption"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="pandianDialog = false">取 消</el-button>
+              <el-button type="primary" @click="CangdialogSure">确 定</el-button>
+            </span>
+          </el-dialog>
         </div>
       </div>
     </div>
@@ -89,7 +108,7 @@
           <el-table-column label="调拨日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="200" :span="2">
+          <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
               <el-button type="text" @click="detail(scope.row.id)">查看</el-button>
               <el-button type="text" @click="update(scope.row.id)">编辑</el-button>
@@ -130,6 +149,8 @@ export default {
   data() {
     return {
       search: "",
+      //盘点的选择仓位
+      pandianDialog: false,
       options: [
         {
           value: "0",
@@ -142,16 +163,21 @@ export default {
         {
           value: "2",
           label: "吉尔吉斯斯坦总仓"
-        },
-        {
-          value: "3",
-          label: "河北总仓"
-        },
-        {
-          value: "4",
-          label: "天津总仓"
         }
       ],
+      /*下拉选择仓位*/
+
+      Cangoption: [
+        {
+          value: "0",
+          label: "唐山丰润仓"
+        },
+        {
+          value: "1",
+          label: "唐山开平仓"
+        }
+      ],
+      Cangvalue: "0",
       value: "0",
       data: [
         {
@@ -204,7 +230,6 @@ export default {
         }
       ],
       /*选择日期*/
-
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
       value3: "",
@@ -214,7 +239,6 @@ export default {
       centerDialogVisible: false,
       chukuid: "",
       /*选择出库原因*/
-
       chukuRadio: ""
     };
   },
@@ -237,11 +261,17 @@ export default {
     },
     /*头部右侧调拨*/
     diao() {
-      console.log("调拨");
+      this.$router.push("/diaoboPage");
     },
     /*头部右侧盘点*/
     pandian() {
-      this.$router.push('/pandian')
+      this.pandianDialog = true;
+    },
+    //盘点仓位选择确定
+    CangdialogSure() {
+      console.log(this.Cangvalue);
+      this.pandianDialog = false;
+      this.$router.push("/pandian?value=" + this.Cangvalue);
     },
     /*时间选择器*/
     timePicker() {
@@ -273,7 +303,7 @@ export default {
       console.log(val);
     },
     update(id) {
-      console.log("编辑");
+      this.$router.push("/allBianji");
     },
     /*出库*/
     chuku(id) {
@@ -290,7 +320,7 @@ export default {
   watch: {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1) {
       next();
     }
   },

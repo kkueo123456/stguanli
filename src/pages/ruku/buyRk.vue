@@ -4,9 +4,10 @@
     <!-- 采购入库头部填写订单 -->
     <div class="head">
       <div class="headLeft">
-        <div class="rongqi">
+        <!-- <div class="rongqi">
           <el-button type="primary" @click="Warehouse">批量入库</el-button>
-        </div>
+        </div> -->
+        <v-pi :isShow='isShow' @xuanCang='Warehouse'></v-pi>
       </div>
     </div>
     <!-- 采购入库头部下方下拉菜单及查找 -->
@@ -33,7 +34,6 @@
             <el-date-picker
               v-model="value2"
               type="datetimerange"
-              :picker-options="pickerOptions"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
@@ -44,7 +44,7 @@
       </div>
       <div class="navRight">
         <el-button type="primary" @click="navclear">清空</el-button>
-        <el-button type="primary" @click="checkall">查看全部</el-button>
+        <el-button type="primary" @click="checkall">搜索</el-button>
       </div>
     </div>
     <!-- 采购入库主体内容 -->
@@ -62,11 +62,12 @@
           <el-table-column label="销售日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作"  :span="2">
+          <el-table-column fixed="right" label="操作" :span="2">
             <template slot-scope="scope">
               <el-button type="text" @click="ruku(scope.row.id)">入库</el-button>
+              <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button>
               <el-dialog
-                title="提示"
+                title="请选择仓位"
                 :visible.sync="dialogVisible"
                 width="30%"
                 :modal-append-to-body="false"
@@ -96,15 +97,21 @@
 <script>
 import fenye from "../../components/fenye";
 import dingdan from "../../components/dingdan";
+import vPi from '../../components/piRuku'
 export default {
   props: [],
   components: {
     dingdan,
-    fenye
+    fenye,
+    vPi
   },
   data() {
     return {
       search: "",
+      //批量入库弹框
+      isShow:{
+        show:false
+      },
       options: [
         {
           value: "0",
@@ -116,19 +123,21 @@ export default {
         }
       ],
       value: "0",
-      /*下拉选择仓位*/ 
-      Cangoption:[
-         {
+      /*下拉选择仓位*/
+
+      Cangoption: [
+        {
           value: "0",
           label: "唐山丰润仓"
         },
-          {
+        {
           value: "1",
           label: "唐山开平仓"
-        },
+        }
       ],
-      Cangvalue:'0',
-      /*数据*/ 
+      Cangvalue: "0",
+      /*数据*/
+
       data: [
         {
           img: "",
@@ -195,37 +204,7 @@ export default {
           zt: "入库在售"
         }
       ],
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: "最近一周",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近一个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近三个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
-      },
+      
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
 
@@ -255,6 +234,13 @@ export default {
       this.value1 = "";
       this.value = "0";
     },
+    //作废
+    del(id) {
+      this.$message({
+        message: "已作废",
+        type: "error"
+      });
+    },
     /*入库按钮*/
 
     ruku(id) {
@@ -265,20 +251,20 @@ export default {
 
     dialogSure() {
       this.dialogVisible = false;
-      console.log(this.dialogId,'商品id');
-      console.log(this.Cangvalue,'仓位')
+      console.log(this.dialogId, "商品id");
+      console.log(this.Cangvalue, "仓位");
     },
     /*批量入库*/
 
-    Warehouse() {
-      console.log("批量");
+    Warehouse(val) {
+      console.log(val)
     }
   },
 
   mounted() {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1) {
       next();
     }
   },

@@ -33,7 +33,6 @@
             <el-date-picker
               v-model="value2"
               type="datetimerange"
-              :picker-options="pickerOptions"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
@@ -44,7 +43,7 @@
       </div>
       <div class="navRight">
         <el-button type="primary" @click="navclear">清空</el-button>
-        <el-button type="primary" @click="checkall">查看全部</el-button>
+        <el-button type="primary" @click="checkall">查找</el-button>
       </div>
     </div>
     <!-- 采购主体内容 -->
@@ -59,6 +58,7 @@
           <el-table-column prop="cangwei" label="仓位" :span="2"></el-table-column>
           <el-table-column prop="finPri" label="指导价格" :span="2"></el-table-column>
           <el-table-column prop="price" label="销售定价" :span="2"></el-table-column>
+          <el-table-column prop="dbzt" label="采购状态" :span="2"></el-table-column>
           <el-table-column label="状态" :span="2">
             <template slot-scope="scope">{{scope.row.zt}}</template>
           </el-table-column>
@@ -66,9 +66,9 @@
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="100" :span="2">
-            <el-button type="text" @click="detail(scope.row.id)">查看</el-button>
             <template slot-scope="scope">
-              <el-button type="text" @click="update(scope.row.id)" v-if="scope.row.zt=='已采购'">编辑</el-button>
+              <el-button type="text" @click="update(scope.row.id)" v-if="scope.row.dbzt=='暂存'">编辑</el-button>
+              <el-button type="text" @click="del(scope.row.id)" style="color:red" v-if="scope.row.zt !=='入库在售'">作废</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -129,7 +129,8 @@ export default {
           finPri: "",
           id: "0",
           zt: "未定价",
-          man: "蒲子杰"
+          man: "蒲子杰",
+          dbzt: "已生成"
         },
         {
           img: "",
@@ -146,7 +147,8 @@ export default {
           finPri: "",
           id: "1",
           zt: "已采购",
-          man: "蒲子杰"
+          man: "蒲子杰",
+          dbzt: "暂存"
         },
         {
           img: "",
@@ -163,7 +165,8 @@ export default {
           finPri: "120000",
           id: "2",
           zt: "已采购",
-          man: "蒲子杰"
+          man: "蒲子杰",
+          dbzt: "已生成"
         },
         {
           img: "",
@@ -180,44 +183,14 @@ export default {
           finPri: "120000",
           id: "2",
           zt: "入库在售",
-          man: "蒲子杰"
+          man: "蒲子杰",
+          dbzt: "暂存"
         }
       ],
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: "最近一周",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近一个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近三个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
-      },
+      
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
       isAdmin: "",
-
       dialogJudge: false
     };
   },
@@ -240,12 +213,18 @@ export default {
       this.value1 = "";
       this.value = "0";
     },
+
     // 编辑
     update(id) {
-      this.$router.push('/detail?id='+id)
+      this.$router.push("/allBianji");
     },
-
-
+    // 作废
+    del(id) {
+      this.$message({
+        message: "已作废",
+        type: "error"
+      });
+    },
     /*将要退回*/
     willBack(id) {
       this.dialogJudge = true;
@@ -260,7 +239,7 @@ export default {
   mounted() {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1||isAdmin==3) {
       next();
     }
   },

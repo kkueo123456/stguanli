@@ -33,7 +33,6 @@
             <el-date-picker
               v-model="value2"
               type="datetimerange"
-              :picker-options="pickerOptions"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
@@ -44,7 +43,7 @@
       </div>
       <div class="navRight">
         <el-button type="primary" @click="navclear">清空</el-button>
-        <el-button type="primary" @click="checkall">查看全部</el-button>
+        <el-button type="primary" @click="checkall">搜索</el-button>
       </div>
     </div>
     <!-- 补全信息主体内容 -->
@@ -67,6 +66,7 @@
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
               <el-button type="text" @click="upDate(scope.row.id)">编辑</el-button>
+              <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -127,7 +127,7 @@ export default {
           finPri: "",
           id: "0",
           zt: "未鉴定",
-          man:'蒲子杰'
+          man: "蒲子杰"
         },
         {
           img: "",
@@ -144,7 +144,7 @@ export default {
           finPri: "",
           id: "1",
           zt: "已退回",
-          man:'蒲子杰'
+          man: "蒲子杰"
         },
         {
           img: "",
@@ -161,7 +161,7 @@ export default {
           finPri: "120000",
           id: "2",
           zt: "未鉴定",
-          man:'蒲子杰'
+          man: "蒲子杰"
         },
         {
           img: "",
@@ -178,40 +178,10 @@ export default {
           finPri: "120000",
           id: "2",
           zt: "入库在售",
-          man:'蒲子杰'
+          man: "蒲子杰"
         }
       ],
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: "最近一周",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近一个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近三个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
-      },
+     
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
       isAdmin: ""
@@ -232,18 +202,24 @@ export default {
       console.log(this.value2);
     },
     /*清空*/
-
     navclear() {
       this.search = "";
       this.value2 = "";
       this.value1 = "";
       this.value = "0";
     },
+    //作废
+    del(id) {
+      this.$message({
+        message: "已作废",
+        type: "error"
+      });
+    }
   },
   mounted() {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1||isAdmin==3) {
       next();
     }
   },

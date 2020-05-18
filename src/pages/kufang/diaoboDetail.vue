@@ -226,7 +226,7 @@ export default {
   watch: {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1) {
       next();
     }
   },

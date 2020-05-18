@@ -13,6 +13,9 @@ const detail = () => import("../pages/detail")
 const dingdan = () => import("../pages/dingdan")
 const buinformation = () => import("../pages/caigou/buinformation")
 const pandian = () => import("../pages/pandian")
+//全部的编辑按钮
+const allBianji=()=>import('../pages/allBianji')
+
 /*采购的三极路由*/
 // const allding = () => import("../pages/allDing")
 // const cgtj = () => import("../pages/caigoutongji")
@@ -28,6 +31,9 @@ const buyEnter = () => import("../pages/ruku/buyRk")
 const diaoEnter = () => import("../pages/ruku/diaoRk")
 /*库房的一级路由*/
 const dbDetail = () => import("../pages/kufang/diaoboDetail")
+const diaoboPage = () => import("../pages/kufang/diaoboPage")
+const diaoboEdit = () => import("../pages/kufang/diaoboEdit")
+const xiaoshouCheck=()=>import('../pages/kufang/xiaoshouCheck')
 /*库房的三级路由*/
 const zaiku = () => import("../pages/kufang/zaiku")
 const chukuF = () => import("../pages/kufang/chukuFind")
@@ -36,6 +42,9 @@ const xiaoshou = () => import("../pages/kufang/xiaoshou")
 
 /*销售一级路由*/
 const sellMan = () => import('../pages/xiaoshou/sellMan')
+//销售订单
+const sellDing = () => import('../pages/xiaoshou/sellDingdan')
+
 //销售二级路由
 const goods = () => import('../pages/xiaoshou/goods')
 
@@ -130,9 +139,9 @@ export default new Router({
             {
               path: "goods",
               component: goods
-            },{
-              path:'',
-              redirect:'goods'
+            }, {
+              path: '',
+              redirect: 'goods'
             }
           ]
         },
@@ -173,6 +182,26 @@ export default new Router({
     {
       path: '/pandian',
       component: pandian
+    },
+    {
+      path: '/sellDing',
+      component: sellDing
+    },
+    {
+      path: '/diaoboPage',
+      component:diaoboPage
+    },
+    {
+      path:'/allBianji',
+      component:allBianji
+    },
+    {
+      path:'/xiaoshouCheck',
+      component:xiaoshouCheck
+    },
+    {
+      path:'/diaoboEdit',
+      component:diaoboEdit
     },
     {
       path: "*",

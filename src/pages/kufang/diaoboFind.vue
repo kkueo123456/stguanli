@@ -19,7 +19,6 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-
         <div class="slect">
           <select name="public-choice" v-model="value" id="inputselect" @change="gai">
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
@@ -28,6 +27,15 @@
         <div class="slect">
           <select name="public-choice" v-model="value" id="inputselect" @change="gai">
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
+        </div>
+        <div class="slect">
+          <select name="public-choice" v-model="value2" id="inputselect" @change="gai">
+            <option
+              :value="item.value"
+              v-for="(item,index) in ztoptions"
+              :key="index"
+            >{{item.label}}</option>
           </select>
         </div>
         <div class="slect">
@@ -53,18 +61,22 @@
     <div class="main">
       <div class="tabMain">
         <el-table :data="tabData" border>
-          <el-table-column prop="number" label="调拨单号" :span="2" ></el-table-column>
+          <el-table-column prop="number" label="调拨单号" :span="2"></el-table-column>
           <el-table-column prop="fistCang" label="原始仓" :span="2"></el-table-column>
           <el-table-column prop="finCang" label="接收仓" :span="2"></el-table-column>
           <el-table-column prop="diaoboPerson" label="调拨员" :span="2"></el-table-column>
           <el-table-column prop="rukuPerson" label="入库员" :span="2"></el-table-column>
+          <el-table-column prop="dbzt" label="调拨单状态" :span="2"></el-table-column>
           <el-table-column prop="zhuangtai" label="接收情况" :span="2"></el-table-column>
           <el-table-column label="调拨日期" :span="2">
-          <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
+            <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
               <el-button type="text" @click="look(scope.row.id)">查看</el-button>
+              <el-button type="text" @click="update(scope.row.id)" v-if="scope.row.dbzt=='暂存'">编辑</el-button>
+              <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button>
+
               <!-- <el-button type="text" @click="willDao(scope.row.id)">导出</el-button> -->
             </template>
           </el-table-column>
@@ -98,14 +110,12 @@ export default {
           value: "2",
           label: "上海总仓"
         },
-        {
-          value: "3",
-          label: "河北总仓"
-        },
-        {
-          value: "4",
-          label: "天津总仓"
-        }
+   
+      ],
+      ztoptions: [
+        { value: "0", label: "已生成" },
+        { value: "1", label: "已作废" },
+        { value: "2", label: "暂存" }
       ],
       value: "0",
       /*调拨查询主要数据*/
@@ -114,10 +124,9 @@ export default {
       /*选择日期*/
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-      value2: "",
+      value2: "0",
       value3: "",
-      value4: "",
-
+      value4: ""
     };
   },
   methods: {
@@ -147,7 +156,7 @@ export default {
     look(id) {
       this.$router.push("/dbDetail?id=" + id);
     },
- 
+
     // handleCurrentChange(val) {
     //   console.log(val);
     // },
@@ -156,19 +165,16 @@ export default {
     changeye(val) {
       console.log(val);
     },
-
+    //编辑
     update(id) {
-      console.log("编辑");
+      this.$router.push('/diaoboEdit')
     },
-    /*出库*/
-    chuku(id) {
-      this.centerDialogVisible = true;
-      this.chukuid = id;
-      console.log("出库", id);
-    },
-    sure() {
-      this.centerDialogVisible = false;
-      console.log(this.chukuid, this.chukuRadio);
+    //作废
+    del(id) {
+      this.$message({
+        message: "已作废",
+        type: "error"
+      });
     }
   },
   mounted() {
@@ -181,7 +187,8 @@ export default {
         diaoboPerson: "蒲子杰",
         rukuPerson: "蒲子杰",
         zhuangtai: "正常",
-        time: "1589163916"
+        time: "1589163916",
+        dbzt: "已生成"
       },
       {
         id: "1",
@@ -191,7 +198,8 @@ export default {
         diaoboPerson: "蒲子杰",
         rukuPerson: "蒲子杰",
         zhuangtai: "不正常",
-        time: "1589163916"
+        time: "1589163916",
+        dbzt: "暂存"
       },
       {
         id: "2",
@@ -202,6 +210,7 @@ export default {
         rukuPerson: "蒲子杰",
         zhuangtai: "货运受损严重",
         time: "158916391611",
+        dbzt: "已生成"
       },
       {
         id: "3",
@@ -211,14 +220,15 @@ export default {
         diaoboPerson: "蒲子杰",
         rukuPerson: "蒲子杰",
         zhuangtai: "滋滋滋滋滋",
-        time: "1589163916"
+        time: "1589163916",
+        dbzt: "暂存"
       }
     ];
   },
   watch: {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1) {
       next();
     }
   },

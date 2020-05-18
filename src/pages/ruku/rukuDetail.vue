@@ -6,7 +6,8 @@
       <div class="head">
         <div class="headLeft">
           <div class="rongqi">
-            <el-button type="primary" @click="inKu">+批量入库+</el-button>
+            <!-- <el-button type="primary" @click="inKu">+批量入库+</el-button> -->
+            <v-pi @xuanCang="Warehouse"></v-pi>
             <el-button type="primary" @click="daochuTab">+导出表格+</el-button>
           </div>
         </div>
@@ -75,6 +76,14 @@
           <div class="mainRight">
             <!-- 出库及dialog -->
             <h4 class="mainRight-ck" @click="chakan(item.id)">查看</h4>
+            <h4 class="mainRight-ck" @click="willdont(item.id)" style="color:red">拒收</h4>
+            <el-dialog title="移除" :visible.sync="Dondialog" width="30%">
+              <span>确定移除？</span>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="Dondialog = false">取 消</el-button>
+                <el-button type="primary" @click="confirmDon">确 定</el-button>
+              </span>
+            </el-dialog>
             <!-- 下方销售定价 -->
             <h4 class="dingPri">销售定价:{{item.price}}</h4>
           </div>
@@ -88,12 +97,14 @@
 <script>
 import fenye from "../../components/fenye";
 import vHead from "../../components/head";
+import vPi from "../../components/piRuku";
 
 export default {
   props: [],
   components: {
     fenye,
-    vHead
+    vHead,
+    vPi
   },
   data() {
     return {
@@ -177,7 +188,10 @@ export default {
       /*选择日期*/
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-      value2: ""
+      value2: "",
+      //拒收的dialog和id
+      dontid: "",
+      Dondialog: false
     };
   },
   methods: {
@@ -216,18 +230,18 @@ export default {
       return jsonData.map(v => filterVal.map(j => v[j]));
     },
     /*批量出库*/
-    inKu() {
-      this.$message({
-        message: "入库成功",
-        type: "success"
-      });
-      let data2 = this.data.map(item => {
-        if (item.checked == true) {
-          return item;
-        }
-      });
-      console.log(data2);
-    },
+    // inKu() {
+    //   this.$message({
+    //     message: "入库成功",
+    //     type: "success"
+    //   });
+    //   let data2 = this.data.map(item => {
+    //     if (item.checked == true) {
+    //       return item;
+    //     }
+    //   });
+    //   console.log(data2);
+    // },
     /*全选*/
     allCheck() {
       this.data.forEach(item => {
@@ -241,6 +255,32 @@ export default {
     /*查看*/
     chakan(id) {
       this.$router.push("/detail?id=" + id);
+    },
+    //拒收
+    willdont(id) {
+      this.dontid = id;
+      this.Dondialog = true;
+    },
+    confirmDon() {
+      alert(this.dontid);
+      this.Dondialog = false;
+    },
+    /*批量入库*/
+
+    Warehouse(val) {
+      this.$message({
+        message: "入库成功",
+        type: "success"
+      });
+      let data2 = this.data.map(item => {
+        if (item.checked == true) {
+          return item;
+        }else{
+          return "空"
+        }
+      });
+      console.log('仓位',val)
+      console.log('数据',data2);
     }
   },
   mounted() {
@@ -249,7 +289,7 @@ export default {
   watch: {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1) {
       next();
     }
   },
@@ -270,11 +310,14 @@ export default {
   background-color: #f0f4f4;
   padding-right: 20px;
 }
-
+.headLeft .rongqi {
+  display: flex;
+}
 .headLeft .rongqi .el-button--primary {
   background-color: #019997;
   border-color: #019997;
   width: 200px;
+  margin-left: 20px;
 }
 
 /* 头部下方下拉菜单等样式 */

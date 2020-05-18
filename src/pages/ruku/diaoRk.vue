@@ -2,13 +2,13 @@
   <!-- 采购人员看的全部订单及详情 -->
   <div>
     <!-- 订单头部填写订单 -->
-    <div class="head">
+    <!-- <div class="head">
       <div class="headLeft">
         <div class="rongqi">
           <el-button type="primary" @click="Warehouse">批量入库</el-button>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- 补全信息头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
@@ -33,7 +33,6 @@
             <el-date-picker
               v-model="value2"
               type="datetimerange"
-              :picker-options="pickerOptions"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
@@ -44,7 +43,7 @@
       </div>
       <div class="navRight">
         <el-button type="primary" @click="navclear">清空</el-button>
-        <el-button type="primary" @click="checkall">查看全部</el-button>
+        <el-button type="primary" @click="checkall">搜索</el-button>
       </div>
     </div>
     <div class="main">
@@ -59,9 +58,10 @@
           <el-table-column label="调拨日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作"  :span="2">
+          <el-table-column fixed="right" label="操作" :span="2">
             <template slot-scope="scope">
               <el-button type="text" @click="look(scope.row.id)">查看</el-button>
+              <el-button type="text" @click="del(scope.row.id)" style="color:red" >作废</el-button>
               <!-- <el-button type="text" @click="willDao(scope.row.id)">导出</el-button> -->
             </template>
           </el-table-column>
@@ -107,42 +107,13 @@ export default {
         }
       ],
       value: "0",
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: "最近一周",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近一个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近三个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
-      },
+      
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
       isAdmin: "",
-      /*表单中的信息*/ 
-      tabData:[]
+      /*表单中的信息*/
+      tabData: [],
+    
     };
   },
   methods: {
@@ -166,8 +137,15 @@ export default {
     Warehouse() {
       console.log("入库");
     },
-    look(id){
-       this.$router.push('/rkdetail?id='+id)
+    look(id) {
+      this.$router.push("/rkdetail?id=" + id);
+    },
+    //作废
+    del(id) {
+      this.$message({
+        message: "已作废",
+        type: "error"
+      });
     }
   },
   mounted() {
@@ -200,7 +178,7 @@ export default {
         diaoboPerson: "蒲子杰",
         rukuPerson: "蒲子杰",
         zhuangtai: "货运受损严重",
-        time: "158916391611",
+        time: "158916391611"
       },
       {
         id: "3",
@@ -216,7 +194,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 0) {
+    if (isAdmin == 1) {
       next();
     }
   },
