@@ -77,8 +77,8 @@
             <!-- 出库及dialog -->
             <h4 class="mainRight-ck" @click="chakan(item.id)">查看</h4>
             <h4 class="mainRight-ck" @click="willdont(item.id)" style="color:red">拒收</h4>
-            <el-dialog title="移除" :visible.sync="Dondialog" width="30%">
-              <span>确定移除？</span>
+            <el-dialog title="拒收" :visible.sync="Dondialog" width="30%">
+              <span>确定拒收？</span>
               <span slot="footer" class="dialog-footer">
                 <el-button @click="Dondialog = false">取 消</el-button>
                 <el-button type="primary" @click="confirmDon">确 定</el-button>

@@ -29,14 +29,10 @@
             width="30%"
             :modal-append-to-body="false"
           >
-            <el-select v-model="Cangvalue" placeholder="请选择">
-              <el-option
-                v-for="item in Cangoption"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
+            <div class="block">
+              <span class="demonstration">选择仓位</span>
+              <el-cascader :options="Cangoption" :props="{ multiple: true }" v-model="Cangvalue" clearable></el-cascader>
+            </div>
             <span slot="footer" class="dialog-footer">
               <el-button @click="pandianDialog = false">取 消</el-button>
               <el-button type="primary" @click="CangdialogSure">确 定</el-button>
@@ -165,19 +161,38 @@ export default {
           label: "吉尔吉斯斯坦总仓"
         }
       ],
-      /*下拉选择仓位*/
+      /*下拉选择仓位多选*/
 
       Cangoption: [
         {
           value: "0",
-          label: "唐山丰润仓"
+          label: "唐山丰润仓",
+          children: [
+              { value: "0-1", label: '丰润a仓' },
+              { value: "0-2", label: '丰润b仓' },
+              { value: "0-3", label: '丰润c仓' }
+            ]
+        },
+      {
+          value: "1",
+          label: "唐山开平",
+          children: [
+              { value: "1-1", label: '开平a仓' },
+              { value: "1-2", label: '开平b仓' },
+              { value: "1-3", label: '开平c仓' }
+            ]
         },
         {
-          value: "1",
-          label: "唐山开平仓"
+          value: "2",
+          label: "北京朝阳",
+          children: [
+              { value: "2-1", label: '朝阳a仓' },
+              { value: "2-2", label: '朝阳b仓' },
+              { value: "2-3", label: '朝阳c仓' }
+            ]
         }
       ],
-      Cangvalue: "0",
+      Cangvalue:'0',
       value: "0",
       data: [
         {
@@ -269,7 +284,7 @@ export default {
     },
     //盘点仓位选择确定
     CangdialogSure() {
-      console.log(this.Cangvalue);
+      console.log(this.Cangvalue)
       this.pandianDialog = false;
       this.$router.push("/pandian?value=" + this.Cangvalue);
     },

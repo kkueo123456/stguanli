@@ -82,17 +82,17 @@
               <li>
                 <div class="title">
                   <span>
-                    <i>*</i>客户姓名
+                    <i>*</i>手机号码
                   </span>
-                  <el-input v-model="form3.name" placeholder="输入姓名"></el-input>
+                  <el-input v-model="form3.phone" placeholder="输入手机号码"></el-input>
                 </div>
               </li>
               <li>
                 <div class="title">
                   <span>
-                    <i>*</i>手机号码
+                    <i>*</i>客户姓名
                   </span>
-                  <el-input v-model="form3.phone" placeholder="输入手机号码"></el-input>
+                  <el-input v-model="form3.name" placeholder="输入姓名"></el-input>
                 </div>
               </li>
               <li>
@@ -103,7 +103,7 @@
                   <el-input v-model="form3.add" placeholder="输入地址"></el-input>
                 </div>
               </li>
-              <li>
+              <!-- <li>
                 <div class="title">
                   <span>
                     <i>*</i>截图凭证
@@ -122,7 +122,7 @@
                     <div slot="tip" class="el-upload__tip">限制三个文件</div>
                   </el-upload>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="miaoshuBottomRight"></div>

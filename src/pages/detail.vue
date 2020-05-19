@@ -41,13 +41,13 @@
               <span class="cangwei">仓位 : {{data[0].cangwei}}</span>
             </div>
             <!-- 头部右侧底下相关操作 -->
-            <div class="headButton">
+            <!-- <div class="headButton">
               <span>出库</span>
               <span>调拨</span>
               <span>编辑</span>
               <span>分销</span>
               <span>调价</span>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

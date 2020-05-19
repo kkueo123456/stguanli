@@ -7,7 +7,17 @@
         text-color="#fff"
         active-text-color="#019997"
       >
-        <el-submenu index="1" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)">
+       <el-submenu index="1" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)||(isAdmin==2)">
+          <template slot="title">
+            <router-link to="/index/caigou" active-class="active" >采&nbsp;&nbsp;&nbsp;&nbsp;购</router-link>
+          </template>
+          <el-menu-item-group class="caigouliebiao">
+            <router-link to="/index/caigou/allBuy" active-class="active2" >>全部订单</router-link>
+            <router-link to="/index/caigou/information" active-class="active2" >>补全信息</router-link>
+            <router-link to="/index/caigou/tuihui" active-class="active2" v-if="(isAdmin==1)||(isAdmin==3)">>退回</router-link>
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="2" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)">
           <template slot="title">
             <router-link to="/index/kufang" active-class="active"  >库&nbsp;&nbsp;&nbsp;&nbsp;房</router-link>
           </template>
@@ -18,16 +28,7 @@
             <router-link to="/index/kufang/chukuF" active-class="active2">>出库查询</router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="2" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)||(isAdmin==3)">
-          <template slot="title">
-            <router-link to="/index/caigou" active-class="active" >采&nbsp;&nbsp;&nbsp;&nbsp;购</router-link>
-          </template>
-          <el-menu-item-group class="caigouliebiao">
-            <router-link to="/index/caigou/allBuy" active-class="active2" >>全部订单</router-link>
-            <router-link to="/index/caigou/information" active-class="active2" >>补全信息</router-link>
-            <router-link to="/index/caigou/tuihui" active-class="active2" v-if="(isAdmin==1)||(isAdmin==3)">>退回</router-link>
-          </el-menu-item-group>
-        </el-submenu>
+       
         <el-submenu index="3" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)">
           <template slot="title">
             <router-link to="/index/ruku" active-class="active" >待&nbsp;入&nbsp;库</router-link>
@@ -43,6 +44,8 @@
           </template>
           <el-menu-item-group class="caigouliebiao" v-if="(isAdmin==1)">
             <router-link to="/index/sellMan/goods" active-class="active2" >>全部货品</router-link>
+            <router-link to="/index/sellMan/findSell" active-class="active2" >>销售查询</router-link>
+
             <!-- <router-link to="/index/ruku/diaoEnter" active-class="active2">>调拨入库</router-link> -->
           </el-menu-item-group>
         </el-submenu>

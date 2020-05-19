@@ -1,9 +1,8 @@
 <template>
   <div>
-    <el-header>查看全部订单</el-header>
+    <el-header>查看销售历史订单</el-header>
     <el-main>
       <div class="layout">
-        <h3 class="main-title">填写采购信息</h3>
         <!-- 信息标题下方订单详情列表 -->
         <div class="detailList">
           <div class="detailListTit">
@@ -54,14 +53,7 @@
               <!-- 主体内容列表右 -->
               <div class="mainRight">
                 <!-- 出库及dialog -->
-                <h4 class="mainRight-ck" @click="remove(item.id)">移除</h4>
-                <el-dialog title="移除" :visible.sync="Deldialog" width="30%">
-                  <span>确定移除？</span>
-                  <span slot="footer" class="dialog-footer">
-                    <el-button @click="Deldialog = false">取 消</el-button>
-                    <el-button type="primary" @click="confirmDel">确 定</el-button>
-                  </span>
-                </el-dialog>
+                
                 <!-- 下方销售定价 -->
                 <h4 class="dingPri">指导售价:{{item.price}}</h4>
                 <!-- 销售价格填写 -->
@@ -83,7 +75,7 @@
                   <span>
                     <i>*</i>手机号码
                   </span>
-                  <el-input v-model="form3.phone" placeholder="输入手机号码"></el-input>
+                  <el-input v-model="form3.phone" placeholder="输入手机号码" :disabled="true"></el-input>
                 </div>
               </li>
               <li>
@@ -91,7 +83,7 @@
                   <span>
                     <i>*</i>客户姓名
                   </span>
-                  <el-input v-model="form3.name" placeholder="输入姓名"></el-input>
+                  <el-input v-model="form3.name" placeholder="输入姓名" :disabled="true"></el-input>
                 </div>
               </li>
 
@@ -100,29 +92,10 @@
                   <span>
                     <i>*</i>联系地址
                   </span>
-                  <el-input v-model="form3.add" placeholder="输入地址"></el-input>
+                  <el-input v-model="form3.add" placeholder="输入地址" :disabled="true"></el-input>
                 </div>
               </li>
-              <!-- <li>
-                <div class="title">
-                  <span>
-                    <i>*</i>截图凭证
-                  </span>
-                  <el-upload
-                    class="upload-demo"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :on-preview="handlePreview"
-                    :on-remove="handleRemove"
-                    :before-remove="beforeRemove"
-                    multiple
-                    :on-exceed="handleExceed"
-                    :file-list="fileList"
-                  >
-                    <el-button size="small" type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">限制三个文件</div>
-                  </el-upload>
-                </div>
-              </li> -->
+             
             </ul>
           </div>
           <div class="miaoshuBottomRight"></div>
@@ -130,12 +103,7 @@
 
         <!-- 提交订单与取消 -->
         <div class="footer">
-          <span>采购员：王小明</span>
-          <div>
-            <button class="tijiao" @click="tijiao">提交订单</button>
-            <button class="zancun" @click="zancun">暂存</button>
-            <button class="tuihui">取消退回</button>
-          </div>
+         
         </div>
       </div>
     </el-main>
@@ -214,40 +182,7 @@ export default {
     };
   },
   methods: {
-    remove(id) {
-      this.Deldialog = true;
-      this.DelId = id;
-    },
-    //确定移除
-    confirmDel() {
-      this.$message({
-        showClose: true,
-        message: this.DelId + "删除成功",
-        type: "success"
-      });
-      this.Deldialog = false;
-    },
-    /*上传文件需要的方法*/
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    /*点击文件列表中已上传的文件时的钩子*/
-
-    handlePreview(file) {
-      console.log(file);
-    },
-    /*文件上传限制*/
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      );
-    },
-    /*上传文件后准备移除*/
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`);
-    },
+   
     //提交订单
     tijiao() {
       console.log(this.data);
@@ -434,35 +369,5 @@ export default {
   color: #019997;
   padding-left: 15px;
 }
-/* 上传文件的按钮 */
-.miaoshuBottomLeft ul li .title /deep/ .el-button--primary {
-  background-color: #019997;
-  border: #019997;
-}
-/* 底部提交订单 */
-.footer {
-  display: flex;
-  margin-top: 30px;
-}
-.footer span {
-  margin-right: 40px;
-  line-height: 40px;
-}
-.footer button {
-  border: none;
-  width: 200px;
-  height: 40px;
-  cursor: pointer;
-  margin-right: 15px;
-  color: white;
-}
-.footer .tijiao {
-  background-color: red;
-}
-.footer .tuihui {
-  background-color: #4b4b4b;
-}
-.footer .zancun {
-  background-color: rgb(239, 156, 0);
-}
+
 </style>

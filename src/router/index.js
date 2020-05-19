@@ -42,9 +42,13 @@ const xiaoshou = () => import("../pages/kufang/xiaoshou")
 
 /*销售一级路由*/
 const sellMan = () => import('../pages/xiaoshou/sellMan')
+//查询销售历史详情
+const findSellDetail = () => import('../pages/xiaoshou/findSellDetail')
+
 //销售订单
 const sellDing = () => import('../pages/xiaoshou/sellDingdan')
-
+//查询销售历史
+const findSell=()=> import('../pages/xiaoshou/findSell')
 //销售二级路由
 const goods = () => import('../pages/xiaoshou/goods')
 
@@ -142,6 +146,10 @@ export default new Router({
             }, {
               path: '',
               redirect: 'goods'
+            },
+            {
+              path:'findSell',
+              component:findSell
             }
           ]
         },
@@ -202,6 +210,10 @@ export default new Router({
     {
       path:'/diaoboEdit',
       component:diaoboEdit
+    },
+    {
+      path:'/findSellDetail',
+      component:findSellDetail
     },
     {
       path: "*",

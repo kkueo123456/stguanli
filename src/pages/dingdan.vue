@@ -302,7 +302,7 @@
         <div class="footer">
           <span>采购员：王小明</span>
           <div>
-            <button class="tijiao">提交订单</button>
+            <button class="tijiao" @click="tijiao">提交订单</button>
             <button class="zancun">暂存</button>
             <button class="tuihui">取消退回</button>
           </div>
@@ -395,6 +395,12 @@ export default {
     /*上传图片后准备移除*/
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    // 提交
+    tijiao(){
+      if(this.radio==""){
+        alert('未选择采购方式')
+      }
     }
   },
   mounted() {},
