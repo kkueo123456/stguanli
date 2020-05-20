@@ -1,12 +1,16 @@
 <template>
 <div>
+    <v-head></v-head>
     <router-view></router-view>
 </div>
 </template>
 <script>
+import vHead from '../components/head'
 export default {
 props:[],
-components:{},
+components:{
+    vHead
+},
 data(){
 return {
 }

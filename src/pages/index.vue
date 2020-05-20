@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="index">
-      <v-head></v-head>
+      <!-- <v-head></v-head> -->
       <div class="main">
         <v-left class="left"></v-left>
         <v-right class="right"></v-right>
@@ -36,7 +36,7 @@ export default {
 <style  scoped>
 .index {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -45,17 +45,19 @@ export default {
   flex: 1;
   display: flex;
   background-color: #f0f4f4;
+  
 }
 .left {
-  width: 260px;
+  width: 256px;
   background-color: white;
-  margin-top: 15px;
+  position: fixed;
+  min-height: 100vh;
+
 }
 .right {
   flex: 1;
-  margin-top: 15px;
-  padding-left: 22px;
-  padding-right: 30px;
+  padding-left: 260px;
+
 }
 
 

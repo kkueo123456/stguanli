@@ -60,7 +60,7 @@
     <!-- 库房主体内容 -->
     <div class="main">
       <div class="tabMain">
-        <el-table :data="tabData" border>
+        <el-table :data="tabData" >
           <el-table-column prop="number" label="调拨单号" :span="2"></el-table-column>
           <el-table-column prop="fistCang" label="原始仓" :span="2"></el-table-column>
           <el-table-column prop="finCang" label="接收仓" :span="2"></el-table-column>
@@ -169,12 +169,25 @@ export default {
     update(id) {
       this.$router.push('/diaoboEdit')
     },
-    //作废
+    // 作废  
     del(id) {
-      this.$message({
-        message: "已作废",
-        type: "error"
-      });
+      this.$confirm("确定作废？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$message({
+            type: "warning",
+            message: "删除成功!" + id
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   },
   mounted() {
@@ -300,9 +313,11 @@ export default {
   background-color: white;
   padding-left: 16px;
   padding-right: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
   height: 100%;
   padding-top: 50px;
+  min-height: 50vh;
+
 }
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
@@ -316,6 +331,5 @@ export default {
 }
 .pages {
   text-align: center;
-  margin-top: 100px;
 }
 </style>

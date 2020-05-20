@@ -49,7 +49,7 @@
     <!-- 采购主体内容 -->
     <div class="main">
       <div class="tabMain">
-        <el-table :data="data" border>
+        <el-table :data="data" >
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
 
@@ -67,8 +67,14 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="100" :span="2">
             <template slot-scope="scope">
+              <el-button type="text" @click="look(scope.row.id)" v-if="scope.row.dbzt=='已生成'">查看</el-button>
               <el-button type="text" @click="update(scope.row.id)" v-if="scope.row.dbzt=='暂存'">编辑</el-button>
-              <el-button type="text" @click="del(scope.row.id)" style="color:red" v-if="scope.row.zt !=='入库在售'">作废</el-button>
+              <el-button
+                type="text"
+                @click="del(scope.row.id)"
+                style="color:red"
+                v-if="scope.row.zt !=='入库在售'"
+              >作废</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -187,7 +193,7 @@ export default {
           dbzt: "暂存"
         }
       ],
-      
+
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
       isAdmin: "",
@@ -216,30 +222,47 @@ export default {
 
     // 编辑
     update(id) {
-      this.$router.push("/allBianji");
+      this.$router.push("/allBianji?id=" + id);
     },
     // 作废
     del(id) {
-      this.$message({
-        message: "已作废",
-        type: "error"
-      });
+      this.$confirm("确定作废？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$message({
+            type: "warning",
+            message: "删除成功!"+id
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
-    /*将要退回*/
-    willBack(id) {
-      this.dialogJudge = true;
-    },
-    /*确认退回*/
+    //查看
+    look(id){
+       this.$router.push('/detail?id='+id)
+    }, 
+    // /*将要退回*/
+    // willBack(id) {
+    //   this.dialogJudge = true;
+    // },
+    // /*确认退回*/
 
-    confirmBack() {
-      this.dialogJudge = false;
-      console.log("退回");
-    }
+    // confirmBack() {
+    //   this.dialogJudge = false;
+    //   console.log("退回");
+    // }
   },
   mounted() {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 1||isAdmin==3) {
+    if (isAdmin == 1 || isAdmin == 2) {
       next();
     }
   },
@@ -299,10 +322,11 @@ export default {
 .main {
   background-color: white;
   padding-left: 16px;
-  padding-right: 20px;
+  padding-right: 16px;
   padding-bottom: 20px;
   height: 100%;
   padding-top: 50px;
+  min-height: 50vh;
 }
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {

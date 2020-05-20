@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="tabMain">
-          <el-table :data="item.xsDetail" border>
+          <el-table :data="item.xsDetail" >
             <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
             <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
             <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -344,7 +344,7 @@ export default {
   width: 320px;
 }
 .navRight {
-  padding-right: 10px;
+  padding-right: 30px;
 }
 .navRight .el-button--primary {
   background-color: #019997;
@@ -359,6 +359,8 @@ export default {
   padding-bottom: 20px;
   height: 100%;
   padding-top: 30px;
+  box-sizing: content-box;
+  min-height: 50vh;
 }
 .main .mainList-wrap {
   padding-top: 20px;
@@ -389,6 +391,5 @@ export default {
 }
 .pages {
   text-align: center;
-  margin-top: 100px;
 }
 </style>

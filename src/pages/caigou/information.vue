@@ -50,7 +50,7 @@
     <div class="main">
       <!-- 补全信息主体内容列表 -->
       <div class="tabMain">
-        <el-table :data="data" border>
+        <el-table :data="data" >
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
           <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -176,12 +176,12 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "2",
+          id: "3",
           zt: "入库在售",
           man: "蒲子杰"
         }
       ],
-     
+
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
       isAdmin: ""
@@ -196,7 +196,7 @@ export default {
       console.log(val);
     },
     upDate(id) {
-      this.$router.push("/buquan");
+      this.$router.push("/buquan?id=" + id);
     },
     checkall() {
       console.log(this.value2);
@@ -208,18 +208,31 @@ export default {
       this.value1 = "";
       this.value = "0";
     },
-    //作废
+    // 作废  
     del(id) {
-      this.$message({
-        message: "已作废",
-        type: "error"
-      });
+      this.$confirm("确定作废？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$message({
+            type: "warning",
+            message: "删除成功!" + id
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   },
   mounted() {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin == 1||isAdmin==3) {
+    if (isAdmin == 1 || isAdmin == 2) {
       next();
     }
   },
@@ -279,10 +292,12 @@ export default {
 .main {
   background-color: white;
   padding-left: 16px;
-  padding-right: 20px;
+  padding-right: 16px;
   padding-bottom: 20px;
   height: 100%;
   padding-top: 50px;
+  min-height: 50vh;
+
 }
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
@@ -296,6 +311,5 @@ export default {
 }
 .pages {
   text-align: center;
-  margin-top: 100px;
 }
 </style>

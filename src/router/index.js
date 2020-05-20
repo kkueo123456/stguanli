@@ -2,16 +2,26 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/pages/HelloWorld'
 const index = () => import("../pages/index")
+//欢迎页面路由 
 const welcome = () => import("../pages/welcome")
+// 登录路由
 const login = () => import("../pages/login")
-const kufang = () => import("../pages/kufang")
+//左侧菜单一级路由
 const caigou = () => import("../pages/caigou")
+const kufang = () => import("../pages/kufang")
 const ruku = () => import("../pages/ruku")
-const tongji = () => import("../pages/tongji")
+const sellMan = () => import('../pages/xiaoshou/sellMan')
 const guanli = () => import("../pages/guanli")
+const customer = () => import("../pages/customer/customer")
+const tongji = () => import("../pages/tongji")
+//页面的二级路由
+//详情页
 const detail = () => import("../pages/detail")
+//订单填写页
 const dingdan = () => import("../pages/dingdan")
+// 补全信息页
 const buinformation = () => import("../pages/caigou/buinformation")
+//盘点页
 const pandian = () => import("../pages/pandian")
 //全部的编辑按钮
 const allBianji=()=>import('../pages/allBianji')
@@ -41,7 +51,7 @@ const diaoboF = () => import("../pages/kufang/diaoboFind")
 const xiaoshou = () => import("../pages/kufang/xiaoshou")
 
 /*销售一级路由*/
-const sellMan = () => import('../pages/xiaoshou/sellMan')
+
 //查询销售历史详情
 const findSellDetail = () => import('../pages/xiaoshou/findSellDetail')
 
@@ -154,6 +164,10 @@ export default new Router({
           ]
         },
         {
+          path:'customer',
+          component:customer
+        },
+        {
           path: 'welcome',
           component: welcome
         },
@@ -215,6 +229,7 @@ export default new Router({
       path:'/findSellDetail',
       component:findSellDetail
     },
+    
     {
       path: "*",
       redirect: '/login'

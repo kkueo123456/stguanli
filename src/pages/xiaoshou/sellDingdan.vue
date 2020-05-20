@@ -303,6 +303,8 @@ export default {
   background-color: white;
   margin-top: 20px;
   padding-bottom: 20px;
+  min-height: 50vh;
+
 }
 .main .list {
   padding-top: 40px;

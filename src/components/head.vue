@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="header">
+  <div class="wrap">
+    <!-- <div class="header">
       <div class="logo">
         <img src="../assets/img/indexlogo.png" alt />
       </div>
@@ -11,6 +11,27 @@
       </div>
       <div class="back">
         <el-button type="text" style="color:#019997" @click="backLog">登出</el-button>
+      </div>
+    </div>-->
+    <div class="head">
+      <div class="headLeft">
+        <h3>
+          库存管理系统
+        </h3>
+      </div>
+      <div class="headRight">
+        <!-- <i class="el-icon-user-solid"></i>：<span>王小明</span>
+        <el-button type="text" style="color:#019997" @click="backLog">登出</el-button>-->
+        <el-dropdown @command="backLog">
+          <span class="el-dropdown-link">
+            <i class="el-icon-user-solid"></i>
+            王小明
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>登出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </div>
   </div>
@@ -28,7 +49,7 @@ export default {
       this.$axios({
         url: API.BackLog
       }).then(res => {
-        console.log(res);
+        this.$router.push('/login')
         this.$message({
           message: res.Msg,
           type: "warning"
@@ -42,32 +63,37 @@ export default {
 };
 </script>
 <style scoped>
-.header {
-  height: 120px;
-  position: relative;
-  padding-left: 30px;
-  padding-right: 30px;
+.wrap{
+  padding-left: 2px;
+  padding-right: 5px;
 }
-
-.logo {
-  width: 220px;
+.head {
   height: 50px;
-  position: absolute;
-  bottom: 20px;
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  line-height: 50px;
+  display: flex;
+  justify-content: space-between;
+  
 }
-.logo img {
-  width: 100%;
-  height: 100%;
+.head h3 {
+  font-size: 20px;
 }
-.welcome {
-  position: absolute;
+.head h3 i {
+  font-size: 20px;
+}
+.head .headRight {
+  padding-right: 20px;
+}
+.headRight /deep/ .el-dropdown-link {
+  cursor: pointer;
+}
+.head .headRight i {
   font-size: 15px;
-  right: 20px;
-  bottom: 20px;
 }
-.back {
-  position: absolute;
-  right: 20px;
-  bottom: 40px;
+.head .headRight span {
+  margin-right: 10px;
 }
 </style>

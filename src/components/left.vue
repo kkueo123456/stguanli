@@ -1,15 +1,18 @@
 <template>
   <div class="left">
+    <el-scrollbar>
+    <h3>ShengTang</h3>
     <el-col :span="24">
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
-        text-color="#fff"
-        active-text-color="#019997"
+        text-color="white"
+        active-text-color="rgb(16,17,23)"
+        background-color="rgb(25,26,35)"
       >
        <el-submenu index="1" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)||(isAdmin==2)">
           <template slot="title">
-            <router-link to="/index/caigou" active-class="active" >采&nbsp;&nbsp;&nbsp;&nbsp;购</router-link>
+            <router-link to="/index/caigou" active-class="active" >采购管理</router-link>
           </template>
           <el-menu-item-group class="caigouliebiao">
             <router-link to="/index/caigou/allBuy" active-class="active2" >>全部订单</router-link>
@@ -19,7 +22,7 @@
         </el-submenu>
         <el-submenu index="2" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)">
           <template slot="title">
-            <router-link to="/index/kufang" active-class="active"  >库&nbsp;&nbsp;&nbsp;&nbsp;房</router-link>
+            <router-link to="/index/kufang" active-class="active"  >仓存管理</router-link>
           </template>
           <el-menu-item-group class="caigouliebiao">
             <router-link to="/index/kufang/zaiku" active-class="active2" >>在库货品</router-link>
@@ -31,7 +34,7 @@
        
         <el-submenu index="3" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)">
           <template slot="title">
-            <router-link to="/index/ruku" active-class="active" >待&nbsp;入&nbsp;库</router-link>
+            <router-link to="/index/ruku" active-class="active" >入库管理</router-link>
           </template>
           <el-menu-item-group class="caigouliebiao" >
             <router-link to="/index/ruku/buyEnter" active-class="active2" v-if="(isAdmin==3)||(isAdmin==1)" >>采购入库</router-link>
@@ -40,23 +43,27 @@
         </el-submenu>
         <el-submenu index="4" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)">
           <template slot="title">
-            <router-link to="/index/sellMan" active-class="active" >销&nbsp;&nbsp;&nbsp;&nbsp;售</router-link>
+            <router-link to="/index/sellMan" active-class="active" >销售管理</router-link>
           </template>
           <el-menu-item-group class="caigouliebiao" v-if="(isAdmin==1)">
             <router-link to="/index/sellMan/goods" active-class="active2" >>全部货品</router-link>
             <router-link to="/index/sellMan/findSell" active-class="active2" >>销售查询</router-link>
-
             <!-- <router-link to="/index/ruku/diaoEnter" active-class="active2">>调拨入库</router-link> -->
           </el-menu-item-group>
         </el-submenu>
         <el-menu-item index="5" class="guanli" style="padding-left:0px">
-          <router-link to="/index/guanli" active-class="active" v-if="(isAdmin==1)">客户管理</router-link>
+          <router-link to="/index/guanli" active-class="active" v-if="(isAdmin==1)">角色管理</router-link>
         </el-menu-item>
-        <el-menu-item index="6" class="guanli" style="padding-left:0px">
+         <el-menu-item index="6" class="guanli" style="padding-left:0px">
+          <router-link to="/index/customer" active-class="active" v-if="(isAdmin==1)">顾客管理</router-link>
+        </el-menu-item>
+        <el-menu-item index="7" class="guanli" style="padding-left:0px">
           <router-link to="/index/tongji" active-class="active" v-if="(isAdmin==1)">数据统计</router-link>
         </el-menu-item>
+        
       </el-menu>
     </el-col>
+    </el-scrollbar>
   </div>
 </template>
 <script>
@@ -83,24 +90,44 @@ export default {
 <style scoped>
 .left {
   display: flex;
+  height: 100%;
   flex-direction: column;
   text-align: center;
-  padding-top: 10px;
+  background-color: rgb(25,26,35);
+  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+  overflow: hidden;
+}
+/* left的横向滚动条 */
+.left /deep/ .el-scrollbar__wrap {
+   overflow-x: hidden;
+}
+.left h3{
+  color: white;
+  padding-top: 20px;
+  font-size: 25px;
+  padding-bottom: 20px;
+}
+.left /deep/ .el-menu{
+  border-right: none;
 }
 .left a {
-  color: black;
-  height: 70px;
+  color: rgb(186,187,189);
+  height: 60px;
   display: block;
-  line-height: 70px;
+  line-height: 60px;
   font-size: 16px;
+  text-align: left;
+  padding-left: 35px;
 }
 .left .active {
-  background-color: #d1ecec;
-  color: #019997;
+  background-color: rgb(16,17,23);
+  color: white;
 }
+/* .left /deep/ .el-submenu__title:hover{
+  background-color: rgba(0,0,0,0.5);
+} */
 .left .guanli {
   padding: 0;
-  height: 100%;
 }
 .el-submenu .el-menu-item {
   color: #989898 !important;
@@ -111,7 +138,7 @@ export default {
   padding: 0;
 }
 .guanli .caigouliebiao .active2 {
-  color: #019997;
+  color: white;
 }
 .guanli .caigouliebiao a {
   color: #989898;

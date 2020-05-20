@@ -59,7 +59,7 @@
     <!-- 库房主体内容 -->
     <div class="main">
       <div class="tabMain">
-        <el-table :data="data" border>
+        <el-table :data="data" >
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
           <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -301,6 +301,8 @@ export default {
   padding-bottom: 20px;
   height: 100%;
   padding-top: 50px;
+  min-height: 50vh;
+
 }
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
@@ -314,6 +316,5 @@ export default {
 }
 .pages {
   text-align: center;
-  margin-top: 100px;
 }
 </style>

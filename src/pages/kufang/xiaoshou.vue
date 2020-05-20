@@ -55,7 +55,7 @@
           </div>
         </div>
         <div class="tabMain">
-          <el-table :data="item.xsDetail" border>
+          <el-table :data="item.xsDetail" >
             <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
             <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
             <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -266,12 +266,25 @@ export default {
     // handleCurrentChange(val) {
     //   console.log(val);
     // },
-    //作废
+      // 作废  
     del(id) {
-      this.$message({
-        message: "已作废",
-        type: "error"
-      });
+      this.$confirm("确定作废？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$message({
+            type: "warning",
+            message: "删除成功!" + id
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
     /*查看订单*/
     checkDing(id) {
@@ -336,6 +349,7 @@ export default {
   padding-left: 5px;
   margin-bottom: 20px;
   display: flex;
+  padding-right: 20px;
   justify-content: space-between;
 }
 .slect {
@@ -370,6 +384,8 @@ export default {
   padding-bottom: 20px;
   height: 100%;
   padding-top: 30px;
+  min-height: 50vh;
+
 }
 .main .mainList-wrap {
   padding-top: 20px;
@@ -400,6 +416,5 @@ export default {
 }
 .pages {
   text-align: center;
-  margin-top: 100px;
 }
 </style>

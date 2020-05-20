@@ -2,7 +2,7 @@
   <div class="body">
     <el-button type="primary" @click="addguanli" class="add">添加管理员</el-button>
     <v-addguanli :isAdd="isAdd" @init="init" :transJson="transJson" ref="add"></v-addguanli>
-    <el-table :data="tabData" border>
+    <el-table :data="tabData" >
       <el-table-column fixed prop="name" label="账号" :span="6"></el-table-column>
       <el-table-column prop="prop" label="密码" :span="6"></el-table-column>
       <el-table-column label="日期" :span="6">

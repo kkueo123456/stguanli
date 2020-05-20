@@ -205,11 +205,11 @@ export default {
 <style  scoped>
 /* 头部样式 */
 .head {
-  width: 100%;
   height: 60px;
   padding-top: 10px;
   display: flex;
   justify-content: space-between;
+  padding-right: 20px;
 }
 .head .headLeft {
   display: flex;
@@ -326,6 +326,5 @@ export default {
 
 .pages {
   text-align: center;
-  margin-top: 100px;
 }
 </style>

@@ -33,6 +33,6 @@ export default {
 <style scoped>
 .fenye {
   text-align: center;
-  margin-top: 100px;
+  padding-top: 100px;
 }
 </style>
