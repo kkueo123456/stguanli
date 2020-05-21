@@ -80,7 +80,8 @@ export default new Router({
           component: kufang,
           children: [{
             path: "zaiku",
-            component: zaiku
+            component: zaiku,
+            meta:['仓库管理','在库货品']
           },
           {
             path: '',
@@ -88,15 +89,18 @@ export default new Router({
           },
           {
             path: "chukuF",
-            component: chukuF
+            component: chukuF,
+            meta:['仓库管理','出库查询']
           },
           {
             path: "diaoboF",
-            component: diaoboF
+            component: diaoboF,
+            meta:['仓库管理','调拨查询']
           },
           {
             path: "xiaoshou",
-            component: xiaoshou
+            component: xiaoshou,
+            meta:['仓库管理','销售订单']
           }
           ]
         },
@@ -105,7 +109,8 @@ export default new Router({
           component: ruku,
           children: [{
             path: "buyEnter",
-            component: buyEnter
+            component: buyEnter,
+            meta:['入库管理','采购入库']
           },
           {
             path: '',
@@ -113,7 +118,8 @@ export default new Router({
           },
           {
             path: "diaoEnter",
-            component: diaoEnter
+            component: diaoEnter,
+            meta:['入库管理','调拨入库']
           }
           ]
         },
@@ -122,14 +128,17 @@ export default new Router({
           component: caigou,
           children: [{
             path: "tuihui",
-            component: tuihui
+            component: tuihui,
+            meta:['采购管理','退回']
           }, {
             path: "allBuy",
-            component: allBuy
+            component: allBuy,
+            meta:['采购管理','全部订单']
           },
           {
             path: 'information',
-            component: information
+            component: information,
+            meta:['采购管理','补全信息']
           },
           {
             path: '',
@@ -141,10 +150,12 @@ export default new Router({
         {
           path: "tongji",
           component: tongji,
+          meta:['数据统计']
         },
         {
           path: "guanli",
-          component: guanli
+          component: guanli,
+          meta:['角色管理']
         },
         {
           path: "sellMan",
@@ -152,24 +163,28 @@ export default new Router({
           children: [
             {
               path: "goods",
-              component: goods
+              component: goods,
+              meta:['销售管理','全部货品']
             }, {
               path: '',
               redirect: 'goods'
             },
             {
               path:'findSell',
-              component:findSell
+              component:findSell,
+              meta:['销售管理','销售查询']
             }
           ]
         },
         {
           path:'customer',
-          component:customer
+          component:customer,
+          meta:['顾客管理']
         },
         {
           path: 'welcome',
-          component: welcome
+          component: welcome,
+          meta:['欢迎']
         },
         {
           path: '',
@@ -191,7 +206,8 @@ export default new Router({
     },
     {
       path: '/dbDetail',
-      component: dbDetail
+      component: dbDetail,
+      meta:['调拨查询']
     },
     {
       path: '/buquan',
@@ -199,7 +215,8 @@ export default new Router({
     },
     {
       path: '/rkDetail',
-      component: rukuDetail
+      component: rukuDetail,
+      meta:['调拨详情']
     },
     {
       path: '/pandian',

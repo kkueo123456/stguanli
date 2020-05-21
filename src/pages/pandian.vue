@@ -161,7 +161,8 @@ export default {
   computed: {}
 };
 </script>
-<style scoped>
+<style lang="stylus" scoped>
+@import '../stylus/index.styl';
 /* 头部样式 */
 .el-header {
   text-align: center;
@@ -198,11 +199,11 @@ export default {
 }
 .el-main-Tit-Right .input /deep/ .el-input__inner {
   padding-right: 0;
-  /* border: 1px solid #019997; */
+  /* border: 1px solid $bg1; */
 }
 .el-main-Tit-Right .daochu /deep/ .el-button {
-  border: 1px solid #019997;
-  background: #019997;
+  border: 1px solid $bg1;
+  background: $bg1;
   color: white;
   border-radius: 0;
   margin-left: 20px;
@@ -218,14 +219,14 @@ export default {
     margin-left: 20px;
 }
 .main-bottom-head .ready {
-  color: #019997;
+  color: $bg1;
 }
 .main-bottom-body {
   margin-top: 20px;
 }
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
-  color: #019997;
+  color: $bg1;
 }
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;

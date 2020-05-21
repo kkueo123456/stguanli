@@ -233,7 +233,8 @@ export default {
   computed: {}
 };
 </script>
-<style  scoped>
+<style lang="stylus" scoped>
+@import '../../stylus/index.styl';
 /* 头部样式 */
 .head {
   width: 100%;
@@ -249,8 +250,8 @@ export default {
 }
 
 .headLeft .rongqi .el-button--primary {
-  background-color: #019997;
-  border-color: #019997;
+  background-color: $bg1;
+  border-color: $bg1;
   width: 200px;
 }
 
@@ -271,7 +272,7 @@ export default {
 .slect #inputselect {
   width: 120px;
   height: 30px;
-  border: 1px solid #019997;
+  border: 1px solid $bg1;
 }
 .navLeft {
   display: flex;
@@ -288,8 +289,8 @@ export default {
   color: red;
 }
 .navRight .el-button--primary {
-  background-color: #019997;
-  border-color: #019997;
+  background-color: $bg1;
+  border-color: $bg1;
   border-radius: 20px;
 }
 /* 下拉菜单下方主题样式 */
@@ -301,7 +302,7 @@ export default {
 }
 .main .list {
   padding-top: 40px;
-  border-bottom: 1px solid #019997;
+  border-bottom: 1px solid $bg1;
   padding-bottom: 30px;
 }
 /* 下拉菜单下方主题样式列表左侧图片 */
@@ -323,7 +324,7 @@ export default {
 }
 .listTit {
   font-size: 18px;
-  color: #019997;
+  color: $bg1;
   margin-right: 20px;
   margin-bottom: 10px;
 }

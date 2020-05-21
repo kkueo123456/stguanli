@@ -79,15 +79,18 @@ export default {
   computed: {}
 };
 </script>
-<style  scoped>
+<style lang="stylus" scoped>
+@import '../stylus/index.styl';
 .add {
   margin-bottom: 30px;
-  background-color: #019997;
-  border-color: #019997;
+  background-color: $bg1;
+  border-color: $bg1;
+
 }
 .body {
   background-color: white;
   height: 100%;
   padding: 20px;
+
 }
 </style>

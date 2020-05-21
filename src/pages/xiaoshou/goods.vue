@@ -202,7 +202,8 @@ export default {
   computed: {}
 };
 </script>
-<style  scoped>
+<style lang="stylus" scoped>
+@import '../../stylus/index.styl';
 /* 头部样式 */
 .head {
   height: 60px;
@@ -221,11 +222,11 @@ export default {
 .headLeft .el-input--suffix /deep/ .el-input__inner {
   width: 275px;
   border-radius: 18px;
-  border: 1px solid #019997;
+  border: 1px solid $bg1;
 }
 .headLeft .rongqi .el-button--primary {
-  background-color: #019997;
-  border-color: #019997;
+  background-color: $bg1;
+  border-color: $bg1;
   border-radius: 12px;
 }
 .headRight {
@@ -233,8 +234,8 @@ export default {
   justify-content: space-around;
 }
 .headRight .rongqi .el-button--primary {
-  background-color: #019997;
-  border-color: #019997;
+  background-color: $bg1;
+  border-color: $bg1;
 }
 
 /* 下拉菜单下方主题样式 */
@@ -247,7 +248,7 @@ export default {
 /* 下拉菜单下方主题样式列表 */
 .main .list {
   padding-top: 40px;
-  border-bottom: 1px solid #019997;
+  border-bottom: 1px solid $bg1;
   padding-bottom: 30px;
 }
 /* 下拉菜单下方主题样式列表左侧图片 */
@@ -271,7 +272,7 @@ export default {
 /* 下拉菜单下方主题样式列表标题 */
 .listTit {
   font-size: 18px;
-  color: #019997;
+  color: $bg1;
   margin-right: 20px;
   margin-bottom: 10px;
 }

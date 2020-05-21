@@ -210,7 +210,8 @@ export default {
   computed: {}
 };
 </script>
-<style scoped>
+<style lang="stylus" scoped>
+@import '../../stylus/index.styl';
 /* 头部样式 */
 .el-header {
   text-align: center;
@@ -232,11 +233,11 @@ export default {
 .headLeft .el-input--suffix /deep/ .el-input__inner {
   width: 275px;
   border-radius: 18px;
-  border: 1px solid #019997;
+  border: 1px solid $bg1;
 }
 .headLeft .rongqi .el-button--primary {
-  background-color: #019997;
-  border-color: #019997;
+  background-color: $bg1;
+  border-color: $bg1;
   border-radius: 12px;
 }
 /* 主体有效去 */
@@ -295,7 +296,7 @@ export default {
 }
 .listTit {
   font-size: 18px;
-  color: #019997;
+  color: $bg1;
   margin-right: 20px;
   margin-bottom: 10px;
 }
@@ -354,7 +355,7 @@ export default {
   cursor: pointer;
 }
 .mainRight .mainRight-xs {
-  color: #019997;
+  color: $bg1;
   font-size: 20px;
   display: flex;
 }

@@ -197,7 +197,8 @@ export default {
   computed: {}
 };
 </script>
-<style scoped>
+<style lang="stylus" scoped>
+@import '../../stylus/index.styl';
 /* 头部样式 */
 .el-header {
   text-align: center;
@@ -264,7 +265,7 @@ export default {
 }
 .listTit {
   font-size: 18px;
-  color: #019997;
+  color: $bg1;
   margin-right: 20px;
   margin-bottom: 10px;
 }
@@ -323,7 +324,7 @@ export default {
   cursor: pointer;
 }
 .mainRight .mainRight-xs {
-  color: #019997;
+  color: $bg1;
   font-size: 20px;
   display: flex;
 }
@@ -366,7 +367,7 @@ export default {
 }
 .miaoshuBottomLeft ul h3 {
   font-size: 18px;
-  color: #019997;
+  color: $bg1;
   padding-left: 15px;
 }
 

@@ -215,7 +215,8 @@ export default {
   computed: {}
 };
 </script>
-<style  scoped>
+<style lang="stylus" scoped>
+@import '../../stylus/index.styl';
 /* 头部样式 */
 .head {
   width: 100%;
@@ -223,8 +224,8 @@ export default {
   padding-top: 10px;
 }
 .headLeft .rongqi .el-button--primary {
-  background-color: #019997;
-  border-color: #019997;
+  background-color: $bg1;
+  border-color: $bg1;
 }
 
 /* 头部下方下拉菜单等样式 */
@@ -245,22 +246,22 @@ export default {
 .slect #inputselect {
   width: 145px;
   height: 38px;
-  border: 1px solid #019997;
+  border: 1px solid $bg1;
 }
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
 .navLeft /deep/ .el-input__inner {
-  border: 1px solid #019997;
+  border: 1px solid $bg1;
   width: 320px;
 }
 .navRight {
   padding-right: 20px;
 }
 .navRight .el-button--primary {
-  background-color: #019997;
-  border-color: #019997;
+  background-color: $bg1;
+  border-color: $bg1;
   border-radius: 20px;
 }
 /* 下拉菜单下方主题样式 */
@@ -276,7 +277,7 @@ export default {
 }
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
-  color: #019997;
+  color: $bg1;
 }
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-header>查看全部订单</el-header>
+    <el-header>查看销售订单</el-header>
     <el-main>
       <div class="layout">
-        <h3 class="main-title">填写采购信息</h3>
+        <h3 class="main-title">销售订单信息</h3>
         <!-- 信息标题下方订单详情列表 -->
         <div class="detailList">
           <div class="detailListTit">
@@ -54,7 +54,6 @@
               <!-- 主体内容列表右 -->
               <div class="mainRight">
                 <!-- 出库及dialog -->
-                <h4 class="mainRight-ck" @click="remove(item.id)">移除</h4>
                 <el-dialog title="移除" :visible.sync="Deldialog" width="30%">
                   <span>确定移除？</span>
                   <span slot="footer" class="dialog-footer">
@@ -83,7 +82,7 @@
                   <span>
                     <i>*</i>手机号码
                   </span>
-                  <el-input v-model="form3.phone" placeholder="输入手机号码"></el-input>
+                  <el-input v-model="form3.phone" placeholder="输入手机号码" :disabled="true"></el-input>
                 </div>
               </li>
               <li>
@@ -91,7 +90,7 @@
                   <span>
                     <i>*</i>客户姓名
                   </span>
-                  <el-input v-model="form3.name" placeholder="输入姓名"></el-input>
+                  <el-input v-model="form3.name" placeholder="输入姓名" :disabled="true"></el-input>
                 </div>
               </li>
 
@@ -100,7 +99,7 @@
                   <span>
                     <i>*</i>联系地址
                   </span>
-                  <el-input v-model="form3.add" placeholder="输入地址"></el-input>
+                  <el-input v-model="form3.add" placeholder="输入地址" :disabled="true"></el-input>
                 </div>
               </li>
               <!-- <li>
@@ -200,33 +199,18 @@ export default {
           cw: "1"
         }
       ],
-      //移除的dialog及id
-      Deldialog: false,
-      DelId: "",
+      
       /*付款方式客户寄卖*/
       form3: {
         name: "",
         phone: "",
         add: ""
       },
-      /*上传文件*/
-      fileList: []
+ 
     };
   },
   methods: {
-    remove(id) {
-      this.Deldialog = true;
-      this.DelId = id;
-    },
-    //确定移除
-    confirmDel() {
-      this.$message({
-        showClose: true,
-        message: this.DelId + "删除成功",
-        type: "success"
-      });
-      this.Deldialog = false;
-    },
+    
     /*上传文件需要的方法*/
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -262,7 +246,8 @@ export default {
   computed: {}
 };
 </script>
-<style scoped>
+<style lang="stylus" scoped>
+@import '../../stylus/index.styl';
 /* 头部样式 */
 .el-header {
   text-align: center;
@@ -329,7 +314,7 @@ export default {
 }
 .listTit {
   font-size: 18px;
-  color: #019997;
+  color: $bg1;
   margin-right: 20px;
   margin-bottom: 10px;
 }
@@ -388,7 +373,7 @@ export default {
   cursor: pointer;
 }
 .mainRight .mainRight-xs {
-  color: #019997;
+  color: $bg1;
   font-size: 20px;
   display: flex;
 }
@@ -431,13 +416,13 @@ export default {
 }
 .miaoshuBottomLeft ul h3 {
   font-size: 18px;
-  color: #019997;
+  color: $bg1;
   padding-left: 15px;
 }
 /* 上传文件的按钮 */
 .miaoshuBottomLeft ul li .title /deep/ .el-button--primary {
-  background-color: #019997;
-  border: #019997;
+  background-color: $bg1;
+  border: $bg1;
 }
 /* 底部提交订单 */
 .footer {
