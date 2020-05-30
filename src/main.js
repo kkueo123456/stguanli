@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import echarts from 'echarts'
+import "animate.css"
 Vue.prototype.$echarts = echarts
 //css重置
 import './assets/css/reset.css'

@@ -20,7 +20,7 @@
         </h3>
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item v-for="(item,index) in $route.meta" :key="index">{{item}}</el-breadcrumb-item>
+          <el-breadcrumb-item v-for="(item,index) in $route.meta" :key="index" >{{item}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="headRight">
@@ -62,10 +62,10 @@ export default {
     }
   },
   mounted() {
-    let arr = this.$route.meta.map(item=>{
-       return item
-    })
-    console.log(arr)
+    // let arr = this.$route.meta.map(item=>{
+    //    return item
+    // })
+    console.log(this.$route)
   },
   watch: {},
   computed: {}
