@@ -5,12 +5,8 @@
       <div class="layout">
         <h3 class="main-title">唐山分仓&nbsp;->&nbsp;北京分仓</h3>
         <div class="headLeft">
-          <div class="rongqi">
-            <el-input placeholder="请输入货品编号" v-model="search" clearable></el-input>
-          </div>
-          <div class="rongqi">
-            <el-button type="primary" @click="headSearch">搜索</el-button>
-          </div>
+          <search @search="headSearch"></search>
+
           <div class="rongqi">
             <el-input
               placeholder="输入框选中状态才可扫描"
@@ -99,15 +95,18 @@
 </template>
 <script>
 import look from "../../components/look";
+import search from "../../components/search";
+
 export default {
   props: [],
   components: {
-    look
+    look,
+    search
   },
   data() {
     return {
       // 搜索
-      search: "",
+  
       //扫描
       saomiao: "",
       // 主题数据
@@ -175,9 +174,9 @@ export default {
     };
   },
   methods: {
-    //搜索
-    headSearch() {
-      console.log("搜索");
+    /*头部搜索按钮*/
+    headSearch(val) {
+      console.log(val);
     },
     //扫码提交
     submit() {},

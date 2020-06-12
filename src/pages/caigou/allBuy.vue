@@ -75,7 +75,7 @@
                 style="color:red"
                 v-if="scope.row.zt !=='入库在售'"
               >作废</el-button>-->
-              <nullify :nullId="scope.row.id" v-if="scope.row.zt !=='入库在售'"></nullify>
+              <nullify :nullId="scope.row.id" v-if="scope.row.zt !=='入库在售'" :nullzt='scope.row.zf'></nullify>
             </template>
           </el-table-column>
         </el-table>
@@ -148,7 +148,8 @@ export default {
           id: "0",
           zt: "未定价",
           man: "蒲子杰",
-          dbzt: "已生成"
+          dbzt: "已生成",
+          zf: true
         },
         {
           img: "",
@@ -166,7 +167,8 @@ export default {
           id: "1",
           zt: "已采购",
           man: "蒲子杰",
-          dbzt: "暂存"
+          dbzt: "暂存",
+          zf: false
         },
         {
           img: "",
@@ -184,7 +186,8 @@ export default {
           id: "22",
           zt: "已采购",
           man: "蒲子杰",
-          dbzt: "已生成"
+          dbzt: "已生成",
+          zf: true
         },
         {
           img: "",
@@ -202,7 +205,8 @@ export default {
           id: "31",
           zt: "入库在售",
           man: "蒲子杰",
-          dbzt: "暂存"
+          dbzt: "暂存",
+          zf: false
         }
       ],
 
@@ -211,7 +215,7 @@ export default {
       value2: "",
       isAdmin: "",
       dialogJudge: false,
-      pageNum:0
+      pageNum: 0
     };
   },
   methods: {
@@ -262,7 +266,7 @@ export default {
     // },
   },
   mounted() {
-           this.pageNum=6
+    this.pageNum = 6;
   },
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");

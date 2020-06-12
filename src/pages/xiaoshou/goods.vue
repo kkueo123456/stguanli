@@ -3,12 +3,8 @@
     <!-- 库房头部搜索及功能 -->
     <div class="head">
       <div class="headLeft">
-        <div class="rongqi">
-          <el-input placeholder="请输入货品编号" v-model="search" clearable></el-input>
-        </div>
-        <div class="rongqi">
-          <el-button type="primary" @click="headSearch">搜索</el-button>
-        </div>
+        <search @search="headSearch"></search>
+
         <div class="rongqi">
           <el-input
             placeholder="输入框选中状态才可扫描"
@@ -91,16 +87,17 @@
 <script>
 import fenye from "../../components/fenye";
 import look from "../../components/look";
+import search from "../../components/search";
 
 export default {
   props: [],
   components: {
     fenye,
-    look
+    look,
+    search
   },
   data() {
     return {
-      search: "",
       //扫描
       saomiao: "",
       data: [
@@ -163,8 +160,8 @@ export default {
     //扫描添加商品
     submit() {},
     /*头部搜索按钮*/
-    headSearch() {
-      console.log(this.search);
+    headSearch(val) {
+      console.log(val);
     },
     //销售定价
     jumpSellDing() {

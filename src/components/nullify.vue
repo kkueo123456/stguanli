@@ -1,19 +1,21 @@
 <template>
-<!-- 作废组件 -->
+  <!-- 作废组件 -->
   <!-- <div class="wrap"> -->
-    <el-button type="text" @click="del(nullId)" style="color:red">作废</el-button>
+  <el-button type="text" @click="del(nullId)" style="color:red" :disabled="nullzt">作废</el-button>
   <!-- </div> -->
 </template>
 <script>
 export default {
-  props: ["nullId"],
+  props: ["nullId", "nullzt"],
   components: {},
   data() {
-    return {};
+    return {
+    };
   },
   methods: {
     // 作废
     del(id) {
+      console.log(this.nullify);
       this.$confirm("确定作废？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -33,13 +35,14 @@ export default {
         });
     }
   },
-  mounted() {},
+  mounted() {
+  },
   watch: {},
   computed: {}
 };
 </script>
 <style lang="stylus" scoped>
-.wrap{
-    display inline-block
+.wrap {
+  display: inline-block;
 }
 </style>

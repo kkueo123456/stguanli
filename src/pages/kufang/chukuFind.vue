@@ -3,15 +3,8 @@
     <!-- 库房头部搜索及功能 -->
     <div class="head">
       <div class="headLeft">
-        <div class="rongqi">
-          <el-input placeholder="请输入货品编号" v-model="search" clearable></el-input>
-        </div>
-        <div class="rongqi">
-          <el-button type="primary" @click="headSearch">搜索</el-button>
-        </div>
-        <div class="rongqi">
-          <el-button type="primary">扫码</el-button>
-        </div>
+         <search @search='headSearch'></search>
+   
       </div>
     </div>
     <!-- 库房头部下方下栏菜单及品牌筛选 -->
@@ -90,16 +83,18 @@
 <script>
 import fenye from "../../components/fenye";
 import look from "../../components/look";
+import search from "../../components/search";
+
 
 export default {
   props: [],
   components: {
     fenye,
-    look
+    look,
+    search
   },
   data() {
     return {
-      search: "",
       options: [
         {
           value: "0",
@@ -192,9 +187,9 @@ export default {
         }
       });
     },
-    /*头部搜索按钮*/
-    headSearch() {
-      console.log("搜索");
+      /*头部搜索按钮*/
+    headSearch(val) {
+      console.log(val);
     },
     /*时间选择器*/
     timePicker() {

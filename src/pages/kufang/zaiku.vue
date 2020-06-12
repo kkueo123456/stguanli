@@ -3,16 +3,8 @@
     <!-- 库房头部搜索及功能 -->
     <div class="head">
       <div class="headLeft">
-        <!-- <div class="rongqi">
-          <el-input placeholder="请输入货品编号" v-model="search" clearable></el-input>
-        </div>
-        <div class="rongqi">
-          <el-button type="primary" @click="headSearch">搜索</el-button>
-        </div>-->
         <search @search='headSearch'></search>
-        <div class="rongqi">
-          <el-button type="primary">扫码</el-button>
-        </div>
+     
       </div>
       <div class="headRight">
         <div class="rongqi">

@@ -46,5 +46,6 @@ export default {
   border-color: $bg1;
   border-radius: 12px;
   margin-left 20px
+  margin-right 20px
 }
 </style>
