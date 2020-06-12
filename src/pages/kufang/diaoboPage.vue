@@ -79,7 +79,7 @@
                     <el-button type="primary" @click="confirmDel">确 定</el-button>
                   </span>
                 </el-dialog>
-                <el-button type="text" @click="look(item.id)">查看</el-button>
+                <look :look="item.id"></look>
               </div>
             </div>
           </div>
@@ -98,9 +98,12 @@
   </div>
 </template>
 <script>
+import look from "../../components/look";
 export default {
   props: [],
-  components: {},
+  components: {
+    look
+  },
   data() {
     return {
       // 搜索
@@ -191,10 +194,7 @@ export default {
       });
       this.Deldialog = false;
     },
-    //查看
-    look(id) {
-      this.$router.push("/detail?id=" + id);
-    },
+
     //提交订单
     tijiao() {
       console.log(this.data);
@@ -203,8 +203,7 @@ export default {
     zancun() {}
   },
   mounted() {
-    this.$refs.input.focus()
-
+    this.$refs.input.focus();
   },
   watch: {},
   computed: {}
@@ -212,6 +211,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .el-header {
   text-align: center;
@@ -222,48 +222,59 @@ export default {
   line-height: 105px;
   letter-spacing: 5px;
 }
+
 /* 头部搜索扫码样式 */
 .headLeft {
   display: flex;
   margin-bottom: 10px;
 }
+
 .headLeft .rongqi {
   margin-right: 20px;
 }
+
 .headLeft .el-input--suffix /deep/ .el-input__inner {
   width: 275px;
   border-radius: 18px;
   border: 1px solid $bg1;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 12px;
 }
+
 /* 主体有效去 */
 .el-main .layout {
   width: 1300px;
   margin: 0 auto;
 }
+
 .el-main .head .choose {
   margin-bottom: 50px;
 }
+
 /* 主题下方提示标题 */
 .main-title {
   font-size: 28px;
   margin-bottom: 40px;
 }
+
 /* 主题下方列表详情 */
 .detailListTit {
   display: flex;
   justify-content: space-between;
 }
+
 .detailListTit h3 {
   font-size: 20px;
 }
+
 .detailListTit .detailListTit-Right {
   color: red;
 }
+
 /* 主体样式 */
 /* 下拉菜单下方主题样式 */
 .main {
@@ -271,13 +282,14 @@ export default {
   margin-top: 20px;
   padding-bottom: 20px;
 }
+
 .main .list {
   padding-top: 40px;
   border: 1px solid black;
   padding-bottom: 20px;
 }
-/* 下拉菜单下方主题样式列表左侧图片 */
 
+/* 下拉菜单下方主题样式列表左侧图片 */
 .main .list .leftTu {
   margin-left: 20px;
   width: 130px;
@@ -285,21 +297,25 @@ export default {
   background-color: tomato;
   margin-right: 20px;
 }
+
 .mainLeft {
   display: flex;
 }
+
 /* 下拉菜单下方主题样式列表标题 */
 .list {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
+
 .listTit {
   font-size: 18px;
   color: $bg1;
   margin-right: 20px;
   margin-bottom: 10px;
 }
+
 .zhutititle .listBq .listBqji {
   display: inline-block;
   width: 25px;
@@ -310,21 +326,24 @@ export default {
   color: white;
   background-color: #169bd5;
 }
-/* 下拉菜单下方主题样式列表下方信息*/
+
+/* 下拉菜单下方主题样式列表下方信息 */
 .another {
   display: flex;
 }
+
 .another .anotherList {
   margin-right: 20px;
 }
+
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
   margin-bottom: 10px;
   white-space: nowrap;
 }
-/* 下拉菜单下方主题样式列表右侧 */
 
+/* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
   padding-right: 20px;
   display: flex;
@@ -332,10 +351,12 @@ export default {
   justify-content: space-around;
   margin-top: 20px;
 }
+
 .mainRightTop {
   display: flex;
   justify-content: flex-end;
 }
+
 .mainRight .detail {
   margin-bottom: 15px;
   text-align: right;
@@ -348,21 +369,25 @@ export default {
   font-size: 16px;
   text-align: right;
 }
+
 .mainRight .mainRight-ck {
   color: red;
   font-weight: normal;
   text-align: end;
   cursor: pointer;
 }
+
 .mainRight .mainRight-xs {
   color: $bg1;
   font-size: 20px;
   display: flex;
 }
+
 .mainRight-xs span {
   white-space: nowrap;
   line-height: 40px;
 }
+
 .mainRight-xs /deep/ .el-input__inner {
   padding-right: 0;
   margin-left: 10px;
@@ -374,13 +399,16 @@ export default {
   display: flex;
   margin-top: 30px;
 }
+
 .footer-button {
   margin: 0 auto;
 }
+
 .footer span {
   margin-right: 40px;
   line-height: 40px;
 }
+
 .footer button {
   border: none;
   width: 200px;
@@ -389,12 +417,15 @@ export default {
   margin-right: 15px;
   color: white;
 }
+
 .footer .tijiao {
   background-color: red;
 }
+
 .footer .tuihui {
   background-color: #4b4b4b;
 }
+
 .footer .zancun {
   background-color: rgb(239, 156, 0);
 }

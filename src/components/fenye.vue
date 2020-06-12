@@ -3,7 +3,7 @@
     <el-pagination
       background
       layout="prev, pager, next,jumper"
-      :total="30"
+      :total="pageNum"
       :page-size="1"
       class="pageButton"
       :current-page.sync="currentPage3"
@@ -13,11 +13,12 @@
 </template>
 <script>
 export default {
-  props: [],
+  props: ['pageNum'],
   components: {},
   data() {
     return {
-      currentPage3: 1
+      currentPage3: 1,
+      pageNum2:'',
     };
   },
   methods: {
@@ -25,7 +26,8 @@ export default {
       this.$emit("jumpPage", val);
     }
   },
-  mounted() {},
+  mounted() {
+  },
   watch: {},
   computed: {}
 };

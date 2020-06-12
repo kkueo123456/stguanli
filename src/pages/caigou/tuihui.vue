@@ -18,12 +18,12 @@
           </select>
         </div>
         <div class="slect">
-          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+          <select name="public-choice" v-model="value3" id="inputselect" @change="gai">
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
         <div class="slect">
-          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+          <select name="public-choice" v-model="value4" id="inputselect" @change="gai">
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
@@ -49,7 +49,7 @@
     <!-- 退回主体内容 -->
     <div class="main">
       <div class="tabMain">
-        <el-table :data="data" >
+        <el-table :data="data">
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
           <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -65,7 +65,7 @@
         </el-table>
       </div>
       <!-- 退回主体内容下方分页功能 -->
-      <fenye class="pages" @jumpPage="changeye"></fenye>
+      <fenye class="pages" @jumpPage="changeye" :pageNum="pageNum"></fenye>
     </div>
   </div>
 </template>
@@ -103,7 +103,12 @@ export default {
           label: "北京烤鸭"
         }
       ],
+      //第一个下拉列表的value
       value: "0",
+      //第二个下拉列表的value
+      value3: "0",
+      //第二个下拉列表的value
+      value4: "0",
       data: [
         {
           img: "",
@@ -174,9 +179,10 @@ export default {
           mai: "寄"
         }
       ],
-      
+
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-      value2: ""
+      value2: "",
+      pageNum: 0
     };
   },
   methods: {
@@ -207,7 +213,9 @@ export default {
       console.log(val);
     }
   },
-  mounted() {},
+  mounted() {
+    this.pageNum=12
+  },
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin == 1 || isAdmin == 3) {
@@ -220,12 +228,14 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   width: 100%;
   height: 60px;
   padding-top: 10px;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -242,26 +252,32 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .slect {
   width: 148px;
   margin-right: 10px;
 }
+
 .slect #inputselect {
   width: 145px;
   height: 38px;
   border: 1px solid $bg1;
 }
+
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .navLeft /deep/ .el-input__inner {
   border: 1px solid $bg1;
   width: 320px;
 }
+
 .navRight {
   padding-right: 20px;
 }
+
 .navRight .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -276,18 +292,21 @@ export default {
   height: 100%;
   padding-top: 50px;
   min-height: 50vh;
-
 }
+
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
   color: $bg1;
 }
+
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
 }
+
 .tabMain /deep/ .el-table td {
   text-align: center;
 }
+
 .pages {
   text-align: center;
 }

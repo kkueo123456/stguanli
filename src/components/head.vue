@@ -1,18 +1,5 @@
 <template>
   <div class="wrap">
-    <!-- <div class="header">
-      <div class="logo">
-        <img src="../assets/img/indexlogo.png" alt />
-      </div>
-
-      <div class="welcome">
-        wellcome&nbsp;
-        <span>用户名称</span>
-      </div>
-      <div class="back">
-        <el-button type="text" style="color:#019997" @click="backLog">登出</el-button>
-      </div>
-    </div>-->
     <div class="head">
       <div class="headLeft">
         <h3>
@@ -20,12 +7,11 @@
         </h3>
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item v-for="(item,index) in $route.meta" :key="index" >{{item}}</el-breadcrumb-item>
+          <el-breadcrumb-item v-for="(item) in $route.meta" :key="item.name" >{{item}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="headRight">
-        <!-- <i class="el-icon-user-solid"></i>：<span>王小明</span>
-        <el-button type="text" style="color:#019997" @click="backLog">登出</el-button>-->
+
         <el-dropdown @command="backLog">
           <span class="el-dropdown-link">
             <i class="el-icon-user-solid"></i>

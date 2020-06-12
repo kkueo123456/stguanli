@@ -18,12 +18,12 @@
           </select>
         </div>
         <div class="slect">
-          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+          <select name="public-choice" v-model="value3" id="inputselect" @change="gai">
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
         <div class="slect">
-          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+          <select name="public-choice" v-model="value4" id="inputselect" @change="gai">
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
@@ -49,10 +49,9 @@
     <!-- 采购主体内容 -->
     <div class="main">
       <div class="tabMain">
-        <el-table :data="data" >
+        <el-table :data="data">
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
-
           <el-table-column prop="num" label="编号" :span="2"></el-table-column>
           <el-table-column prop="man" label="采购员" :span="2"></el-table-column>
           <el-table-column prop="cangwei" label="仓位" :span="2"></el-table-column>
@@ -67,31 +66,38 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="100" :span="2">
             <template slot-scope="scope">
-              <el-button type="text" @click="look(scope.row.id)" v-if="scope.row.dbzt=='已生成'">查看</el-button>
+              <look :look="scope.row.id" v-if="scope.row.dbzt=='已生成'"></look>
+              <!-- <el-button type="text" @click="look(scope.row.id)" v-if="scope.row.dbzt=='已生成'">查看</el-button> -->
               <el-button type="text" @click="update(scope.row.id)" v-if="scope.row.dbzt=='暂存'">编辑</el-button>
-              <el-button
+              <!-- <el-button
                 type="text"
                 @click="del(scope.row.id)"
                 style="color:red"
                 v-if="scope.row.zt !=='入库在售'"
-              >作废</el-button>
+              >作废</el-button>-->
+              <nullify :nullId="scope.row.id" v-if="scope.row.zt !=='入库在售'"></nullify>
             </template>
           </el-table-column>
         </el-table>
       </div>
       <!-- 采购主体内容下方分页功能 -->
-      <fenye class="pages" @jumpPage="changeye"></fenye>
+      <fenye class="pages" @jumpPage="changeye" :pageNum="pageNum"></fenye>
     </div>
   </div>
 </template>
 <script>
 import fenye from "../../components/fenye";
+import nullify from "../../components/nullify";
 import dingdan from "../../components/dingdan";
+import look from "../../components/look";
+
 export default {
   props: [],
   components: {
     dingdan,
-    fenye
+    fenye,
+    nullify,
+    look
   },
   data() {
     return {
@@ -118,7 +124,13 @@ export default {
           label: "北京烤鸭"
         }
       ],
+      //第一个下拉列表的value
       value: "0",
+      //第二个下拉列表的value
+      value3: "0",
+      //第二个下拉列表的value
+      value4: "0",
+
       data: [
         {
           img: "",
@@ -169,7 +181,7 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "2",
+          id: "22",
           zt: "已采购",
           man: "蒲子杰",
           dbzt: "已生成"
@@ -187,7 +199,7 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "2",
+          id: "31",
           zt: "入库在售",
           man: "蒲子杰",
           dbzt: "暂存"
@@ -195,9 +207,11 @@ export default {
       ],
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+      //时间列表的value
       value2: "",
       isAdmin: "",
-      dialogJudge: false
+      dialogJudge: false,
+      pageNum:0
     };
   },
   methods: {
@@ -217,49 +231,39 @@ export default {
       this.search = "";
       this.value2 = "";
       this.value1 = "";
+      this.value3 = "0";
+      this.value4 = "0";
       this.value = "0";
     },
 
     // 编辑
     update(id) {
       this.$router.push("/allBianji?id=" + id);
-    },
+    }
     // 作废
-    del(id) {
-      this.$confirm("确定作废？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$message({
-            type: "warning",
-            message: "删除成功!"+id
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    },
-    //查看
-    look(id){
-       this.$router.push('/detail?id='+id)
-    }, 
-    // /*将要退回*/
-    // willBack(id) {
-    //   this.dialogJudge = true;
+    // del(id) {
+    //   this.$confirm("确定作废？", "提示", {
+    //     confirmButtonText: "确定",
+    //     cancelButtonText: "取消",
+    //     type: "warning"
+    //   })
+    //     .then(() => {
+    //       this.$message({
+    //         type: "warning",
+    //         message: "删除成功!"+id
+    //       });
+    //     })
+    //     .catch(() => {
+    //       this.$message({
+    //         type: "info",
+    //         message: "已取消删除"
+    //       });
+    //     });
     // },
-    // /*确认退回*/
-
-    // confirmBack() {
-    //   this.dialogJudge = false;
-    //   console.log("退回");
-    // }
   },
-  mounted() {},
+  mounted() {
+           this.pageNum=6
+  },
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin == 1 || isAdmin == 2) {
@@ -272,12 +276,14 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   width: 100%;
   height: 60px;
   padding-top: 10px;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -294,31 +300,38 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .slect {
   width: 148px;
   margin-right: 10px;
 }
+
 .slect #inputselect {
   width: 140px;
   border: 1px solid $bg1;
   height: 38px;
 }
+
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .navLeft /deep/ .el-input__inner {
   border: 1px solid $bg1;
   width: 320px;
 }
+
 .navRight {
   padding-right: 10px;
 }
+
 .navRight .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 20px;
 }
+
 /* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
@@ -329,13 +342,16 @@ export default {
   padding-top: 50px;
   min-height: 50vh;
 }
+
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
   color: $bg1;
 }
+
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
 }
+
 .tabMain /deep/ .el-table td {
   text-align: center;
 }

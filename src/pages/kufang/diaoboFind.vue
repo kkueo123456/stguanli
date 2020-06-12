@@ -60,7 +60,7 @@
     <!-- 库房主体内容 -->
     <div class="main">
       <div class="tabMain">
-        <el-table :data="tabData" >
+        <el-table :data="tabData">
           <el-table-column prop="number" label="调拨单号" :span="2"></el-table-column>
           <el-table-column prop="fistCang" label="原始仓" :span="2"></el-table-column>
           <el-table-column prop="finCang" label="接收仓" :span="2"></el-table-column>
@@ -73,11 +73,10 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
-              <el-button type="text" @click="look(scope.row.id)">查看</el-button>
+              <look :look="scope.row.id"></look>
               <el-button type="text" @click="update(scope.row.id)" v-if="scope.row.dbzt=='暂存'">编辑</el-button>
-              <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button>
-
-              <!-- <el-button type="text" @click="willDao(scope.row.id)">导出</el-button> -->
+              <!-- <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button> -->
+              <nullify :nullId="scope.row.id"></nullify>
             </template>
           </el-table-column>
         </el-table>
@@ -89,10 +88,14 @@
 </template>
 <script>
 import fenye from "../../components/fenye";
+import nullify from "../../components/nullify";
+import look from "../../components/look";
 export default {
   props: [],
   components: {
-    fenye
+    fenye,
+    nullify,
+    look
   },
   data() {
     return {
@@ -109,8 +112,7 @@ export default {
         {
           value: "2",
           label: "上海总仓"
-        },
-   
+        }
       ],
       ztoptions: [
         { value: "0", label: "已生成" },
@@ -151,11 +153,6 @@ export default {
     navFind() {
       console.log(this.value2, "查找");
     },
-    /*查看信息与导出表格*/
-
-    look(id) {
-      this.$router.push("/dbDetail?id=" + id);
-    },
 
     // handleCurrentChange(val) {
     //   console.log(val);
@@ -167,28 +164,9 @@ export default {
     },
     //编辑
     update(id) {
-      this.$router.push('/diaoboEdit')
-    },
-    // 作废  
-    del(id) {
-      this.$confirm("确定作废？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$message({
-            type: "warning",
-            message: "删除成功!" + id
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
+      this.$router.push("/diaoboEdit");
     }
+    // 作废
   },
   mounted() {
     this.tabData = [
@@ -226,7 +204,7 @@ export default {
         dbzt: "已生成"
       },
       {
-        id: "3",
+        id: "32",
         number: "18912367198311",
         fistCang: "唐山",
         finCang: "北京",
@@ -250,6 +228,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   width: 100%;
@@ -258,22 +237,27 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .head .headLeft {
   display: flex;
 }
+
 .head .headLeft .rongqi {
   margin-right: 20px;
 }
+
 .headLeft .el-input--suffix /deep/ .el-input__inner {
   width: 275px;
   border-radius: 18px;
   border: 1px solid $bg1;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 12px;
 }
+
 /* 头部下方下拉菜单等样式 */
 .nav {
   height: 50px;
@@ -285,30 +269,37 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .slect {
   margin-right: 10px;
 }
+
 .slect #inputselect {
   width: 120px;
   height: 38px;
   border: 1px solid $bg1;
 }
+
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .navLeft /deep/ .el-input__inner {
   border: 1px solid $bg1;
   width: 320px;
 }
+
 .navRight {
   padding-right: 10px;
 }
+
 .navRight .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 20px;
 }
+
 /* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
@@ -318,18 +309,21 @@ export default {
   height: 100%;
   padding-top: 50px;
   min-height: 50vh;
-
 }
+
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
   color: $bg1;
 }
+
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
 }
+
 .tabMain /deep/ .el-table td {
   text-align: center;
 }
+
 .pages {
   text-align: center;
 }

@@ -54,13 +54,13 @@
               <!-- 主体内容列表右 -->
               <div class="mainRight">
                 <!-- 出库及dialog -->
-                <el-dialog title="移除" :visible.sync="Deldialog" width="30%">
+                <!-- <el-dialog title="移除" :visible.sync="Deldialog" width="30%">
                   <span>确定移除？</span>
                   <span slot="footer" class="dialog-footer">
                     <el-button @click="Deldialog = false">取 消</el-button>
                     <el-button type="primary" @click="confirmDel">确 定</el-button>
                   </span>
-                </el-dialog>
+                </el-dialog> -->
                 <!-- 下方销售定价 -->
                 <h4 class="dingPri">指导售价:{{item.price}}</h4>
                 <!-- 销售价格填写 -->
@@ -121,7 +121,7 @@
                     <div slot="tip" class="el-upload__tip">限制三个文件</div>
                   </el-upload>
                 </div>
-              </li> -->
+              </li>-->
             </ul>
           </div>
           <div class="miaoshuBottomRight"></div>
@@ -199,18 +199,16 @@ export default {
           cw: "1"
         }
       ],
-      
+
       /*付款方式客户寄卖*/
       form3: {
         name: "",
         phone: "",
         add: ""
-      },
- 
+      }
     };
   },
   methods: {
-    
     /*上传文件需要的方法*/
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -248,6 +246,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .el-header {
   text-align: center;
@@ -258,30 +257,37 @@ export default {
   line-height: 105px;
   letter-spacing: 5px;
 }
+
 /* 主体有效去 */
 .el-main .layout {
   width: 1300px;
   margin: 0 auto;
 }
+
 .el-main .head .choose {
   margin-bottom: 50px;
 }
+
 /* 主题下方提示标题 */
 .main-title {
   font-size: 28px;
   margin-bottom: 40px;
 }
+
 /* 主题下方列表详情 */
 .detailListTit {
   display: flex;
   justify-content: space-between;
 }
+
 .detailListTit h3 {
   font-size: 20px;
 }
+
 .detailListTit .detailListTit-Right {
   color: red;
 }
+
 /* 主体样式 */
 /* 下拉菜单下方主题样式 */
 .main {
@@ -289,13 +295,14 @@ export default {
   margin-top: 20px;
   padding-bottom: 20px;
 }
+
 .main .list {
   padding-top: 40px;
   border: 1px solid black;
   padding-bottom: 20px;
 }
-/* 下拉菜单下方主题样式列表左侧图片 */
 
+/* 下拉菜单下方主题样式列表左侧图片 */
 .main .list .leftTu {
   margin-left: 20px;
   width: 130px;
@@ -303,21 +310,25 @@ export default {
   background-color: tomato;
   margin-right: 20px;
 }
+
 .mainLeft {
   display: flex;
 }
+
 /* 下拉菜单下方主题样式列表标题 */
 .list {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
+
 .listTit {
   font-size: 18px;
   color: $bg1;
   margin-right: 20px;
   margin-bottom: 10px;
 }
+
 .zhutititle .listBq .listBqji {
   display: inline-block;
   width: 25px;
@@ -328,21 +339,24 @@ export default {
   color: white;
   background-color: #169bd5;
 }
-/* 下拉菜单下方主题样式列表下方信息*/
+
+/* 下拉菜单下方主题样式列表下方信息 */
 .another {
   display: flex;
 }
+
 .another .anotherList {
   margin-right: 20px;
 }
+
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
   margin-bottom: 10px;
   white-space: nowrap;
 }
-/* 下拉菜单下方主题样式列表右侧 */
 
+/* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
   padding-right: 20px;
   display: flex;
@@ -350,10 +364,12 @@ export default {
   justify-content: space-around;
   margin-top: 20px;
 }
+
 .mainRightTop {
   display: flex;
   justify-content: flex-end;
 }
+
 .mainRight .detail {
   margin-bottom: 15px;
   text-align: right;
@@ -366,73 +382,89 @@ export default {
   font-size: 16px;
   text-align: right;
 }
+
 .mainRight .mainRight-ck {
   color: red;
   font-weight: normal;
   text-align: end;
   cursor: pointer;
 }
+
 .mainRight .mainRight-xs {
   color: $bg1;
   font-size: 20px;
   display: flex;
 }
+
 .mainRight-xs span {
   white-space: nowrap;
   line-height: 40px;
 }
+
 .mainRight-xs /deep/ .el-input__inner {
   padding-right: 0;
   margin-left: 10px;
 }
+
 /* 公共标题 */
 .title {
   margin-top: 32px;
 }
+
 .title span {
   font-size: 18px;
   margin-right: 20px;
   width: 100px;
   line-height: 40px;
 }
+
 .title i {
   color: red;
   margin-right: 10px;
 }
+
 /* 付款方式 */
 .miaoshuBottomLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .miaoshuBottomLeft ul li .title {
   display: flex;
 }
+
 .miaoshuBottomLeft ul li .title /deep/ .el-input {
   width: 70%;
 }
+
 .miaoshuBottomLeft ul {
   width: 40%;
   margin-top: 20px;
 }
+
 .miaoshuBottomLeft ul h3 {
   font-size: 18px;
   color: $bg1;
   padding-left: 15px;
 }
+
 /* 上传文件的按钮 */
 .miaoshuBottomLeft ul li .title /deep/ .el-button--primary {
   background-color: $bg1;
   border: $bg1;
 }
+
 /* 底部提交订单 */
 .footer {
   display: flex;
   margin-top: 30px;
 }
+
 .footer span {
   margin-right: 40px;
   line-height: 40px;
 }
+
 .footer button {
   border: none;
   width: 200px;
@@ -441,12 +473,15 @@ export default {
   margin-right: 15px;
   color: white;
 }
+
 .footer .tijiao {
   background-color: red;
 }
+
 .footer .tuihui {
   background-color: #4b4b4b;
 }
+
 .footer .zancun {
   background-color: rgb(239, 156, 0);
 }

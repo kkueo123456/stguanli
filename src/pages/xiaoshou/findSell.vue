@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="tabMain">
-          <el-table :data="item.xsDetail" >
+          <el-table :data="item.xsDetail">
             <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
             <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
             <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -68,7 +68,7 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="150" :span="2">
               <template slot-scope="scope">
-                <el-button type="text" @click="look(scope.row.id)">查看</el-button>
+                <look :look="scope.row.id"></look>
               </template>
             </el-table-column>
           </el-table>
@@ -81,10 +81,13 @@
 </template>
 <script>
 import fenye from "../../components/fenye";
+import look from "../../components/look";
+
 export default {
   props: [],
   components: {
-    fenye
+    fenye,
+    look
   },
   data() {
     return {
@@ -164,7 +167,7 @@ export default {
               color: "95-97新",
               num: "12345678909123",
               finPri: "120000",
-              id: "2",
+              id: "55",
               cw: "1"
             }
           ]
@@ -264,12 +267,12 @@ export default {
     // handleCurrentChange(val) {
     //   console.log(val);
     // },
-    
+
     /*查看订单*/
     checkDing(id) {
-      this.$router.push("/findSellDetail?id="+id);
+      this.$router.push("/findSellDetail?id=" + id);
     },
-   
+
     /*查看信息*/
     look(id) {
       this.$router.push("/detail?id=" + id);
@@ -293,6 +296,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   width: 100%;
@@ -301,15 +305,18 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .head .headLeft {
   display: flex;
   width: 460px;
 }
+
 .headLeft .el-input--suffix /deep/ .el-input__inner {
   width: 275px;
   border-radius: 18px;
   border: 1px solid $bg1;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -328,30 +335,37 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .slect {
   margin-right: 10px;
 }
+
 .slect #inputselect {
   width: 120px;
   height: 38px;
   border: 1px solid $bg1;
 }
+
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .navLeft /deep/ .el-input__inner {
   border: 1px solid $bg1;
   width: 320px;
 }
+
 .navRight {
   padding-right: 30px;
 }
+
 .navRight .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 20px;
 }
+
 /* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
@@ -363,18 +377,22 @@ export default {
   box-sizing: content-box;
   min-height: 50vh;
 }
+
 .main .mainList-wrap {
   padding-top: 20px;
   margin-bottom: 30px;
 }
+
 .main .mainList-wrap .listTit-Left span {
   margin-right: 25px;
 }
+
 .main .list {
   padding-top: 25px;
   border: 1px solid rgb(205, 205, 205);
   padding-bottom: 25px;
 }
+
 .listTitTop {
   display: flex;
   justify-content: space-between;
@@ -384,12 +402,15 @@ export default {
 .tabMain /deep/ .el-table thead {
   color: $bg1;
 }
+
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
 }
+
 .tabMain /deep/ .el-table td {
   text-align: center;
 }
+
 .pages {
   text-align: center;
 }

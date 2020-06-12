@@ -18,12 +18,12 @@
           </select>
         </div>
         <div class="slect">
-          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+          <select name="public-choice" v-model="value3" id="inputselect" @change="gai">
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
         <div class="slect">
-          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+          <select name="public-choice" v-model="value4" id="inputselect" @change="gai">
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
@@ -50,7 +50,7 @@
     <div class="main">
       <!-- 补全信息主体内容列表 -->
       <div class="tabMain">
-        <el-table :data="data" >
+        <el-table :data="data">
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
           <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -66,7 +66,8 @@
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
               <el-button type="text" @click="upDate(scope.row.id)">编辑</el-button>
-              <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button>
+              <!-- <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button> -->
+              <nullify :nullId="scope.row.id" ></nullify>
             </template>
           </el-table-column>
         </el-table>
@@ -79,11 +80,15 @@
 <script>
 import fenye from "../../components/fenye";
 import dingdan from "../../components/dingdan";
+import nullify from "../../components/nullify";
+
 export default {
   props: [],
   components: {
     dingdan,
-    fenye
+    fenye,
+    nullify
+
   },
   data() {
     return {
@@ -110,7 +115,12 @@ export default {
           label: "北京烤鸭"
         }
       ],
+       //第一个下拉列表的value
       value: "0",
+      //第二个下拉列表的value
+      value3:'0',
+      //第二个下拉列表的value
+      value4:'0',
       data: [
         {
           img: "",
@@ -208,26 +218,8 @@ export default {
       this.value1 = "";
       this.value = "0";
     },
-    // 作废  
-    del(id) {
-      this.$confirm("确定作废？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$message({
-            type: "warning",
-            message: "删除成功!" + id
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    }
+    // 作废
+ 
   },
   mounted() {},
   beforeRouteEnter(to, from, next) {
@@ -242,12 +234,14 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   width: 100%;
   height: 60px;
   padding-top: 10px;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -264,31 +258,38 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .slect {
   width: 148px;
   margin-right: 10px;
 }
+
 .slect #inputselect {
   width: 145px;
   height: 38px;
   border: 1px solid $bg1;
 }
+
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .navLeft /deep/ .el-input__inner {
   border: 1px solid $bg1;
   width: 320px;
 }
+
 .navRight {
   padding-right: 20px;
 }
+
 .navRight .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 20px;
 }
+
 /* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
@@ -298,18 +299,21 @@ export default {
   height: 100%;
   padding-top: 50px;
   min-height: 50vh;
-
 }
+
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
   color: $bg1;
 }
+
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
 }
+
 .tabMain /deep/ .el-table td {
   text-align: center;
 }
+
 .pages {
   text-align: center;
 }

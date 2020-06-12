@@ -3,12 +3,13 @@
     <!-- 库房头部搜索及功能 -->
     <div class="head">
       <div class="headLeft">
-        <div class="rongqi">
+        <!-- <div class="rongqi">
           <el-input placeholder="请输入货品编号" v-model="search" clearable></el-input>
         </div>
         <div class="rongqi">
           <el-button type="primary" @click="headSearch">搜索</el-button>
-        </div>
+        </div>-->
+        <search @search='headSearch'></search>
         <div class="rongqi">
           <el-button type="primary">扫码</el-button>
         </div>
@@ -31,7 +32,12 @@
           >
             <div class="block">
               <span class="demonstration">选择仓位</span>
-              <el-cascader :options="Cangoption" :props="{ multiple: true }" v-model="Cangvalue" clearable></el-cascader>
+              <el-cascader
+                :options="Cangoption"
+                :props="{ multiple: true }"
+                v-model="Cangvalue"
+                clearable
+              ></el-cascader>
             </div>
             <span slot="footer" class="dialog-footer">
               <el-button @click="pandianDialog = false">取 消</el-button>
@@ -91,7 +97,7 @@
     <!-- 库房主体内容 -->
     <div class="main">
       <div class="tabMain">
-        <el-table :data="data" >
+        <el-table :data="data">
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
           <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -106,7 +112,7 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
-              <el-button type="text" @click="detail(scope.row.id)">查看</el-button>
+              <look :look="scope.row.id"></look>
               <el-button type="text" @click="update(scope.row.id)">编辑</el-button>
               <el-button type="text" @click="chuku(scope.row.id)">出库</el-button>
               <el-dialog
@@ -137,14 +143,18 @@
 </template>
 <script>
 import fenye from "../../components/fenye";
+import look from "../../components/look";
+import search from "../../components/search";
+
 export default {
   props: [],
   components: {
-    fenye
+    fenye,
+    look,
+    search
   },
   data() {
     return {
-      search: "",
       //盘点的选择仓位
       pandianDialog: false,
       options: [
@@ -168,31 +178,31 @@ export default {
           value: "0",
           label: "唐山丰润仓",
           children: [
-              { value: "0-1", label: '丰润a仓' },
-              { value: "0-2", label: '丰润b仓' },
-              { value: "0-3", label: '丰润c仓' }
-            ]
+            { value: "0-1", label: "丰润a仓" },
+            { value: "0-2", label: "丰润b仓" },
+            { value: "0-3", label: "丰润c仓" }
+          ]
         },
-      {
+        {
           value: "1",
           label: "唐山开平",
           children: [
-              { value: "1-1", label: '开平a仓' },
-              { value: "1-2", label: '开平b仓' },
-              { value: "1-3", label: '开平c仓' }
-            ]
+            { value: "1-1", label: "开平a仓" },
+            { value: "1-2", label: "开平b仓" },
+            { value: "1-3", label: "开平c仓" }
+          ]
         },
         {
           value: "2",
           label: "北京朝阳",
           children: [
-              { value: "2-1", label: '朝阳a仓' },
-              { value: "2-2", label: '朝阳b仓' },
-              { value: "2-3", label: '朝阳c仓' }
-            ]
+            { value: "2-1", label: "朝阳a仓" },
+            { value: "2-2", label: "朝阳b仓" },
+            { value: "2-3", label: "朝阳c仓" }
+          ]
         }
       ],
-      Cangvalue:'0',
+      Cangvalue: "0",
       value: "0",
       data: [
         {
@@ -240,7 +250,7 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "2",
+          id: "31",
           cw: "1"
         }
       ],
@@ -266,8 +276,8 @@ export default {
       });
     },
     /*头部搜索按钮*/
-    headSearch() {
-      console.log(this.search);
+    headSearch(val) {
+      console.log(val);
     },
     /*头部右侧入库*/
 
@@ -284,7 +294,7 @@ export default {
     },
     //盘点仓位选择确定
     CangdialogSure() {
-      console.log(this.Cangvalue)
+      console.log(this.Cangvalue);
       this.pandianDialog = false;
       this.$router.push("/pandian?value=" + this.Cangvalue);
     },
@@ -304,11 +314,7 @@ export default {
     navFind() {
       console.log(this.value2, "查找");
     },
-    /*查看信息*/
 
-    detail(id) {
-      this.$router.push("/detail?id=" + id);
-    },
     // handleCurrentChange(val) {
     //   console.log(val);
     // },
@@ -318,7 +324,7 @@ export default {
       console.log(val);
     },
     update(id) {
-      this.$router.push("/allBianji?id="+id);
+      this.$router.push("/allBianji?id=" + id);
     },
     /*出库*/
     chuku(id) {
@@ -344,6 +350,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   width: 100%;
@@ -352,32 +359,38 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .head .headLeft {
   display: flex;
   justify-content: space-between;
   width: 460px;
 }
+
 .headLeft .el-input--suffix /deep/ .el-input__inner {
   width: 275px;
   border-radius: 18px;
   border: 1px solid $bg1;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 12px;
 }
+
 .headRight {
   width: 300px;
   display: flex;
   justify-content: space-around;
 }
+
 .headRight .rongqi .el-button--primary {
   width: 90px;
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 25px;
 }
+
 /* 头部下方下拉菜单等样式 */
 .nav {
   height: 50px;
@@ -389,30 +402,37 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .slect {
   margin-right: 10px;
 }
+
 .slect #inputselect {
   width: 100px;
   height: 38px;
   border: 1px solid $bg1;
 }
+
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .navLeft /deep/ .el-input__inner {
   border: 1px solid $bg1;
   width: 320px;
 }
+
 .navRight {
   padding-right: 10px;
 }
+
 .navRight .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 20px;
 }
+
 /* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
@@ -421,18 +441,21 @@ export default {
   height: 100%;
   padding-top: 50px;
   min-height: 50vh;
-
 }
+
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
   color: $bg1;
 }
+
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
 }
+
 .tabMain /deep/ .el-table td {
   text-align: center;
 }
+
 .pages {
   text-align: center;
 }

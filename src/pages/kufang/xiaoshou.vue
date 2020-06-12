@@ -49,13 +49,15 @@
             <span>销售时间:{{item.xstime}}</span>
           </div>
           <div class="listTit-right">
-            <el-button type="text" @click="del(item.xsid)" style="color:red">作废</el-button>
+            <!-- <el-button type="text" @click="del(item.xsid)" style="color:red">作废</el-button> -->
+            <nullify :nullId="item.xsid"></nullify>
+
             <el-button type="text" @click="checkDing(item.xsid)">查看订单</el-button>
             <el-button type="text" @click="allchuku(index)">批量出库</el-button>
           </div>
         </div>
         <div class="tabMain">
-          <el-table :data="item.xsDetail" >
+          <el-table :data="item.xsDetail">
             <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
             <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
             <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -70,7 +72,7 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="150" :span="2">
               <template slot-scope="scope">
-                <el-button type="text" @click="look(scope.row.id)">查看</el-button>
+                <look :look="scope.row.id" ></look>
               </template>
             </el-table-column>
           </el-table>
@@ -83,10 +85,15 @@
 </template>
 <script>
 import fenye from "../../components/fenye";
+import nullify from "../../components/nullify";
+import look from "../../components/look";
+
 export default {
   props: [],
   components: {
-    fenye
+    fenye,
+    nullify,
+    look
   },
   data() {
     return {
@@ -175,7 +182,7 @@ export default {
           xsnum: "XS2020051115012",
           xsman: "王小明",
           xstime: "2020/05/12",
-          xsid: "1",
+          xsid: "11",
           xsDetail: [
             {
               img: "",
@@ -266,29 +273,11 @@ export default {
     // handleCurrentChange(val) {
     //   console.log(val);
     // },
-      // 作废  
-    del(id) {
-      this.$confirm("确定作废？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$message({
-            type: "warning",
-            message: "删除成功!" + id
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    },
+     
+     
     /*查看订单*/
     checkDing(id) {
-      this.$router.push("/xiaoshouCheck?id="+id);
+      this.$router.push("/xiaoshouCheck?id=" + id);
     },
     /*批量出库*/
     allchuku(index) {
@@ -317,6 +306,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   width: 100%;
@@ -325,15 +315,18 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .head .headLeft {
   display: flex;
   width: 460px;
 }
+
 .headLeft .el-input--suffix /deep/ .el-input__inner {
   width: 275px;
   border-radius: 18px;
   border: 1px solid $bg1;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -353,30 +346,37 @@ export default {
   padding-right: 20px;
   justify-content: space-between;
 }
+
 .slect {
   margin-right: 10px;
 }
+
 .slect #inputselect {
   width: 120px;
   height: 38px;
   border: 1px solid $bg1;
 }
+
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .navLeft /deep/ .el-input__inner {
   border: 1px solid $bg1;
   width: 320px;
 }
+
 .navRight {
   padding-right: 10px;
 }
+
 .navRight .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 20px;
 }
+
 /* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
@@ -386,20 +386,23 @@ export default {
   height: 100%;
   padding-top: 30px;
   min-height: 50vh;
-
 }
+
 .main .mainList-wrap {
   padding-top: 20px;
   margin-bottom: 30px;
 }
+
 .main .mainList-wrap .listTit-Left span {
   margin-right: 25px;
 }
+
 .main .list {
   padding-top: 25px;
   border: 1px solid rgb(205, 205, 205);
   padding-bottom: 25px;
 }
+
 .listTitTop {
   display: flex;
   justify-content: space-between;
@@ -409,12 +412,15 @@ export default {
 .tabMain /deep/ .el-table thead {
   color: $bg1;
 }
+
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
 }
+
 .tabMain /deep/ .el-table td {
   text-align: center;
 }
+
 .pages {
   text-align: center;
 }

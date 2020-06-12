@@ -52,7 +52,7 @@
               </el-table-column>
               <el-table-column fixed="right" label="操作" width="200" :span="2">
                 <template slot-scope="scope">
-                  <el-button type="text" @click="look(scope.row.id)">查看</el-button>
+                  <look :look="scope.row.id"></look>
                 </template>
               </el-table-column>
             </el-table>
@@ -63,9 +63,13 @@
   </div>
 </template>
 <script>
+import look from "../components/look";
+
 export default {
   props: [],
-  components: {},
+  components: {
+    look
+  },
   data() {
     return {
       /*选择盘点的状态*/
@@ -84,18 +88,15 @@ export default {
       console.log("全部");
     },
     // 已盘点的商品
-    ready(){
-        console.log('已盘点')
+    ready() {
+      console.log("已盘点");
     },
     // 未盘点的商品
-    no(){
-        console.log('未盘点')
+    no() {
+      console.log("未盘点");
     },
     submit() {
       this.pandianNum++;
-    },
-    look(id) {
-      this.$router.push("/detail?id=" + id);
     }
   },
   mounted() {
@@ -163,6 +164,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../stylus/index.styl';
+
 /* 头部样式 */
 .el-header {
   text-align: center;
@@ -174,11 +176,13 @@ export default {
   letter-spacing: 5px;
   margin-bottom: 20px;
 }
+
 /* 主体有效去 */
 .el-main .layout {
   width: 1300px;
   margin: 0 auto;
 }
+
 .el-main-Tit {
   height: 60px;
   padding: 20px;
@@ -187,20 +191,25 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .el-main-Tit-Left {
   display: flex;
 }
+
 .el-main-Tit-Left h3 {
   font-size: 30px;
   margin-right: 25px;
 }
+
 .el-main-Tit-Right {
   display: flex;
 }
+
 .el-main-Tit-Right .input /deep/ .el-input__inner {
   padding-right: 0;
   /* border: 1px solid $bg1; */
 }
+
 .el-main-Tit-Right .daochu /deep/ .el-button {
   border: 1px solid $bg1;
   background: $bg1;
@@ -208,29 +217,37 @@ export default {
   border-radius: 0;
   margin-left: 20px;
 }
+
 .main-bottom-head {
   display: flex;
   justify-content: space-between;
 }
+
 .main-bottom-head .gong {
   color: red;
 }
-.gong .el-radio-group{
-    margin-left: 20px;
+
+.gong .el-radio-group {
+  margin-left: 20px;
 }
+
 .main-bottom-head .ready {
   color: $bg1;
 }
+
 .main-bottom-body {
   margin-top: 20px;
 }
+
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
   color: $bg1;
 }
+
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
 }
+
 .tabMain /deep/ .el-table td {
   text-align: center;
 }

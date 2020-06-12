@@ -69,8 +69,8 @@
         </div>
         <!-- 主体内容列表右 -->
         <div class="mainRight">
-          <el-button type="primary" @click="detail(item.id)">查看</el-button>
-          <el-button type="danger" @click="willDel(item.id)">移除</el-button>
+          <look :look="item.id"></look>
+          <el-button type="text" @click="willDel(item.id)" style="color:red">移除</el-button>
           <el-dialog title="移除" :visible.sync="Deldialog" width="30%">
             <span>确定移除？</span>
             <span slot="footer" class="dialog-footer">
@@ -90,10 +90,13 @@
 </template>
 <script>
 import fenye from "../../components/fenye";
+import look from "../../components/look";
+
 export default {
   props: [],
   components: {
-    fenye
+    fenye,
+    look
   },
   data() {
     return {
@@ -164,8 +167,8 @@ export default {
       console.log(this.search);
     },
     //销售定价
-    jumpSellDing(){
-        this.$router.push('/sellDing')
+    jumpSellDing() {
+      this.$router.push("/sellDing");
     },
     /*查看信息*/
     detail(id) {
@@ -190,7 +193,7 @@ export default {
     }
   },
   mounted() {
-      this.$refs.input.focus()
+    this.$refs.input.focus();
   },
   watch: {},
   beforeRouteEnter(to, from, next) {
@@ -204,6 +207,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   height: 60px;
@@ -212,27 +216,33 @@ export default {
   justify-content: space-between;
   padding-right: 20px;
 }
+
 .head .headLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .head .headLeft .rongqi {
   margin-right: 20px;
 }
+
 .headLeft .el-input--suffix /deep/ .el-input__inner {
   width: 275px;
   border-radius: 18px;
   border: 1px solid $bg1;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 12px;
 }
+
 .headRight {
   display: flex;
   justify-content: space-around;
 }
+
 .headRight .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -245,14 +255,15 @@ export default {
   padding-right: 20px;
   padding-bottom: 20px;
 }
+
 /* 下拉菜单下方主题样式列表 */
 .main .list {
   padding-top: 40px;
   border-bottom: 1px solid $bg1;
   padding-bottom: 30px;
 }
-/* 下拉菜单下方主题样式列表左侧图片 */
 
+/* 下拉菜单下方主题样式列表左侧图片 */
 .main .list .leftTu {
   margin-left: 20px;
   width: 130px;
@@ -260,9 +271,11 @@ export default {
   background-color: tomato;
   margin-right: 20px;
 }
+
 .mainLeft {
   display: flex;
 }
+
 .list {
   display: flex;
   justify-content: space-between;
@@ -276,6 +289,7 @@ export default {
   margin-right: 20px;
   margin-bottom: 10px;
 }
+
 .title .listBq .listBqji {
   display: inline-block;
   width: 25px;
@@ -286,10 +300,12 @@ export default {
   color: white;
   background-color: #169bd5;
 }
-/* 下拉菜单下方主题样式列表下方信息*/
+
+/* 下拉菜单下方主题样式列表下方信息 */
 .another {
   display: flex;
 }
+
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
@@ -297,6 +313,7 @@ export default {
   margin-bottom: 10px;
   white-space: nowrap;
 }
+
 /* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
   position: absolute;
@@ -304,13 +321,16 @@ export default {
   bottom: 40px;
   text-align: right;
 }
+
 /* 右侧上方入库与退回 */
 .dialogJudge {
   margin-bottom: 20px;
 }
+
 .mainRight /deep/ .el-dialog {
   text-align: left;
 }
+
 /* 右侧状态样式 */
 .mainRight .zhuangtai {
   font-size: 18px;
@@ -318,6 +338,7 @@ export default {
   margin-bottom: 10px;
   text-align: right;
 }
+
 .mainRight .dingPri {
   color: #588cfe;
   font-size: 18px;

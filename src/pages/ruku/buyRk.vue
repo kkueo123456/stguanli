@@ -6,8 +6,8 @@
       <div class="headLeft">
         <!-- <div class="rongqi">
           <el-button type="primary" @click="Warehouse">批量入库</el-button>
-        </div> -->
-        <v-pi :isShow='isShow' @xuanCang='Warehouse'></v-pi>
+        </div>-->
+        <v-pi :isShow="isShow" @xuanCang="Warehouse"></v-pi>
       </div>
     </div>
     <!-- 采购入库头部下方下拉菜单及查找 -->
@@ -50,7 +50,7 @@
     <!-- 采购入库主体内容 -->
     <div class="main">
       <div class="tabMain">
-        <el-table :data="data" >
+        <el-table :data="data">
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
           <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
@@ -65,7 +65,9 @@
           <el-table-column fixed="right" label="操作" :span="2">
             <template slot-scope="scope">
               <el-button type="text" @click="ruku(scope.row.id)">入库</el-button>
-              <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button>
+              <!-- <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button> -->
+              <nullify :nullId="scope.row.id"></nullify>
+
               <el-dialog
                 title="请选择仓位"
                 :visible.sync="dialogVisible"
@@ -97,20 +99,22 @@
 <script>
 import fenye from "../../components/fenye";
 import dingdan from "../../components/dingdan";
-import vPi from '../../components/piRuku'
+import nullify from "../../components/nullify";
+import vPi from "../../components/piRuku";
 export default {
   props: [],
   components: {
     dingdan,
     fenye,
-    vPi
+    vPi,
+    nullify
   },
   data() {
     return {
       search: "",
       //批量入库弹框
-      isShow:{
-        show:false
+      isShow: {
+        show: false
       },
       options: [
         {
@@ -204,7 +208,7 @@ export default {
           zt: "入库在售"
         }
       ],
-      
+
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
 
@@ -234,26 +238,7 @@ export default {
       this.value1 = "";
       this.value = "0";
     },
-       // 作废  
-    del(id) {
-      this.$confirm("确定作废？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$message({
-            type: "warning",
-            message: "删除成功!" + id
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    },
+
     /*入库按钮*/
 
     ruku(id) {
@@ -270,7 +255,7 @@ export default {
     /*批量入库*/
 
     Warehouse(val) {
-      console.log(val)
+      console.log(val);
     }
   },
 
@@ -287,12 +272,14 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   width: 100%;
   height: 60px;
   padding-top: 10px;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -310,31 +297,38 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .slect {
   width: 148px;
   margin-right: 10px;
 }
+
 .slect #inputselect {
   width: 145px;
   height: 38px;
   border: 1px solid $bg1;
 }
+
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .navLeft /deep/ .el-input__inner {
   border: 1px solid $bg1;
   width: 320px;
 }
+
 .navRight {
   padding-right: 20px;
 }
+
 .navRight .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 20px;
 }
+
 /* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
@@ -344,18 +338,21 @@ export default {
   height: 100%;
   padding-top: 30px;
   min-height: 50vh;
-
 }
+
 /* 表格样式 */
 .tabMain /deep/ .el-table thead {
   color: $bg1;
 }
+
 .tabMain /deep/ .el-table th.is-leaf {
   text-align: center;
 }
+
 .tabMain /deep/ .el-table td {
   text-align: center;
 }
+
 /* 右侧编辑 */
 .bianji {
   font-size: 16px;

@@ -24,7 +24,7 @@ const buinformation = () => import("../pages/caigou/buinformation")
 //盘点页
 const pandian = () => import("../pages/pandian")
 //全部的编辑按钮
-const allBianji=()=>import('../pages/allBianji')
+const allBianji = () => import('../pages/allBianji')
 
 /*采购的三极路由*/
 // const allding = () => import("../pages/allDing")
@@ -43,7 +43,7 @@ const diaoEnter = () => import("../pages/ruku/diaoRk")
 const dbDetail = () => import("../pages/kufang/diaoboDetail")
 const diaoboPage = () => import("../pages/kufang/diaoboPage")
 const diaoboEdit = () => import("../pages/kufang/diaoboEdit")
-const xiaoshouCheck=()=>import('../pages/kufang/xiaoshouCheck')
+const xiaoshouCheck = () => import('../pages/kufang/xiaoshouCheck')
 /*库房的三级路由*/
 const zaiku = () => import("../pages/kufang/zaiku")
 const chukuF = () => import("../pages/kufang/chukuFind")
@@ -58,15 +58,14 @@ const findSellDetail = () => import('../pages/xiaoshou/findSellDetail')
 //销售订单
 const sellDing = () => import('../pages/xiaoshou/sellDingdan')
 //查询销售历史
-const findSell=()=> import('../pages/xiaoshou/findSell')
+const findSell = () => import('../pages/xiaoshou/findSell')
 //销售二级路由
 const goods = () => import('../pages/xiaoshou/goods')
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/hello',
       name: 'HelloWorld',
       component: HelloWorld
@@ -74,117 +73,130 @@ export default new Router({
     {
       path: '/index',
       component: index,
-      children: [
-        {
+      children: [{
           path: 'kufang',
           component: kufang,
           children: [{
-            path: "zaiku",
-            component: zaiku,
-            meta:['仓库管理','在库货品']
-          },
-          {
-            path: '',
-            redirect: 'zaiku'
-          },
-          {
-            path: "chukuF",
-            component: chukuF,
-            meta:['仓库管理','出库查询']
-          },
-          {
-            path: "diaoboF",
-            component: diaoboF,
-            meta:['仓库管理','调拨查询']
-          },
-          {
-            path: "xiaoshou",
-            component: xiaoshou,
-            meta:['仓库管理','销售订单']
-          }
+              path: "zaiku",
+              component: zaiku,
+              name: 'zaiku',
+              meta: ['仓库管理', '在库货品']
+            },
+            {
+              path: '',
+              redirect: 'zaiku'
+            },
+            {
+              path: "chukuF",
+              component: chukuF,
+              name: 'chukuF',
+              meta: ['仓库管理', '出库查询']
+            },
+            {
+              path: "diaoboF",
+              component: diaoboF,
+              name: 'diaoboF',
+              meta: ['仓库管理', '调拨查询']
+            },
+            {
+              path: "xiaoshou",
+              component: xiaoshou,
+              name: 'xiaoshou',
+              meta: ['仓库管理', '销售订单']
+            }
           ]
         },
         {
           path: 'ruku',
           component: ruku,
           children: [{
-            path: "buyEnter",
-            component: buyEnter,
-            meta:['入库管理','采购入库']
-          },
-          {
-            path: '',
-            redirect: 'buyEnter'
-          },
-          {
-            path: "diaoEnter",
-            component: diaoEnter,
-            meta:['入库管理','调拨入库']
-          }
+              path: "buyEnter",
+              component: buyEnter,
+              name: 'buyEnter',
+              meta: ['入库管理', '采购入库']
+            },
+            {
+              path: '',
+              redirect: 'buyEnter'
+            },
+            {
+              path: "diaoEnter",
+              component: diaoEnter,
+              name: 'diaoEnter',
+              meta: ['入库管理', '调拨入库']
+            }
           ]
         },
         {
           path: "caigou",
           component: caigou,
           children: [{
-            path: "tuihui",
-            component: tuihui,
-            meta:['采购管理','退回']
-          }, {
-            path: "allBuy",
-            component: allBuy,
-            meta:['采购管理','全部订单']
-          },
-          {
-            path: 'information',
-            component: information,
-            meta:['采购管理','补全信息']
-          },
-          {
-            path: '',
-            redirect: 'allBuy'
-          }
+              path: "tuihui",
+              component: tuihui,
+              name: 'tuihui',
+              meta: ['采购管理', '退回']
+            }, {
+              path: "allBuy",
+              component: allBuy,
+              name: 'allBuy',
+              meta: ['采购管理', '全部订单']
+            },
+            {
+              path: 'information',
+              component: information,
+              name: 'information',
+              meta: ['采购管理', '补全信息']
+            },
+            {
+              path: '',
+              redirect: 'allBuy'
+            }
 
           ]
         },
         {
           path: "tongji",
           component: tongji,
-          meta:['数据统计']
+          name: 'tongji',
+          meta: ['数据统计']
         },
         {
           path: "guanli",
           component: guanli,
-          meta:['角色管理']
+          name: 'guanli',
+          meta: ['角色管理']
         },
         {
           path: "sellMan",
           component: sellMan,
-          children: [
-            {
+          children: [{
               path: "goods",
               component: goods,
-              meta:['销售管理','全部货品']
+              name: 'goods',
+              meta: ['销售管理', '全部货品']
             }, {
               path: '',
               redirect: 'goods'
             },
             {
-              path:'findSell',
-              component:findSell,
-              meta:['销售管理','销售查询']
+              path: 'findSell',
+              component: findSell,
+              name: 'findSell',
+              meta: ['销售管理', '销售查询']
             }
           ]
         },
         {
-          path:'customer',
-          component:customer,
-          meta:['顾客管理']
+          path: 'customer',
+          component: customer,
+          name: 'customer',
+          meta: ['顾客管理']
         },
         {
           path: 'welcome',
           component: welcome,
-          meta:['欢迎']
+          name: 'welcome',
+          meta: ['欢迎']
         },
         {
           path: '',
@@ -207,7 +219,8 @@ export default new Router({
     {
       path: '/dbDetail',
       component: dbDetail,
-      meta:['调拨查询']
+      name: 'dbDetail',
+      meta: ['调拨查询']
     },
     {
       path: '/buquan',
@@ -216,7 +229,8 @@ export default new Router({
     {
       path: '/rkDetail',
       component: rukuDetail,
-      meta:['调拨详情']
+      name: 'rkDetail',
+      meta: ['调拨详情']
     },
     {
       path: '/pandian',
@@ -228,25 +242,25 @@ export default new Router({
     },
     {
       path: '/diaoboPage',
-      component:diaoboPage
+      component: diaoboPage
     },
     {
-      path:'/allBianji',
-      component:allBianji
+      path: '/allBianji',
+      component: allBianji
     },
     {
-      path:'/xiaoshouCheck',
-      component:xiaoshouCheck
+      path: '/xiaoshouCheck',
+      component: xiaoshouCheck
     },
     {
-      path:'/diaoboEdit',
-      component:diaoboEdit
+      path: '/diaoboEdit',
+      component: diaoboEdit
     },
     {
-      path:'/findSellDetail',
-      component:findSellDetail
+      path: '/findSellDetail',
+      component: findSellDetail
     },
-    
+
     {
       path: "*",
       redirect: '/login'

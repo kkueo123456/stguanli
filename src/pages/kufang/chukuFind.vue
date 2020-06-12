@@ -76,7 +76,7 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
-              <el-button type="text" @click="chakan(scope.row.id)">查看</el-button>
+              <look :look="scope.row.id" ></look>
             </template>
           </el-table-column>
         </el-table>
@@ -89,10 +89,13 @@
 </template>
 <script>
 import fenye from "../../components/fenye";
+import look from "../../components/look";
+
 export default {
   props: [],
   components: {
-    fenye
+    fenye,
+    look
   },
   data() {
     return {
@@ -168,7 +171,7 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "2",
+          id: "41",
           cw: "1",
           zhuangtai:'商品售出'
         }
@@ -217,10 +220,7 @@ export default {
     changeye(val) {
       console.log(val);
     },
-    /*查看*/
-    chakan(id) {
-      this.$router.push("/detail?id=" + id);
-    }
+  
   },
   mounted() {},
   watch: {},

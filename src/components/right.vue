@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-head></v-head>
-    <transition mode="out-in" :name="transitionName">
+    <transition mode="out-in" :name="transitionName" >
       <router-view></router-view>
     </transition>
   </div>
@@ -15,24 +15,24 @@ export default {
   },
   data() {
     return {
-      transitionName: ""
+      transitionName: "fade"
     };
   },
   methods: {},
   mounted() {},
   watch: {
-    $route(to, from) {
-      const toDepth = to.meta.length;
-      const fromDepth = from.meta.length;
-      if (toDepth < fromDepth) {
-        this.transitionName = "fade";
-      } else if (toDepth == fromDepth) {
-        this.transitionName = "fade";
-      } else {
-        this.transitionName = "fade";
-      }
-      console.log(to.meta.length,from.meta.length);
-    }
+    // $route(to, from) {
+    //   const toDepth = to.meta.length;
+    //   const fromDepth = from.meta.length;
+    //   if (toDepth < fromDepth) {
+    //     this.transitionName = "fade";
+    //   } else if (toDepth == fromDepth) {
+    //     this.transitionName = "fade";
+    //   } else {
+    //     this.transitionName = "fade";
+    //   }
+    //   console.log(to.meta.length,from.meta.length);
+    // }
   },
   computed: {}
 };
@@ -42,6 +42,6 @@ export default {
   opacity: 0;
 }
 .fade-enter-active {
-  transition: opacity 0.5s;
+  transition:opacity 0.3s linear;
 }
 </style>
