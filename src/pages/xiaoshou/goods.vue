@@ -1,6 +1,7 @@
 <template>
+<!-- 全部货品页 -->
   <div>
-    <!-- 库房头部搜索及功能 -->
+    <!-- 头部搜索及功能 -->
     <div class="head">
       <div class="headLeft">
         <search @search="headSearch"></search>
@@ -24,11 +25,11 @@
         </div>
       </div>
     </div>
-    <!-- 库房头部下方下栏菜单及品牌筛选 -->
+    <!-- 头部下方下栏菜单及品牌筛选 -->
 
-    <!-- 库房主体内容 -->
+    <!-- 主体内容 -->
     <div class="main">
-      <!-- 采购主体内容列表 -->
+      <!-- 主体内容列表 -->
       <div class="list" v-for="(item,index) in data" :key="index">
         <!-- 主体内容列表左 -->
         <div class="mainLeft">
@@ -79,7 +80,7 @@
         </div>
       </div>
 
-      <!-- 库房主体内容下方分页功能 -->
+      <!-- 主体内容下方分页功能 -->
       <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>

@@ -15,7 +15,6 @@ export default {
   methods: {
     // 作废
     del(id) {
-      console.log(this.nullify);
       this.$confirm("确定作废？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -24,13 +23,13 @@ export default {
         .then(() => {
           this.$message({
             type: "warning",
-            message: "删除成功!" + id
+            message: "作废成功!" + id
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消作废"
           });
         });
     }

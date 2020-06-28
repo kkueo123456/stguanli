@@ -1,4 +1,5 @@
 <template>
+<!-- 盘点页面 -->
   <div>
     <el-header>盘点</el-header>
     <el-main>

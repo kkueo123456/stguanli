@@ -1,4 +1,5 @@
 <template>
+<!-- 管理员角色管理页 -->
   <div class="body">
     <el-button type="primary" @click="addguanli" class="add">添加管理员</el-button>
     <v-addguanli :isAdd="isAdd" @init="init" :transJson="transJson" ref="add"></v-addguanli>

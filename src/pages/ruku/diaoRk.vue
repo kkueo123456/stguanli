@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>-->
-    <!-- 补全信息头部下方下拉菜单及查找 -->
+    <!-- 头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -27,7 +27,7 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <!-- 补全信息头部下方日期下拉列表 -->
+        <!-- 头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
             <el-date-picker
@@ -68,7 +68,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <!-- 库房主体内容下方分页功能 -->
+      <!-- 主体内容下方分页功能 -->
       <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>

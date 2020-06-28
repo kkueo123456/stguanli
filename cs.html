@@ -2,62 +2,71 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .wrap {
-            margin: 100px auto;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .wrap {
+      margin: 100px auto;
+    }
 
-        .cs {
-            width: 150px;
-            height: 50px;
-            position: absolute;
-            border: none;
-            border-radius: 25px;
-            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
-            background-size: 400%;
-            z-index: 2;
-            color: white;
-        }
+    .cs {
+      width: 150px;
+      height: 50px;
+      position: absolute;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+      background-size: 400%;
+      z-index: 2;
+      color: white;
+    }
 
-        .cs::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            bottom: -5px;
-            left: -5px;
-            right: -5px;
-            border-radius: 20px;
-            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
-            background-size: 400%;
-            z-index: -1;
-            filter: blur(20px);
-        }
+    .cs::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      bottom: -5px;
+      left: -5px;
+      right: -5px;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+      background-size: 400%;
+      z-index: -1;
+      filter: blur(20px);
+    }
 
-        .cs::after:hover {
-            animation: dong 8s linear infinite;
+    .cs::after:hover {
+      animation: dong 8s linear infinite;
 
-        }
+    }
 
-        .cs:hover {
-            animation: dong 8s linear infinite;
-        }
+    .cs:hover {
+      animation: dong 8s linear infinite;
+    }
 
-        @keyframes dong {
-            100% {
-                background-position: -400% 0;
-            }
-        }
-    </style>
+    @keyframes dong {
+      100% {
+        background-position: -400% 0;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
-    <div class="wrap">
-        <button class="cs">按钮</button>
+  <div class="wrap">
+    <button class="cs">按钮</button>
 
-    </div>
+  </div>
+  <script>
+    function A() {
+      this.name = "yy1"
+    }
+    var a = new A();
+    console.log(a.name)
+
+  </script>
 </body>
 
 </html>

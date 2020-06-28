@@ -1,4 +1,5 @@
 <template>
+<!-- 首页右侧大组件 -->
   <div>
     <v-head></v-head>
     <transition mode="out-in" :name="transitionName" >

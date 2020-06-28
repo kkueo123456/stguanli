@@ -35,7 +35,6 @@ const tuihui = () => import("../pages/caigou/tuihui")
 const allBuy = () => import("../pages/caigou/allBuy")
 /*待入库的一级路由*/
 const rukuDetail = () => import("../pages/ruku/rukuDetail")
-
 /*待入库的三级路由*/
 const buyEnter = () => import("../pages/ruku/buyRk")
 const diaoEnter = () => import("../pages/ruku/diaoRk")

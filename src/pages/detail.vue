@@ -1,4 +1,5 @@
 <template>
+<!-- 商品详情页 -->
   <div class="zong">
     <el-header>商品详情</el-header>
     <!-- 详情页头部 -->
@@ -33,7 +34,7 @@
                   {{data[0].num}}
                 </li>
                 <li>
-                  <span>产品标题:</span>
+                  <span>产品:</span>
                   {{data[0].name}}
                 </li>
 
@@ -310,7 +311,7 @@ export default {
           time: "1587472220",
           cangwei: "唐山总仓/C-1-20",
           color: "95-97新",
-          num: "12345678909123",
+          num: "12345",
           finPri: "120000",
           id: "0",
           cai: "牛批"
@@ -344,22 +345,22 @@ export default {
 .el-header {
   text-align: center;
   height: 65px !important;
-  background-color: rgb(75,75,75);
+  background-color: rgb(75, 75, 75);
   color: white;
   font-size: 26px;
   line-height: 65px;
   letter-spacing: 5px;
-  margin-bottom 20px
+  margin-bottom: 20px;
 }
 
 .zong {
   /* 总体外框的有效区 */
-  width: 1800px;
+  width: 100vw;
   margin: 0 auto;
 }
 
 .layout {
-  width: 1800px;
+  width: 100vw;
   margin: 0 auto;
 }
 
@@ -378,21 +379,23 @@ export default {
 }
 
 .headLeft .headLeftBig .xiaotu {
-  width: 295px;
+  width 100%
   height: 275px;
 }
 
 .headLeft .headLeftBig {
-  width: 295px;
+  width: 100%;
   height: 275px;
   background-color: coral;
 }
-
+.headLeft .headLeftSm{
+  display flex
+  justify-content space-between
+} 
 .headLeft .headLeftSmTu {
   width: 90px;
   height: 80px;
   display: inline-block;
-  margin-right: 8px;
   background-color: crimson;
   margin-top: 10px;
   border: 1px solid yellowgreen;
@@ -435,9 +438,9 @@ export default {
 }
 
 .headRightTop ul li {
-  width: 230px;
+  width 15%
   margin-bottom: 15px;
-  margin-right: 15px;
+  margin-right: 18px;
 }
 
 .headRightTop ul li span {

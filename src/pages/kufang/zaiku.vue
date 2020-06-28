@@ -1,4 +1,5 @@
 <template>
+<!-- 在库货品页 -->
   <div>
     <!-- 库房头部搜索及功能 -->
     <div class="head">

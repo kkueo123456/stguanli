@@ -1,4 +1,5 @@
 <template>
+<!-- 查看销售订单页 -->
   <div>
     <el-header>查看销售订单</el-header>
     <el-main>

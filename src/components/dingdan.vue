@@ -1,4 +1,5 @@
 <template>
+<!-- 采购订单按钮组件 -->
   <div class="dingdan">
     <el-button type="primary" @click="dingdan">+填写采购订单+</el-button>
   </div>

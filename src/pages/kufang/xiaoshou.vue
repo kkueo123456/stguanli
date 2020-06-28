@@ -1,12 +1,12 @@
 <template>
+<!-- 销售订单页 -->
   <div>
-    <!-- 库房头部搜索及功能 -->
     <div class="head">
       <div class="headLeft">
         <search @search='headSearch'></search>
       </div>
     </div>
-    <!-- 库房头部下方下栏菜单及品牌筛选 -->
+    <!-- 销售头部下方下栏菜单及品牌筛选 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -33,9 +33,9 @@
         <el-button type="primary" @click="navFind">搜索</el-button>
       </div>
     </div>
-    <!-- 库房主体内容 -->
+    <!-- 销售主体内容 -->
     <div class="main">
-      <!-- 库房主体内容列表 -->
+      <!-- 销售主体内容列表 -->
       <div class="mainList-wrap" v-for="(item,index) in data" :key="index">
         <div class="listTitTop">
           <div class="listTit-Left">
@@ -73,7 +73,7 @@
           </el-table>
         </div>
       </div>
-      <!-- 库房主体内容下方分页功能 -->
+      <!-- 销售主体内容下方分页功能 -->
       <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>

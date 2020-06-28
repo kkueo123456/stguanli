@@ -1,4 +1,5 @@
 <template>
+<!-- 顾客管理页面 -->
   <div class="body">
     <el-table :data="tabData" >
       <el-table-column fixed prop="name" label="姓名" :span="6"></el-table-column>

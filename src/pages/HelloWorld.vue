@@ -1,4 +1,5 @@
 <template>
+<!-- 待作废 -->
   <div>
     <div id="myChart" :style="{width: '600px', height: '600px'}"></div>
   </div>

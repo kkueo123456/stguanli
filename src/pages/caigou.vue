@@ -1,4 +1,5 @@
 <template>
+<!-- 采购主入口 -->
 <div>
     <router-view></router-view>
 </div>

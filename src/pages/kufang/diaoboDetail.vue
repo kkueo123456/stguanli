@@ -1,6 +1,6 @@
 <template>
+<!-- 调拨详情（未知，可能作废） -->
   <div>
-    <!-- 库房头部搜索及功能 -->
     <v-head></v-head>
     <div class="wrap">
       <div class="head">

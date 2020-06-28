@@ -1,4 +1,5 @@
 <template>
+<!-- 添加管理员组件 -->
   <div class="zhuti">
     <!-- <el-button type="primary" @click="addguanli" class="add">添加管理员</el-button> -->
 

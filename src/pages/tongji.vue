@@ -1,4 +1,5 @@
 <template>
+<!-- 数据统计 -->
   <div>
      <transition enter-active-class="animate__zoomInLeft">
     <div id="myChart" :style="{width: '600px', height: '600px'}"></div>

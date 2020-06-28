@@ -1,4 +1,5 @@
 <template>
+<!-- 销售主入口(窗口页) -->
 <div>
     <router-view></router-view>
 </div>

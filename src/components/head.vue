@@ -1,4 +1,5 @@
 <template>
+<!-- 右侧头部组件 -->
   <div class="wrap">
     <div class="head">
       <div class="headLeft">

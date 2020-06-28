@@ -1,4 +1,5 @@
 <template>
+<!-- 搜索框组件 -->
   <div class="sou">
     <div class="rongqi">
       <el-input placeholder="请输入货品编号" v-model="search" clearable></el-input>

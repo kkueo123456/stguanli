@@ -51,6 +51,7 @@ export default {
     },
     dialogSure() {
       this.isShow.show = false;
+      this.$router.push('/rkDetail')
       this.$emit("xuanCang", this.AllCangvalue);
     }
   },

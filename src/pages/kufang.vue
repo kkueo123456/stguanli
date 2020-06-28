@@ -1,4 +1,5 @@
 <template>
+<!--仓库管理页主入口 -->
 <div>
     <router-view></router-view>
 </div>

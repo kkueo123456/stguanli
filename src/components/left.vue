@@ -1,4 +1,5 @@
 <template>
+<!-- 首页左侧分栏组件 -->
   <div class="left">
     <el-scrollbar style="height:100%">
       <h3>ShengTang</h3>

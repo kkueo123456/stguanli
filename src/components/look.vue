@@ -1,4 +1,5 @@
 <template>
+<!-- 查看单个商品详情组件 -->
     <el-button type="text" @click="check(look)" >查看</el-button>
 </template>
 <script>

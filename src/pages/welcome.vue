@@ -1,4 +1,5 @@
 <template>
+<!-- 欢迎页 -->
   <div class="main">
     <div class="welcome">
       <span>欢迎来到后台管理系统</span>

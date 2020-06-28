@@ -1,4 +1,5 @@
 <template>
+<!-- 入库管理主入口 -->
 <div>
     <router-view></router-view>
 </div>
