@@ -1,9 +1,10 @@
 <template>
-<!-- 数据统计 -->
+  <!-- 数据统计 -->
   <div>
-     <transition enter-active-class="animate__zoomInLeft">
-    <div id="myChart" :style="{width: '600px', height: '600px'}"></div>
-     </transition>
+    <transition enter-active-class="animate__zoomInLeft">
+      <div id="myChart" :style="{width: '600px', height: '600px'}"></div>
+    </transition>
+
   </div>
 </template>
 <script>
@@ -12,7 +13,8 @@ export default {
   components: {},
   data() {
     return {
-      ser: []
+      ser: [],
+  
     };
   },
   methods: {
@@ -46,7 +48,8 @@ export default {
         );
         console.log(params.name);
       });
-    }
+    },
+
   },
   mounted() {
     this.ser = [

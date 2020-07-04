@@ -60,7 +60,7 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" :span="2">
             <template slot-scope="scope">
-              <look :look="scope.row.id"></look>
+              <dblook :look="scope.row.id" :onlyLook="false"></dblook>
 
               <!-- <el-button type="text" @click="del(scope.row.id)" style="color:red" >作废</el-button> -->
               <nullify :nullId="scope.row.id"></nullify>
@@ -77,7 +77,7 @@
 import fenye from "../../components/fenye";
 import dingdan from "../../components/dingdan";
 import nullify from "../../components/nullify";
-import look from "../../components/look";
+import dblook from "../../components/diaoboLook";
 
 export default {
   props: [],
@@ -85,7 +85,7 @@ export default {
     dingdan,
     fenye,
     nullify,
-    look
+    dblook
   },
   data() {
     return {

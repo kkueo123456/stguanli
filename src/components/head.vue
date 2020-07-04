@@ -52,7 +52,6 @@ export default {
     // let arr = this.$route.meta.map(item=>{
     //    return item
     // })
-    console.log(this.$route)
   },
   watch: {},
   computed: {}

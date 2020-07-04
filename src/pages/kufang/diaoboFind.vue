@@ -1,5 +1,5 @@
 <template>
-<!-- 调拨查询页 -->
+  <!-- 调拨查询页 -->
   <div>
     <!-- 头部搜索及功能 -->
     <div class="head">
@@ -69,7 +69,7 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
-              <look :look="scope.row.id"></look>
+              <dblook :look="scope.row.id" :onlyLook="true"></dblook>
               <el-button type="text" @click="update(scope.row.id)" v-if="scope.row.dbzt=='暂存'">编辑</el-button>
               <!-- <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button> -->
               <nullify :nullId="scope.row.id"></nullify>
@@ -85,15 +85,14 @@
 <script>
 import fenye from "../../components/fenye";
 import nullify from "../../components/nullify";
-import look from "../../components/look";
 import search from "../../components/search";
-
+import dblook from "../../components/diaoboLook";
 export default {
   props: [],
   components: {
     fenye,
     nullify,
-    look,
+    dblook,
     search
   },
   data() {

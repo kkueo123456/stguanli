@@ -85,8 +85,6 @@
 import fenye from "../../components/fenye";
 import look from "../../components/look";
 import search from "../../components/search";
-
-
 export default {
   props: [],
   components: {

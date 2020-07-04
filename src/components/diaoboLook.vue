@@ -1,20 +1,24 @@
 <template>
-  <!-- 查看单个商品详情组件 -->
+  <!-- 调拨详情组件 -->
   <div class="lookWrap">
-    <el-button type="text" @click="check(look)" >查看</el-button>
+    <el-button type="text" @click="dbcheck(look,onlyLook)">查看</el-button>
   </div>
 </template>
 <script>
 export default {
-  props: ["look"],
+  props: ["look", "onlyLook"],
   components: {},
   data() {
     return {};
   },
   methods: {
     //查看
-    check(id) {
-      this.$router.push("/detail?id=" + id);
+    dbcheck(id, only) {
+      if (only) {
+        this.$router.push("/dbDetail?id=" + id);
+      } else {
+        this.$router.push("/rkDetail?id=" + id);
+      }
     }
   },
   mounted() {},
