@@ -40,6 +40,7 @@ export default {
       this.$axios({
         url: API.BackLog
       }).then(res => {
+        localStorage.removeItem('isAdmin')
         this.$router.push("/login");
         this.$message({
           message: res.Msg,

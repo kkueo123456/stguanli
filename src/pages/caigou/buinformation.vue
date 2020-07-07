@@ -274,7 +274,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="title">
+                  <!-- <div class="title">
                     <span>
                       <i>*</i>截图凭证
                     </span>
@@ -292,7 +292,7 @@
                       <el-button size="small" type="primary">点击上传</el-button>
                       <div slot="tip" class="el-upload__tip">限制三个文件</div>
                     </el-upload>
-                  </div>
+                  </div> -->
                 </li>
               </ul>
             </div>

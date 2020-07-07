@@ -257,11 +257,9 @@ export default {
 
 /* 头部下方下拉菜单等样式 */
 .nav {
-  height: 50px;
   border-radius: 10px;
   background-color: white;
-  padding-top: 20px;
-  padding-left: 20px;
+  padding: 12px 0 12px 12px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
@@ -272,7 +270,7 @@ export default {
 }
 
 .slect #inputselect {
-  width: 120px;
+  width: 100px;
   height: 38px;
   border: 1px solid $bg1;
 }

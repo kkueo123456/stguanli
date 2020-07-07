@@ -19,13 +19,14 @@ const tongji = () => import("../pages/tongji")
 const detail = () => import("../pages/detail")
 //订单填写页
 const dingdan = () => import("../pages/dingdan")
+//批量入库
+const batchStorage = () => import('../pages/ruku/batchStorage')
 // 补全信息页
 const buinformation = () => import("../pages/caigou/buinformation")
 //盘点页
 const pandian = () => import("../pages/pandian")
 //全部的编辑按钮
 const allBianji = () => import('../pages/allBianji')
-
 /*采购的三极路由*/
 // const allding = () => import("../pages/allDing")
 // const cgtj = () => import("../pages/caigoutongji")
@@ -56,6 +57,9 @@ const findSellDetail = () => import('../pages/xiaoshou/findSellDetail')
 
 //销售订单
 const sellDing = () => import('../pages/xiaoshou/sellDingdan')
+//编辑销售订单
+const updateDing = () => import('../pages/xiaoshou/updateDing')
+
 //查询销售历史
 const findSell = () => import('../pages/xiaoshou/findSell')
 //销售二级路由
@@ -259,7 +263,14 @@ export default new Router({
       path: '/findSellDetail',
       component: findSellDetail
     },
-
+    {
+      path: '/batchStorage',
+      component: batchStorage
+    },
+    {
+      path: '/updateDing',
+      component: updateDing
+    },
     {
       path: "*",
       redirect: '/login'

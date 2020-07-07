@@ -1,5 +1,5 @@
 <template>
-<!-- 销售查询页 -->
+  <!-- 销售查询页 -->
   <div>
     <!-- 头部搜索及功能 -->
     <div class="head">
@@ -45,6 +45,8 @@
             <span>销售时间:{{item.xstime}}</span>
           </div>
           <div class="listTit-right">
+            <nullify :nullId="item.xsid"></nullify>
+            <el-button type="text" @click="updateDing(item.xsid)" :disabled="item.zt=='已生成'">编辑订单</el-button>
             <el-button type="text" @click="checkDing(item.xsid)">查看订单</el-button>
           </div>
         </div>
@@ -79,12 +81,14 @@
 import fenye from "../../components/fenye";
 import look from "../../components/look";
 import search from "../../components/search";
+import nullify from "../../components/nullify";
 export default {
   props: [],
   components: {
     fenye,
     look,
-    search
+    search,
+    nullify
   },
   data() {
     return {
@@ -117,6 +121,7 @@ export default {
           xsman: "王小明",
           xstime: "2020/05/11",
           xsid: "0",
+          zt: "已生成",
           xsDetail: [
             {
               img: "",
@@ -268,7 +273,10 @@ export default {
     checkDing(id) {
       this.$router.push("/findSellDetail?id=" + id);
     },
-
+    //编辑订单
+    updateDing(id) {
+      this.$router.push("/updateDing?id=" + id);
+    },
     /*查看信息*/
     look(id) {
       this.$router.push("/detail?id=" + id);
@@ -322,11 +330,9 @@ export default {
 
 /* 头部下方下拉菜单等样式 */
 .nav {
-  height: 50px;
   border-radius: 10px;
   background-color: white;
-  padding-top: 20px;
-  padding-left: 5px;
+  padding: 12px 0 12px 12px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
@@ -337,7 +343,7 @@ export default {
 }
 
 .slect #inputselect {
-  width: 120px;
+  width: 100px;
   height: 38px;
   border: 1px solid $bg1;
 }

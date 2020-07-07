@@ -1,5 +1,5 @@
 <template>
-<!-- 批量入库页 -->
+  <!-- 批量入库页 -->
   <div>
     <!-- 库房头部搜索及功能 -->
     <v-head></v-head>
@@ -147,7 +147,7 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "0",
+          id: 0,
           cw: "2",
           checked: false
         },
@@ -164,7 +164,7 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "1",
+          id: 1,
           cw: "0",
           checked: false
         },
@@ -181,7 +181,7 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "2",
+          id: 2,
           cw: "1",
           checked: false
         }
@@ -269,19 +269,23 @@ export default {
     /*批量入库*/
 
     Warehouse(val) {
+      //先循环出选中的数据
+      let data2 = this.data.filter(item => {
+        return item.checked;
+      });
+      // 取出选中数据的id
+      let dataId = data2.map(item => {
+        return item.id;
+      });
       this.$message({
         message: "入库成功",
         type: "success"
       });
-      let data2 = this.data.map(item => {
-        if (item.checked == true) {
-          return item;
-        }else{
-          return "空"
-        }
-      });
-      console.log('仓位',val)
-      console.log('数据',data2);
+      // 把选中数据的id转成字符串
+      let finData = dataId.join();
+      console.log("仓位", val);
+      console.log("数据", finData);
+      console.log(typeof finData);
     }
   },
   mounted() {
@@ -299,6 +303,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../../stylus/index.styl';
+
 /* 头部样式 */
 .head {
   width: 100%;
@@ -307,14 +312,17 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .wrap {
   padding-left: 20px;
   background-color: #f0f4f4;
   padding-right: 20px;
 }
+
 .headLeft .rongqi {
   display: flex;
 }
+
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -333,18 +341,22 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .slect {
   margin-right: 10px;
 }
+
 .slect #inputselect {
   width: 120px;
   height: 30px;
   border: 1px solid $bg1;
 }
+
 .navLeft {
   display: flex;
   justify-content: space-between;
 }
+
 .navLeft .navInformation {
   margin-right: 25px;
 }
@@ -352,14 +364,17 @@ export default {
 .navRight {
   padding-right: 20px;
 }
+
 .navRight span {
   color: red;
 }
+
 .navRight .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 20px;
 }
+
 /* 下拉菜单下方主题样式 */
 .main {
   background-color: white;
@@ -367,18 +382,21 @@ export default {
   padding-right: 20px;
   padding-bottom: 20px;
 }
+
 .main .allCheck {
 }
+
 .allCheck /deep/ .el-button--text {
   color: $bg1;
 }
+
 .main .list {
   padding-top: 40px;
   border-bottom: 1px solid $bg1;
   padding-bottom: 30px;
 }
-/* 下拉菜单下方主题样式列表左侧图片 */
 
+/* 下拉菜单下方主题样式列表左侧图片 */
 .main .list .leftTu {
   margin-left: 20px;
   width: 130px;
@@ -386,24 +404,29 @@ export default {
   background-color: tomato;
   margin-right: 20px;
 }
+
 .mainLeft {
   display: flex;
   padding-left: 5px;
 }
+
 .mainLeft /deep/ .el-checkbox {
   line-height: 140px;
 }
+
 /* 下拉菜单下方主题样式列表标题 */
 .list {
   display: flex;
   justify-content: space-between;
 }
+
 .listTit {
   font-size: 18px;
   color: $bg1;
   margin-right: 20px;
   margin-bottom: 10px;
 }
+
 .title .listBq .listBqji {
   display: inline-block;
   width: 25px;
@@ -425,21 +448,23 @@ export default {
   text-align: center;
   line-height: 20px;
 } */
-/* 下拉菜单下方主题样式列表下方信息*/
+/* 下拉菜单下方主题样式列表下方信息 */
 .another {
   display: flex;
 }
+
 .another .anotherList {
   margin-right: 20px;
 }
+
 .another .anotherStyle {
   color: #606060;
   font-size: 13px;
   margin-bottom: 10px;
   white-space: nowrap;
 }
-/* 下拉菜单下方主题样式列表右侧 */
 
+/* 下拉菜单下方主题样式列表右侧 */
 .mainRight {
   padding-right: 20px;
   display: flex;
@@ -447,10 +472,12 @@ export default {
   justify-content: space-around;
   margin-top: 20px;
 }
+
 .mainRightTop {
   display: flex;
   justify-content: flex-end;
 }
+
 .mainRight .detail {
   margin-bottom: 15px;
   text-align: right;
@@ -462,12 +489,14 @@ export default {
   color: blue;
   font-size: 18px;
 }
+
 .mainRight .mainRight-ck {
   color: #35a3d8;
   font-weight: normal;
   text-align: end;
   cursor: pointer;
 }
+
 .pages {
   text-align: center;
 }

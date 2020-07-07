@@ -1,5 +1,5 @@
 <template>
-<!-- 采购订单页 -->
+  <!-- 采购订单页 -->
   <div>
     <el-header>填写采购订单</el-header>
     <el-main>
@@ -9,6 +9,7 @@
           <div class="choose">
             <el-radio v-model="radio" label="1">自主采购</el-radio>
             <el-radio v-model="radio" label="2">客户寄卖</el-radio>
+            <el-radio v-model="radio" label="3">货品置换</el-radio>
           </div>
           <div class="headBottom">
             <div class="rongqi">
@@ -23,39 +24,13 @@
               </span>
               <el-input v-model="kufangform.pri" placeholder="请输入采购价格"></el-input>
             </div>
-          </div>
-        </div>
-        <!-- 入库人员才显示的框 -->
-        <div class="isshow">
-          <h3>此处为入库人员填写</h3>
-          <div class="isshowCon">
             <div class="rongqi">
               <span>
-                <i>*</i>货品名称
+                <i>*</i>货品类别
               </span>
-              <el-input v-model="num" placeholder="由入库人员填写"></el-input>
-              <el-button type="text">编码生成</el-button>
-            </div>
-            <div class="rongqi-cangku">
-              <span>
-                <i>*</i>仓库
-              </span>
-              <el-select v-model="value1" filterable placeholder="由入库人员填写">
+              <el-select v-model="value" placeholder="类别">
                 <el-option
-                  v-for="item in kufangoption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div class="rongqi-cangku">
-              <span>
-                <i>*</i>仓位
-              </span>
-              <el-select v-model="value2" filterable placeholder="由入库人员填写">
-                <el-option
-                  v-for="item in kufangoption"
+                  v-for="item in options"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -64,6 +39,7 @@
             </div>
           </div>
         </div>
+
         <!-- 添加图片 -->
         <div class="picList">
           <el-upload
@@ -187,6 +163,25 @@
               <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="textarea"></el-input>
             </div>
           </div>
+          <!-- 入库人员才显示的框 -->
+          <div class="isshow">
+            <div class="isshowCon">
+              <div class="rongqi">
+                <span>
+                  <i>*</i>货品编码
+                </span>
+                <el-input v-model="num" placeholder="由入库人员填写"></el-input>
+                <el-button type="text">编码生成</el-button>
+              </div>
+              <div class="rongqi">
+                <span>
+                  <i>*</i>销售定价
+                </span>
+                <el-input v-model="num" placeholder="由入库人员填写"></el-input>
+              </div>
+              <div></div>
+            </div>
+          </div>
           <!-- 货品描述下方付款方式等 -->
           <div class="miaoshuBottom">
             <div class="miaoshuBottomLeft">
@@ -225,7 +220,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="title">
+                  <!-- <div class="title">
                     <span>
                       <i>*</i>截图凭证
                     </span>
@@ -243,7 +238,7 @@
                       <el-button size="small" type="primary">点击上传</el-button>
                       <div slot="tip" class="el-upload__tip">限制三个文件</div>
                     </el-upload>
-                  </div>
+                  </div>-->
                 </li>
               </ul>
               <!-- 客户寄卖 -->
@@ -254,7 +249,7 @@
                     <span>
                       <i>*</i>客户姓名
                     </span>
-                     <el-input v-model="form3.name" placeholder="输入姓名"></el-input>
+                    <el-input v-model="form3.name" placeholder="输入姓名"></el-input>
                   </div>
                 </li>
                 <li>
@@ -274,7 +269,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="title">
+                  <!-- <div class="title">
                     <span>
                       <i>*</i>截图凭证
                     </span>
@@ -292,7 +287,7 @@
                       <el-button size="small" type="primary">点击上传</el-button>
                       <div slot="tip" class="el-upload__tip">限制三个文件</div>
                     </el-upload>
-                  </div>
+                  </div>-->
                 </li>
               </ul>
             </div>
@@ -357,11 +352,12 @@ export default {
         user: "",
         numB: ""
       },
-      /*付款方式客户寄卖*/ 
-      form3:{
-        name:"",
-        phone:"",
-        add:''
+      /*付款方式客户寄卖*/
+
+      form3: {
+        name: "",
+        phone: "",
+        add: ""
       },
       /*上传文件*/
       fileList: []
@@ -398,9 +394,9 @@ export default {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
     // 提交
-    tijiao(){
-      if(this.radio==""){
-        alert('未选择采购方式')
+    tijiao() {
+      if (this.radio == "") {
+        alert("未选择采购方式");
       }
     }
   },
@@ -457,17 +453,14 @@ export default {
   width: 30% !important;
   margin-right: 10px;
 }
+.el-main .head .rongqi .el-select /deep/ .el-input {
+  width: 100% !important;
+}
 /* 库房人员显示框 */
 .isshow {
-  height: 120px;
-  background-color: #f0f0f0;
-  padding: 30px;
+  padding: 40px 0 10px 0;
 }
-.isshow h3 {
-  font-size: 22px;
-  color: #019997;
-  margin-bottom: 30px;
-}
+
 .isshow .isshowCon {
   display: flex;
   justify-content: space-between;
@@ -490,9 +483,9 @@ export default {
 }
 /* 上传图片框 */
 .picList {
-  border: 1px solid #9a9a9a;
-  padding: 20px;
-  margin-top: 50px;
+  /* border: 1px solid #9a9a9a; */
+  padding: 10px;
+  margin-top: 30px;
 }
 /* 公共标题 */
 .title {
@@ -533,7 +526,7 @@ export default {
   width: 40%;
   margin-top: 20px;
 }
-.miaoshuBottomLeft ul h3{
+.miaoshuBottomLeft ul h3 {
   font-size: 18px;
   color: #019997;
   padding-left: 15px;
@@ -566,7 +559,7 @@ export default {
 .footer .tuihui {
   background-color: #4b4b4b;
 }
-.footer .zancun{
-  background-color:rgb(239, 156, 0) ;
+.footer .zancun {
+  background-color: rgb(239, 156, 0);
 }
 </style>

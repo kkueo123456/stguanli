@@ -3,11 +3,7 @@
   <div>
     <!-- 退回头部填写订单 -->
     <div class="head">
-      <div class="headLeft">
-        <div class="rongqi">
-          <dingdan></dingdan>
-        </div>
-      </div>
+  
     </div>
     <!-- 退回头部下方下拉菜单及查找 -->
     <div class="nav">
@@ -50,15 +46,11 @@
     <div class="main">
       <div class="tabMain">
         <el-table :data="data">
-          <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
-          <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
-          <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
-          <el-table-column prop="kuan" label="款式" :span="2"></el-table-column>
-          <el-table-column prop="color" label="成色" :span="2"></el-table-column>
           <el-table-column prop="num" label="编号" :span="2"></el-table-column>
-          <el-table-column prop="cangwei" label="仓位" :span="2"></el-table-column>
-          <el-table-column prop="finPri" label="销售价格" :span="2"></el-table-column>
-          <el-table-column label="调拨日期" :span="2">
+          <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
+          <el-table-column prop="color" label="采购员" :span="2"></el-table-column>
+          <el-table-column prop="finPri" label="采购价格" :span="2"></el-table-column>
+          <el-table-column label="采购日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
           <el-table-column prop="zt" fixed="right" label="状态" :span="2"></el-table-column>
@@ -232,8 +224,8 @@ export default {
 /* 头部样式 */
 .head {
   width: 100%;
-  height: 60px;
-  padding-top: 10px;
+  height: 10px;
+
 }
 
 .headLeft .rongqi .el-button--primary {
@@ -243,23 +235,21 @@ export default {
 
 /* 头部下方下拉菜单等样式 */
 .nav {
-  height: 50px;
   border-radius: 10px;
   background-color: white;
-  padding-top: 20px;
-  padding-left: 20px;
+  padding: 12px 0 12px 12px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
 }
 
 .slect {
-  width: 148px;
+
   margin-right: 10px;
 }
 
 .slect #inputselect {
-  width: 145px;
+  width: 100px;
   height: 38px;
   border: 1px solid $bg1;
 }

@@ -45,8 +45,6 @@
           </div>
           <div class="listTit-right">
             <!-- <el-button type="text" @click="del(item.xsid)" style="color:red">作废</el-button> -->
-            <nullify :nullId="item.xsid"></nullify>
-
             <el-button type="text" @click="checkDing(item.xsid)">查看订单</el-button>
             <el-button type="text" @click="allchuku(index)">批量出库</el-button>
           </div>
@@ -332,14 +330,11 @@ export default {
 
 /* 头部下方下拉菜单等样式 */
 .nav {
-  height: 50px;
   border-radius: 10px;
   background-color: white;
-  padding-top: 20px;
-  padding-left: 5px;
+  padding: 12px 0 12px 12px;
   margin-bottom: 20px;
   display: flex;
-  padding-right: 20px;
   justify-content: space-between;
 }
 
@@ -348,7 +343,7 @@ export default {
 }
 
 .slect #inputselect {
-  width: 120px;
+  width: 100px;
   height: 38px;
   border: 1px solid $bg1;
 }

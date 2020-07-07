@@ -10,6 +10,7 @@ export default {
   components: {},
   data() {
     return {
+      nulltext:'作废'
     };
   },
   methods: {

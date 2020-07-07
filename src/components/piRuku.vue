@@ -12,14 +12,14 @@
       </el-select>
       <span slot="footer" class="dialog-footer">
         <el-button @click="isShow.show = false">取 消</el-button>
-        <el-button type="primary" @click="dialogSure">确 定</el-button>
+        <el-button type="primary" @click="dialogSure(diaork)">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
 export default {
-  props: [],
+  props: ["diaork"],
   components: {},
   data() {
     return {
@@ -49,9 +49,12 @@ export default {
     Warehouse() {
       this.isShow.show = true;
     },
-    dialogSure() {
+    dialogSure(diaork) {
       this.isShow.show = false;
-      this.$router.push('/rkDetail')
+      if (diaork) {
+        this.$router.push("/batchStorage");
+        this.$emit("xuanCang", this.AllCangvalue);
+      }
       this.$emit("xuanCang", this.AllCangvalue);
     }
   },
@@ -62,6 +65,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../stylus/index.styl';
+
 .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;

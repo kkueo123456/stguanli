@@ -2,13 +2,7 @@
   <!-- 补全信息 -->
   <div>
     <!-- 订单头部填写订单 -->
-    <div class="head">
-      <div class="headLeft">
-        <div class="rongqi">
-          <dingdan></dingdan>
-        </div>
-      </div>
-    </div>
+    <div class="head"></div>
     <!-- 补全信息头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
@@ -53,21 +47,18 @@
         <el-table :data="data">
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
-          <el-table-column prop="lie" label="系列" :span="2"></el-table-column>
-          <el-table-column prop="kuan" label="款式" :span="2"></el-table-column>
-          <el-table-column prop="color" label="成色" :span="2"></el-table-column>
-          <el-table-column prop="num" label="编号" :span="2"></el-table-column>
           <el-table-column prop="man" label="采购员" :span="2"></el-table-column>
-          <el-table-column prop="cangwei" label="仓位" :span="2"></el-table-column>
-          <el-table-column prop="finPri" label="指导价格" :span="2"></el-table-column>
-          <el-table-column label="调拨日期" :span="2">
+          <el-table-column prop="cangwei" label="订单状态" :span="2"></el-table-column>
+          <el-table-column prop="finPri" label="采购价格" :span="2"></el-table-column>
+          <el-table-column label="采购日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
+              <look :look="scope.row.id"></look>
               <el-button type="text" @click="upDate(scope.row.id)">编辑</el-button>
               <!-- <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button> -->
-              <nullify :nullId="scope.row.id" ></nullify>
+              <el-button type="text" @click="back(scope.row.id)" style="color:red">退回</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -81,14 +72,14 @@
 import fenye from "../../components/fenye";
 import dingdan from "../../components/dingdan";
 import nullify from "../../components/nullify";
-
+import look from "../../components/look";
 export default {
   props: [],
   components: {
     dingdan,
     fenye,
-    nullify
-
+    nullify,
+    look
   },
   data() {
     return {
@@ -115,12 +106,12 @@ export default {
           label: "北京烤鸭"
         }
       ],
-       //第一个下拉列表的value
+      //第一个下拉列表的value
       value: "0",
       //第二个下拉列表的value
-      value3:'0',
+      value3: "0",
       //第二个下拉列表的value
-      value4:'0',
+      value4: "0",
       data: [
         {
           img: "",
@@ -218,8 +209,26 @@ export default {
       this.value1 = "";
       this.value = "0";
     },
-    // 作废
- 
+    // 退回
+    back(id) {
+      this.$confirm("即将退回, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "退回成功!" + id
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消退回" + id
+          });
+        });
+    }
   },
   mounted() {},
   beforeRouteEnter(to, from, next) {
@@ -238,8 +247,7 @@ export default {
 /* 头部样式 */
 .head {
   width: 100%;
-  height: 60px;
-  padding-top: 10px;
+  height: 10px;
 }
 
 .headLeft .rongqi .el-button--primary {
@@ -249,23 +257,20 @@ export default {
 
 /* 头部下方下拉菜单等样式 */
 .nav {
-  height: 50px;
   border-radius: 10px;
   background-color: white;
-  padding-top: 20px;
-  padding-left: 20px;
+  padding: 12px 0 12px 12px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
 }
 
 .slect {
-  width: 148px;
   margin-right: 10px;
 }
 
 .slect #inputselect {
-  width: 145px;
+  width: 100px;
   height: 38px;
   border: 1px solid $bg1;
 }

@@ -27,6 +27,16 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
+        <div class="slect">
+          <select name="public-choice" v-model="value4" id="inputselect" @change="gai">
+            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
+        </div>
+        <div class="slect">
+          <select name="public-choice" v-model="value4" id="inputselect" @change="gai">
+            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
+        </div>
         <!-- 采购头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
@@ -50,18 +60,18 @@
     <div class="main">
       <div class="tabMain">
         <el-table :data="data">
+          <el-table-column prop="num" label="编号" :span="2"></el-table-column>
           <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
           <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
-          <el-table-column prop="num" label="编号" :span="2"></el-table-column>
           <el-table-column prop="man" label="采购员" :span="2"></el-table-column>
           <el-table-column prop="cangwei" label="仓位" :span="2"></el-table-column>
-          <el-table-column prop="finPri" label="指导价格" :span="2"></el-table-column>
+          <el-table-column prop="finPri" label="采购价格" :span="2"></el-table-column>
           <el-table-column prop="price" label="销售定价" :span="2"></el-table-column>
-          <el-table-column prop="dbzt" label="采购状态" :span="2"></el-table-column>
-          <el-table-column label="状态" :span="2">
+          <el-table-column prop="dbzt" label="订单状态" :span="2"></el-table-column>
+          <el-table-column label="货品状态" :span="2">
             <template slot-scope="scope">{{scope.row.zt}}</template>
           </el-table-column>
-          <el-table-column label="调拨日期" :span="2">
+          <el-table-column label="采购日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="100" :span="2">
@@ -69,13 +79,11 @@
               <look :look="scope.row.id" v-if="scope.row.dbzt=='已生成'"></look>
               <!-- <el-button type="text" @click="look(scope.row.id)" v-if="scope.row.dbzt=='已生成'">查看</el-button> -->
               <el-button type="text" @click="update(scope.row.id)" v-if="scope.row.dbzt=='暂存'">编辑</el-button>
-              <!-- <el-button
-                type="text"
-                @click="del(scope.row.id)"
-                style="color:red"
-                v-if="scope.row.zt !=='入库在售'"
-              >作废</el-button>-->
-              <nullify :nullId="scope.row.id" v-if="scope.row.zt !=='入库在售'" :nullzt='scope.row.zf'></nullify>
+              <nullify
+                :nullId="scope.row.id"
+                v-if="(scope.row.zf ==false||null)||(scope.row.zt !=='入库在售')"
+                :nullzt="scope.row.zf"
+              ></nullify>
             </template>
           </el-table-column>
         </el-table>
@@ -90,7 +98,6 @@ import fenye from "../../components/fenye";
 import nullify from "../../components/nullify";
 import dingdan from "../../components/dingdan";
 import look from "../../components/look";
-
 export default {
   props: [],
   components: {
@@ -109,21 +116,18 @@ export default {
         },
         {
           value: "1",
-          label: "双皮奶"
+          label: "自主采购"
         },
         {
           value: "2",
-          label: "蚵仔煎"
+          label: "客户寄卖"
         },
         {
           value: "3",
-          label: "龙须面龙须面"
-        },
-        {
-          value: "4",
-          label: "北京烤鸭"
+          label: "货品置换"
         }
       ],
+
       //第一个下拉列表的value
       value: "0",
       //第二个下拉列表的value
@@ -146,7 +150,7 @@ export default {
           num: "12345678909123",
           finPri: "",
           id: "0",
-          zt: "未定价",
+          zt: "入库在售",
           man: "蒲子杰",
           dbzt: "已生成",
           zf: true
@@ -165,7 +169,7 @@ export default {
           num: "12345678909123",
           finPri: "",
           id: "1",
-          zt: "已采购",
+          zt: "未定价",
           man: "蒲子杰",
           dbzt: "暂存",
           zf: false
@@ -206,7 +210,7 @@ export default {
           zt: "入库在售",
           man: "蒲子杰",
           dbzt: "暂存",
-          zf: false
+          zf: null
         }
       ],
 
@@ -295,23 +299,20 @@ export default {
 
 /* 头部下方下拉菜单等样式 */
 .nav {
-  height: 50px;
   border-radius: 10px;
   background-color: white;
-  padding-top: 20px;
-  padding-left: 20px;
+  padding 12px 0 12px 12px 
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
 }
 
 .slect {
-  width: 148px;
   margin-right: 10px;
 }
 
 .slect #inputselect {
-  width: 140px;
+  width: 100px;
   border: 1px solid $bg1;
   height: 38px;
 }
