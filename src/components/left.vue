@@ -1,5 +1,5 @@
 <template>
-<!-- 首页左侧分栏组件 -->
+  <!-- 首页左侧分栏组件 -->
   <div class="left">
     <el-scrollbar style="height:100%">
       <h3>ShengTang</h3>
@@ -11,6 +11,9 @@
           active-text-color="rgb(16,17,23)"
           background-color="rgb(25,26,35)"
           :unique-opened="false"
+          @open="handleOpen"
+          :default-openeds="NavOpeneds"
+          @close="handleClose"
         >
           <el-submenu
             index="1"
@@ -87,13 +90,23 @@ export default {
   data() {
     return {
       list: 0,
-      isAdmin: ""
+      isAdmin: "",
+      //默认打开导航栏的index
+      NavOpeneds: null
     };
   },
-  methods: {},
+  methods: {
+    //导航栏打开触发的事件
+    handleOpen(key, keyPath) {
+      sessionStorage.setItem("leftNavIndex", JSON.stringify(keyPath));
+    },
+    handleClose() {}
+  },
   mounted() {
+    //存角色id，进行判断拦截
     this.isAdmin = localStorage.getItem("isAdmin");
-    console.log(this.isAdmin);
+    //取出导航栏Index，设置默认打开(主要针对页面返回后)
+    this.NavOpeneds = JSON.parse(sessionStorage.getItem("leftNavIndex"));
   },
   watch: {},
   computed: {}
