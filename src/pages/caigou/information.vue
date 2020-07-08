@@ -2,7 +2,11 @@
   <!-- 补全信息 -->
   <div>
     <!-- 订单头部填写订单 -->
-    <div class="head"></div>
+    <div class="head">
+        <div class="headLeft">
+        <search @search="headSearch"></search>
+      </div>
+    </div>
     <!-- 补全信息头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
@@ -21,6 +25,12 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
+        <div class="slect">
+          <select name="public-choice" v-model="value3" id="inputselect" @change="gai">
+            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
+        </div>
+
         <!-- 补全信息头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
@@ -56,7 +66,7 @@
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
               <look :look="scope.row.id"></look>
-              <el-button type="text" @click="upDate(scope.row.id)">编辑</el-button>
+              <update :up="scope.row.id"></update>
               <!-- <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button> -->
               <el-button type="text" @click="back(scope.row.id)" style="color:red">退回</el-button>
             </template>
@@ -73,13 +83,17 @@ import fenye from "../../components/fenye";
 import dingdan from "../../components/dingdan";
 import nullify from "../../components/nullify";
 import look from "../../components/look";
+import update from "../../components/update";
+import search from "../../components/search";
 export default {
   props: [],
   components: {
     dingdan,
     fenye,
     nullify,
-    look
+    look,
+    update,
+    search
   },
   data() {
     return {
@@ -189,15 +203,16 @@ export default {
     };
   },
   methods: {
+    //头部搜索
+    headSearch(val){
+     console.log(val)
+    },
     gai() {
       console.log(this.value);
     },
 
     changeye(val) {
       console.log(val);
-    },
-    upDate(id) {
-      this.$router.push("/buquan?id=" + id);
     },
     checkall() {
       console.log(this.value2);
@@ -247,9 +262,13 @@ export default {
 /* 头部样式 */
 .head {
   width: 100%;
-  height: 10px;
+  height: 60px;
+   
 }
-
+.headLeft {
+  width: 30%;
+  line-height 60px
+}
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;

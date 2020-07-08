@@ -1,15 +1,9 @@
 <template >
-  <!-- 采购人员看的全部订单及详情 -->
+  <!-- 数据统计 -->
   <div>
     <!-- 订单头部填写订单 -->
-    <div class="head">
-      <div class="headLeft">
-        <div class="rongqi">
-          <dingdan></dingdan>
-        </div>
-      </div>
-    </div>
-    <!-- 采购头部下方下拉菜单及查找 -->
+    <div class="head"></div>
+    <!-- 补全信息头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -27,17 +21,9 @@
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
         </div>
-        <div class="slect">
-          <select name="public-choice" v-model="value4" id="inputselect" @change="gai">
-            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
-          </select>
-        </div>
-        <div class="slect">
-          <select name="public-choice" v-model="value4" id="inputselect" @change="gai">
-            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
-          </select>
-        </div>
-        <!-- 采购头部下方日期下拉列表 -->
+  
+
+        <!-- 补全信息头部下方日期下拉列表 -->
         <div class="slect">
           <div class="block">
             <el-date-picker
@@ -53,60 +39,47 @@
       </div>
       <div class="navRight">
         <el-button type="primary" @click="navclear">清空</el-button>
-        <el-button type="primary" @click="checkall">查找</el-button>
+        <el-button type="primary" @click="checkall">搜索</el-button>
       </div>
     </div>
-    <!-- 采购主体内容 -->
+    <!-- 补全信息主体内容 -->
     <div class="main">
+      <!-- 补全信息主体内容列表 -->
       <div class="tabMain">
         <el-table :data="data">
-          <el-table-column prop="num" label="编号" :span="2"></el-table-column>
-          <el-table-column prop="name" label="商品名" :span="2"></el-table-column>
-          <el-table-column prop="logo" label="品牌" :span="2"></el-table-column>
+          <el-table-column prop="name" label="货品名称" :span="2"></el-table-column>
+          <el-table-column prop="logo" label="货品类别" :span="2"></el-table-column>
           <el-table-column prop="man" label="采购员" :span="2"></el-table-column>
-          <el-table-column prop="cangwei" label="仓位" :span="2"></el-table-column>
+          <el-table-column prop="cangwei" label="订单状态" :span="2"></el-table-column>
           <el-table-column prop="finPri" label="采购价格" :span="2"></el-table-column>
-          <el-table-column prop="price" label="销售定价" :span="2"></el-table-column>
-          <el-table-column prop="dbzt" label="订单状态" :span="2"></el-table-column>
-          <el-table-column label="货品状态" :span="2">
-            <template slot-scope="scope">{{scope.row.zt}}</template>
-          </el-table-column>
-          <el-table-column label="采购日期" :span="2">
+          <el-table-column label="订单日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作"  :span="2">
+          <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
-              <look :look="scope.row.id" v-if="scope.row.dbzt=='已生成'"></look>
-              <!-- <el-button type="text" @click="look(scope.row.id)" v-if="scope.row.dbzt=='已生成'">查看</el-button> -->
-              <update :up="scope.row.id"></update>
-              <nullify
-                :nullId="scope.row.id"
-                v-if="(scope.row.zf ==false||null)||(scope.row.zt !=='入库在售')"
-                :nullzt="scope.row.zf"
-              ></nullify>
+              <el-button type="text" @click="bianji(scope.row.id)">编辑</el-button>
+              <!-- <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button> -->
+              <nullify :nullId="scope.row.id"></nullify>
             </template>
           </el-table-column>
         </el-table>
       </div>
-      <!-- 采购主体内容下方分页功能 -->
-      <fenye class="pages" @jumpPage="changeye" :pageNum="pageNum"></fenye>
+      <!-- 补全信息内容下方分页功能 -->
+      <fenye class="pages" @jumpPage="changeye"></fenye>
     </div>
   </div>
 </template>
 <script>
-import fenye from "../../components/fenye";
-import nullify from "../../components/nullify";
-import dingdan from "../../components/dingdan";
-import look from "../../components/look";
-import update from "../../components/update";
-
+import fenye from "../components/fenye";
+import dingdan from "../components/dingdan";
+import nullify from "../components/nullify";
+import update from "../components/update";
 export default {
   props: [],
   components: {
     dingdan,
     fenye,
     nullify,
-    look,
     update
   },
   data() {
@@ -119,25 +92,27 @@ export default {
         },
         {
           value: "1",
-          label: "自主采购"
+          label: "双皮奶"
         },
         {
           value: "2",
-          label: "客户寄卖"
+          label: "蚵仔煎"
         },
         {
           value: "3",
-          label: "货品置换"
+          label: "龙须面龙须面"
+        },
+        {
+          value: "4",
+          label: "北京烤鸭"
         }
       ],
-
       //第一个下拉列表的value
       value: "0",
       //第二个下拉列表的value
       value3: "0",
       //第二个下拉列表的value
       value4: "0",
-
       data: [
         {
           img: "",
@@ -153,10 +128,8 @@ export default {
           num: "12345678909123",
           finPri: "",
           id: "0",
-          zt: "入库在售",
-          man: "蒲子杰",
-          dbzt: "已生成",
-          zf: true
+          zt: "未鉴定",
+          man: "蒲子杰"
         },
         {
           img: "",
@@ -172,10 +145,8 @@ export default {
           num: "12345678909123",
           finPri: "",
           id: "1",
-          zt: "未定价",
-          man: "蒲子杰",
-          dbzt: "暂存",
-          zf: false
+          zt: "已退回",
+          man: "蒲子杰"
         },
         {
           img: "",
@@ -190,11 +161,9 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "22",
-          zt: "已采购",
-          man: "蒲子杰",
-          dbzt: "已生成",
-          zf: true
+          id: "2",
+          zt: "未鉴定",
+          man: "蒲子杰"
         },
         {
           img: "",
@@ -209,20 +178,15 @@ export default {
           color: "95-97新",
           num: "12345678909123",
           finPri: "120000",
-          id: "31",
+          id: "3",
           zt: "入库在售",
-          man: "蒲子杰",
-          dbzt: "暂存",
-          zf: null
+          man: "蒲子杰"
         }
       ],
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-      //时间列表的value
       value2: "",
-      isAdmin: "",
-      dialogJudge: false,
-      pageNum: 0
+      isAdmin: ""
     };
   },
   methods: {
@@ -237,44 +201,18 @@ export default {
       console.log(this.value2);
     },
     /*清空*/
-
     navclear() {
       this.search = "";
       this.value2 = "";
       this.value1 = "";
-      this.value3 = "0";
-      this.value4 = "0";
       this.value = "0";
     },
-
     // 编辑
-    update(id) {
+    bianji(id) {
       this.$router.push("/allBianji?id=" + id);
     }
-    // 作废
-    // del(id) {
-    //   this.$confirm("确定作废？", "提示", {
-    //     confirmButtonText: "确定",
-    //     cancelButtonText: "取消",
-    //     type: "warning"
-    //   })
-    //     .then(() => {
-    //       this.$message({
-    //         type: "warning",
-    //         message: "删除成功!"+id
-    //       });
-    //     })
-    //     .catch(() => {
-    //       this.$message({
-    //         type: "info",
-    //         message: "已取消删除"
-    //       });
-    //     });
-    // },
   },
-  mounted() {
-    this.pageNum = 6;
-  },
+  mounted() {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin == 1 || isAdmin == 2) {
@@ -286,13 +224,12 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-@import '../../stylus/index.styl';
+@import '../stylus/index.styl';
 
 /* 头部样式 */
 .head {
   width: 100%;
-  height: 60px;
-  padding-top: 10px;
+  height: 10px;
 }
 
 .headLeft .rongqi .el-button--primary {
@@ -304,7 +241,7 @@ export default {
 .nav {
   border-radius: 10px;
   background-color: white;
-  padding 12px 0 12px 12px 
+  padding: 12px 0 12px 12px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
@@ -316,8 +253,8 @@ export default {
 
 .slect #inputselect {
   width: 100px;
-  border: 1px solid $bg1;
   height: 38px;
+  border: 1px solid $bg1;
 }
 
 .navLeft {
@@ -331,7 +268,7 @@ export default {
 }
 
 .navRight {
-  padding-right: 10px;
+  padding-right: 20px;
 }
 
 .navRight .el-button--primary {
@@ -361,6 +298,10 @@ export default {
 }
 
 .tabMain /deep/ .el-table td {
+  text-align: center;
+}
+
+.pages {
   text-align: center;
 }
 </style>

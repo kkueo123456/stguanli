@@ -1,7 +1,7 @@
 <template>
   <!-- 作废组件 -->
   <!-- <div class="wrap"> -->
-  <el-button type="text" @click="del(nullId)" style="color:red" :disabled="nullzt">作废</el-button>
+  <el-button type="text"  @click="del(nullId)" :disabled="nullzt">作废</el-button>
   <!-- </div> -->
 </template>
 <script>
@@ -44,5 +44,8 @@ export default {
 <style lang="stylus" scoped>
 .wrap {
   display: inline-block;
+}
+.el-button{
+  color red
 }
 </style>

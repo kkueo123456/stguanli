@@ -22,11 +22,12 @@
             v-if="(isAdmin==1)||(isAdmin==2)"
           >
             <template slot="title">
-              <router-link to="/index/caigou" active-class="active">采购管理</router-link>
+             
+              <router-link to="/index/caigou" active-class="active" index="1-1">采购管理</router-link>
             </template>
             <el-menu-item-group class="caigouliebiao">
-              <router-link to="/index/caigou/allBuy" active-class="active2">>全部订单</router-link>
-              <router-link to="/index/caigou/information" active-class="active2">>补全信息</router-link>
+              <router-link to="/index/caigou/allBuy" active-class="active2" index="1-2">>全部订单</router-link>
+              <router-link to="/index/caigou/information" active-class="active2" index="1-3">>补全信息</router-link>
               <router-link
                 to="/index/caigou/tuihui"
                 active-class="active2"
@@ -41,11 +42,10 @@
             <el-menu-item-group class="caigouliebiao">
               <router-link to="/index/kufang/zaiku" active-class="active2">>在库货品</router-link>
               <router-link to="/index/kufang/diaoboF" active-class="active2">>调拨查询</router-link>
-              <router-link to="/index/kufang/xiaoshou" active-class="active2">>销售订单</router-link>
+              <router-link to="/index/kufang/xiaoshou" active-class="active2">>待出库</router-link>
               <router-link to="/index/kufang/chukuF" active-class="active2">>出库查询</router-link>
             </el-menu-item-group>
           </el-submenu>
-
           <el-submenu index="3" class="guanli" style="padding-left:0px" v-if="(isAdmin==1)">
             <template slot="title">
               <router-link to="/index/ruku" active-class="active">入库管理</router-link>
@@ -78,6 +78,9 @@
           <el-menu-item index="7" class="guanli" style="padding-left:0px">
             <router-link to="/index/tongji" active-class="active" v-if="(isAdmin==1)">数据统计</router-link>
           </el-menu-item>
+           <el-menu-item index="8" class="guanli" style="padding-left:0px">
+            <router-link to="/index/temporary" active-class="active" >暂存列表</router-link>
+          </el-menu-item>
         </el-menu>
       </el-col>
     </el-scrollbar>
@@ -98,6 +101,7 @@ export default {
   methods: {
     //导航栏打开触发的事件
     handleOpen(key, keyPath) {
+      console.log(keyPath)
       sessionStorage.setItem("leftNavIndex", JSON.stringify(keyPath));
     },
     handleClose() {}

@@ -14,6 +14,8 @@ const sellMan = () => import('../pages/xiaoshou/sellMan')
 const guanli = () => import("../pages/guanli")
 const customer = () => import("../pages/customer/customer")
 const tongji = () => import("../pages/tongji")
+const temporary = () => import("../pages/temporary")
+
 //页面的二级路由
 //详情页
 const detail = () => import("../pages/detail")
@@ -105,7 +107,7 @@ export default new Router({
               path: "xiaoshou",
               component: xiaoshou,
               name: 'xiaoshou',
-              meta: ['仓库管理', '销售订单']
+              meta: ['仓库管理', '待出库']
             }
           ]
         },
@@ -194,6 +196,12 @@ export default new Router({
           component: customer,
           name: 'customer',
           meta: ['顾客管理']
+        },
+        {
+          path:'temporary',
+          component:temporary,
+          name: 'temporary',
+          meta: ['暂存列表']
         },
         {
           path: 'welcome',

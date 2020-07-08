@@ -1,9 +1,9 @@
 <template>
-<!-- 销售订单页 -->
+  <!-- 待出库页 -->
   <div>
     <div class="head">
       <div class="headLeft">
-        <search @search='headSearch'></search>
+        <search @search="headSearch"></search>
       </div>
     </div>
     <!-- 销售头部下方下栏菜单及品牌筛选 -->
@@ -47,6 +47,23 @@
             <!-- <el-button type="text" @click="del(item.xsid)" style="color:red">作废</el-button> -->
             <el-button type="text" @click="checkDing(item.xsid)">查看订单</el-button>
             <el-button type="text" @click="allchuku(index)">批量出库</el-button>
+            <el-dialog
+              title="确定出库？"
+              :visible.sync="centerDialogVisible"
+              :modal-append-to-body="false"
+              width="30%"
+            >
+              <!-- <span>此操作将出库，是否继续</span> -->
+              <el-radio-group v-model="chukuRadio">
+                <el-radio :label="3">寄卖售出</el-radio>
+                <el-radio :label="6">假的，出库</el-radio>
+                <el-radio :label="9">随便选</el-radio>
+              </el-radio-group>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="centerDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="sure">确 定</el-button>
+              </span>
+            </el-dialog>
           </div>
         </div>
         <div class="tabMain">
@@ -65,7 +82,7 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="150" :span="2">
               <template slot-scope="scope">
-                <look :look="scope.row.id" ></look>
+                <look :look="scope.row.id"></look>
               </template>
             </el-table-column>
           </el-table>
@@ -92,6 +109,11 @@ export default {
   },
   data() {
     return {
+      //批量出库dialog
+      centerDialogVisible: false,
+      chukuRadio: null,
+      chukuId: null,
+      //下拉
       options: [
         {
           value: "0",
@@ -244,7 +266,7 @@ export default {
         }
       });
     },
-   /*头部搜索按钮*/
+    /*头部搜索按钮*/
     headSearch(val) {
       console.log(val);
     },
@@ -267,15 +289,21 @@ export default {
     // handleCurrentChange(val) {
     //   console.log(val);
     // },
-     
-     
+
     /*查看订单*/
     checkDing(id) {
       this.$router.push("/xiaoshouCheck?id=" + id);
     },
     /*批量出库*/
     allchuku(index) {
-      console.log(this.data[index]);
+      this.centerDialogVisible = true;
+      this.chukuId = this.data[index].xsid;
+    },
+    sure() {
+      console.log(this.chukuId);
+      console.log(this.chukuRadio)
+      this.centerDialogVisible = false;
+
     },
     /*查看信息*/
     look(id) {

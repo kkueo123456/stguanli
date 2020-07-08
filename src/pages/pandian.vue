@@ -1,5 +1,5 @@
 <template>
-<!-- 盘点页面 -->
+  <!-- 盘点页面 -->
   <div>
     <el-header>盘点</el-header>
     <el-main>
@@ -40,6 +40,8 @@
             <div class="ready">已盘点{{pandianNum}}件</div>
           </div>
         </div>
+        <audio ref="audio" :src="audioUrl">您的浏览器不支持 audio 标签。</audio>
+
         <div class="main-bottom-body">
           <div class="tabMain">
             <el-table :data="panList" border>
@@ -80,7 +82,10 @@ export default {
       pandianInput: "",
       panList: [],
       /*已盘点的件数*/
-      pandianNum: "0"
+      pandianNum: "0",
+      //音频
+      audioUrl:
+        "http://ysb.yisell.com/yisell/ybys2018050819052088/sound/yisell_sound_201404102304403674_88366.mp3"
     };
   },
   methods: {
@@ -97,6 +102,8 @@ export default {
       console.log("未盘点");
     },
     submit() {
+      this.$refs.audio.play();
+      this.pandianInput = "";
       this.pandianNum++;
     }
   },

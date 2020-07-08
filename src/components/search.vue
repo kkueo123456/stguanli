@@ -1,5 +1,5 @@
 <template>
-<!-- 搜索框组件 -->
+  <!-- 搜索框组件 -->
   <div class="sou">
     <div class="rongqi">
       <el-input placeholder="请输入货品编号" v-model="search" clearable></el-input>
@@ -20,7 +20,8 @@ export default {
   },
   methods: {
     sousuo() {
-        this.$emit('search',this.search)
+      this.$emit("search", this.search);
+      this.search = "";
     }
   },
   mounted() {},
@@ -46,7 +47,7 @@ export default {
   background-color: $bg1;
   border-color: $bg1;
   border-radius: 12px;
-  margin-left 20px
-  margin-right 20px
+  margin-left: 20px;
+  margin-right: 20px;
 }
 </style>

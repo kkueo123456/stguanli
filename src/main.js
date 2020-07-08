@@ -34,10 +34,24 @@ Vue.config.productionTip = false
 //  导入excel插件
 import XLSX from 'xlsx'
 Vue.prototype.XLSX = XLSX
+//全局路由守卫
+// router.beforeEach((to, from, next) => {
+//   let isId = sessionStorage.getItem('isId')
+//   if (isId) {
+//     next()
+//     return
+//   } else if (to.path === '/login') {
+//     next()
+//     return
+//   }
+//   next('/login')
+// })
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>'
 })

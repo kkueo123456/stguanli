@@ -1,5 +1,5 @@
 <template>
-<!-- 查看销售订单页 -->
+  <!-- 查看销售订单页 -->
   <div>
     <el-header>查看销售订单</el-header>
     <el-main>
@@ -61,7 +61,7 @@
                     <el-button @click="Deldialog = false">取 消</el-button>
                     <el-button type="primary" @click="confirmDel">确 定</el-button>
                   </span>
-                </el-dialog> -->
+                </el-dialog>-->
                 <!-- 下方销售定价 -->
                 <h4 class="dingPri">指导售价:{{item.price}}</h4>
                 <!-- 销售价格填写 -->
@@ -131,11 +131,11 @@
         <!-- 提交订单与取消 -->
         <div class="footer">
           <span>采购员：王小明</span>
-          <div>
+          <!-- <div>
             <button class="tijiao" @click="tijiao">提交订单</button>
             <button class="zancun" @click="zancun">暂存</button>
             <button class="tuihui">取消退回</button>
-          </div>
+          </div>-->
         </div>
       </div>
     </el-main>
@@ -462,28 +462,10 @@ export default {
 }
 
 .footer span {
-  margin-right: 40px;
+  margin-left: 15px;
   line-height: 40px;
 }
 
-.footer button {
-  border: none;
-  width: 200px;
-  height: 40px;
-  cursor: pointer;
-  margin-right: 15px;
-  color: white;
-}
 
-.footer .tijiao {
-  background-color: red;
-}
 
-.footer .tuihui {
-  background-color: #4b4b4b;
-}
-
-.footer .zancun {
-  background-color: rgb(239, 156, 0);
-}
 </style>

@@ -87,7 +87,7 @@
           <div class="footer-button">
             <button class="tijiao" @click="tijiao">上传调拨单</button>
             <button class="zancun" @click="zancun">暂存</button>
-            <button class="tuihui">取消退回</button>
+            <back></back>
           </div>
         </div>
       </div>
@@ -97,12 +97,13 @@
 <script>
 import look from "../../components/look";
 import search from "../../components/search";
-
+import back from "../../components/back";
 export default {
   props: [],
   components: {
     look,
-    search
+    search,
+    back
   },
   data() {
     return {
@@ -421,10 +422,6 @@ export default {
 
 .footer .tijiao {
   background-color: red;
-}
-
-.footer .tuihui {
-  background-color: #4b4b4b;
 }
 
 .footer .zancun {

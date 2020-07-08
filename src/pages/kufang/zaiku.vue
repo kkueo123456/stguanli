@@ -1,11 +1,10 @@
 <template>
-<!-- 在库货品页 -->
+  <!-- 在库货品页 -->
   <div>
     <!-- 库房头部搜索及功能 -->
     <div class="head">
       <div class="headLeft">
-        <search @search='headSearch'></search>
-     
+        <search @search="headSearch"></search>
       </div>
       <div class="headRight">
         <div class="rongqi">
@@ -14,6 +13,46 @@
         <div></div>
         <div class="rongqi">
           <el-button type="primary" @click="diao">调拨</el-button>
+          <el-dialog
+            title="请选择仓位"
+            :visible.sync="diaoDialog"
+            width="40%"
+            :modal-append-to-body="false"
+          >
+            <div class="block">
+              <span class="demonstration">始发仓</span>
+              <el-cascader
+                :options="beginOption"
+                :props="{ multiple: true,
+                label:'name', value:'BigId',
+                leaf:'cId'
+                }"
+                v-model="beginValue"
+                clearable
+              ></el-cascader>
+              <!-- <el-cascader
+                :options="Cangoption"
+                :props="{ multiple: true }"
+                v-model="Cangvalue"
+                clearable
+              ></el-cascader>-->
+            </div>
+            <div class="block">
+              <span class="demonstration">调入仓</span>
+              <el-cascader
+                :options="transferOption"
+                :props="{ multiple: true ,
+                label:'name', value:'BigId'
+                 }"
+                v-model="transferValue"
+                clearable
+              ></el-cascader>
+            </div>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="diaoDialog = false">取 消</el-button>
+              <el-button type="primary" @click="DiaodialogSure">确 定</el-button>
+            </span>
+          </el-dialog>
         </div>
         <div class="rongqi">
           <el-button type="primary" @click="pandian">盘点</el-button>
@@ -106,16 +145,17 @@
           <el-table-column fixed="right" label="操作" width="150" :span="2">
             <template slot-scope="scope">
               <look :look="scope.row.id"></look>
-              <el-button type="text" @click="update(scope.row.id)">编辑</el-button>
+              <update :up="scope.row.id"></update>
               <el-button type="text" @click="chuku(scope.row.id)">出库</el-button>
               <el-dialog
-                title="选择出库原因"
+                title="确定出库？"
                 :visible.sync="centerDialogVisible"
                 :modal-append-to-body="false"
                 width="30%"
               >
+                <!-- <span>此操作将出库，是否继续</span> -->
                 <el-radio-group v-model="chukuRadio">
-                  <el-radio :label="3">想卖</el-radio>
+                  <el-radio :label="3">寄卖售出</el-radio>
                   <el-radio :label="6">假的，出库</el-radio>
                   <el-radio :label="9">随便选</el-radio>
                 </el-radio-group>
@@ -138,17 +178,81 @@
 import fenye from "../../components/fenye";
 import look from "../../components/look";
 import search from "../../components/search";
+import update from "../../components/update";
 
 export default {
   props: [],
   components: {
     fenye,
     look,
-    search
+    search,
+    update
   },
   data() {
     return {
-      //盘点的选择仓位
+      //调拨的dialog
+      diaoDialog: false,
+      beginValue: 0,
+      transferValue: 0,
+      beginOption: [
+        {
+          BigId: "0",
+          name: "唐山丰润仓",
+          children: [
+            { BigId: "0-1", name: "丰润a仓" },
+            { BigId: "0-2", name: "丰润b仓" },
+            { BigId: "0-3", name: "丰润c仓" }
+          ]
+        },
+        {
+          BigId: "1",
+          name: "唐山开平",
+          children: [
+            { BigId: "1-1", name: "开平a仓" },
+            { BigId: "1-2", name: "开平b仓" },
+            { BigId: "1-3", name: "开平c仓" }
+          ]
+        },
+        {
+          BigId: "2",
+          name: "北京朝阳",
+          children: [
+            { BigId: "2-1", name: "朝阳a仓" },
+            { BigId: "2-2", name: "朝阳b仓" },
+            { BigId: "2-3", name: "朝阳c仓" }
+          ]
+        }
+      ],
+      transferOption: [
+        {
+          BigId: "0",
+          name: "唐山丰润仓",
+          children: [
+            { BigId: "0-1", name: "丰润a仓" },
+            { BigId: "0-2", name: "丰润b仓" },
+            { BigId: "0-3", name: "丰润c仓" }
+          ]
+        },
+        {
+          BigId: "1",
+          name: "唐山开平",
+          children: [
+            { BigId: "1-1", name: "开平a仓" },
+            { BigId: "1-2", name: "开平b仓" },
+            { BigId: "1-3", name: "开平c仓" }
+          ]
+        },
+        {
+          BigId: "2",
+          name: "北京朝阳",
+          children: [
+            { BigId: "2-1", name: "朝阳a仓" },
+            { BigId: "2-2", name: "朝阳b仓" },
+            { BigId: "2-3", name: "朝阳c仓" }
+          ]
+        }
+      ],
+      //盘点的选择仓位dialog
       pandianDialog: false,
       options: [
         {
@@ -165,7 +269,6 @@ export default {
         }
       ],
       /*下拉选择仓位多选*/
-
       Cangoption: [
         {
           value: "0",
@@ -279,6 +382,11 @@ export default {
     },
     /*头部右侧调拨*/
     diao() {
+      this.diaoDialog = true;
+    },
+    //调拨确定
+    DiaodialogSure() {
+      console.log(this.beginValue.join(), this.transferValue.join());
       this.$router.push("/diaoboPage");
     },
     /*头部右侧盘点*/
@@ -327,7 +435,6 @@ export default {
     },
     sure() {
       this.centerDialogVisible = false;
-      console.log(this.chukuid, this.chukuRadio);
     }
   },
   mounted() {},
@@ -363,6 +470,12 @@ export default {
   width: 275px;
   border-radius: 18px;
   border: 1px solid $bg1;
+}
+
+// 调拨dialog样式
+.rongqi /deep/ .el-dialog__body {
+  display: flex;
+  justify-content: space-between;
 }
 
 .headLeft .rongqi .el-button--primary {

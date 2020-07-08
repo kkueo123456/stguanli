@@ -1,4 +1,5 @@
 <template>
+  <!-- 采购订单页 -->
   <div>
     <el-header>补全信息</el-header>
     <el-main>
@@ -6,9 +7,9 @@
         <!-- 填写订单头部 -->
         <div class="head">
           <div class="choose">
-            <el-radio v-model="radio" label="1">自主采购</el-radio>
-            <el-radio v-model="radio" label="2">客户寄卖</el-radio>
-            <el-radio v-model="radio" label="3">全新商品</el-radio>
+            <el-radio v-model="radio" label="1" :disabled="true">自主采购</el-radio>
+            <el-radio v-model="radio" label="2" :disabled="true">客户寄卖</el-radio>
+            <el-radio v-model="radio" label="3" :disabled="true">货品置换</el-radio>
           </div>
           <div class="headBottom">
             <div class="rongqi">
@@ -21,41 +22,15 @@
               <span>
                 <i>*</i>采购价格
               </span>
-              <el-input v-model="kufangform.pri" placeholder="请输入采购价格"></el-input>
+              <el-input v-model="kufangform.pri" placeholder="请输入采购价格" :disabled="true"></el-input>
             </div>
-          </div>
-        </div>
-        <!-- 入库人员才显示的框 -->
-        <div class="isshow">
-          <h3>此处为入库人员填写</h3>
-          <div class="isshowCon">
             <div class="rongqi">
               <span>
-                <i>*</i>货品名称
+                <i>*</i>货品类别
               </span>
-              <el-input v-model="num" placeholder="由入库人员填写"></el-input>
-              <el-button type="text">编码生成</el-button>
-            </div>
-            <div class="rongqi-cangku">
-              <span>
-                <i>*</i>仓库
-              </span>
-              <el-select v-model="value1" filterable placeholder="由入库人员填写">
+              <el-select v-model="value" placeholder="类别">
                 <el-option
-                  v-for="item in kufangoption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div class="rongqi-cangku">
-              <span>
-                <i>*</i>仓位
-              </span>
-              <el-select v-model="value2" filterable placeholder="由入库人员填写">
-                <el-option
-                  v-for="item in kufangoption"
+                  v-for="item in options"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -64,6 +39,7 @@
             </div>
           </div>
         </div>
+
         <!-- 添加图片 -->
         <div class="picList">
           <el-upload
@@ -187,6 +163,25 @@
               <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="textarea"></el-input>
             </div>
           </div>
+          <!-- 入库人员才显示的框 -->
+          <div class="isshow">
+            <div class="isshowCon">
+              <div class="rongqi">
+                <span>
+                  <i>*</i>货品编码
+                </span>
+                <el-input v-model="num" placeholder="由入库人员填写" :disabled="true"></el-input>
+                <el-button type="text" :disabled="true">编码生成</el-button>
+              </div>
+              <div class="rongqi">
+                <span>
+                  <i>*</i>销售定价
+                </span>
+                <el-input v-model="num" placeholder="由入库人员填写"></el-input>
+              </div>
+              <div></div>
+            </div>
+          </div>
           <!-- 货品描述下方付款方式等 -->
           <div class="miaoshuBottom">
             <div class="miaoshuBottomLeft">
@@ -198,7 +193,7 @@
                     <span>
                       <i>*</i>付款方式
                     </span>
-                    <el-select v-model="form2.fangshi" placeholder="微信">
+                    <el-select v-model="form2.fangshi" placeholder="微信" :disabled="true">
                       <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -213,7 +208,7 @@
                     <span>
                       <i>*</i>付款账号
                     </span>
-                    <el-input v-model="form2.user" placeholder="输入付款账号"></el-input>
+                    <el-input v-model="form2.user" placeholder="输入付款账号" :disabled="true"></el-input>
                   </div>
                 </li>
                 <li>
@@ -221,7 +216,7 @@
                     <span>
                       <i>*</i>付款单号
                     </span>
-                    <el-input v-model="form2.numB" placeholder="输入付款单号"></el-input>
+                    <el-input v-model="form2.numB" placeholder="输入付款单号" :disabled="true"></el-input>
                   </div>
                 </li>
                 <li>
@@ -240,7 +235,7 @@
                       :on-exceed="handleExceed"
                       :file-list="fileList"
                     >
-                      <el-button size="small" type="primary">点击上传</el-button>
+                      <el-button size="small" type="primary" :disabled="true">点击上传</el-button>
                       <div slot="tip" class="el-upload__tip">限制三个文件</div>
                     </el-upload>
                   </div>
@@ -254,7 +249,7 @@
                     <span>
                       <i>*</i>客户姓名
                     </span>
-                     <el-input v-model="form3.name" placeholder="输入姓名"></el-input>
+                    <el-input v-model="form3.name" placeholder="输入姓名" :disabled="true"></el-input>
                   </div>
                 </li>
                 <li>
@@ -262,7 +257,7 @@
                     <span>
                       <i>*</i>手机号码
                     </span>
-                    <el-input v-model="form3.phone" placeholder="输入手机号码"></el-input>
+                    <el-input v-model="form3.phone" placeholder="输入手机号码" :disabled="true"></el-input>
                   </div>
                 </li>
                 <li>
@@ -270,11 +265,11 @@
                     <span>
                       <i>*</i>联系地址
                     </span>
-                    <el-input v-model="form3.add" placeholder="输入地址"></el-input>
+                    <el-input v-model="form3.add" placeholder="输入地址" :disabled="true"></el-input>
                   </div>
                 </li>
                 <li>
-                  <!-- <div class="title">
+                  <div class="title">
                     <span>
                       <i>*</i>截图凭证
                     </span>
@@ -288,11 +283,12 @@
                       :limit="3"
                       :on-exceed="handleExceed"
                       :file-list="fileList"
+                      :disabled="true"
                     >
-                      <el-button size="small" type="primary">点击上传</el-button>
+                      <el-button size="small" type="primary" :disabled="true">点击上传</el-button>
                       <div slot="tip" class="el-upload__tip">限制三个文件</div>
                     </el-upload>
-                  </div> -->
+                  </div>
                 </li>
               </ul>
             </div>
@@ -303,9 +299,9 @@
         <div class="footer">
           <span>采购员：王小明</span>
           <div>
-            <button class="tijiao">申请入库</button>
+            <button class="tijiao" @click="tijiao">提交订单</button>
             <button class="zancun">暂存</button>
-            <button class="tuihui">取消退回</button>
+            <back></back>
           </div>
         </div>
       </div>
@@ -313,13 +309,16 @@
   </div>
 </template>
 <script>
+import back from "../../components/back";
 export default {
   props: [],
-  components: {},
+  components: {
+    back
+  },
   data() {
     return {
       /*自主采购与客户寄卖*/
-      radio: "",
+      radio:"",
       /*货品名称，采购价格*/
       kufangform: {
         name: "",
@@ -357,11 +356,12 @@ export default {
         user: "",
         numB: ""
       },
-      /*付款方式客户寄卖*/ 
-      form3:{
-        name:"",
-        phone:"",
-        add:''
+      /*付款方式客户寄卖*/
+
+      form3: {
+        name: "",
+        phone: "",
+        add: ""
       },
       /*上传文件*/
       fileList: []
@@ -396,9 +396,17 @@ export default {
     /*上传图片后准备移除*/
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    // 提交
+    tijiao() {
+      if (this.radio == "") {
+        alert("未选择采购方式");
+      }
     }
   },
-  mounted() {},
+  mounted() {
+    this.radio=1
+  },
   watch: {},
   computed: {}
 };
@@ -451,17 +459,14 @@ export default {
   width: 30% !important;
   margin-right: 10px;
 }
+.el-main .head .rongqi .el-select /deep/ .el-input {
+  width: 100% !important;
+}
 /* 库房人员显示框 */
 .isshow {
-  height: 120px;
-  background-color: #f0f0f0;
-  padding: 30px;
+  padding: 40px 0 10px 0;
 }
-.isshow h3 {
-  font-size: 22px;
-  color: #019997;
-  margin-bottom: 30px;
-}
+
 .isshow .isshowCon {
   display: flex;
   justify-content: space-between;
@@ -484,9 +489,9 @@ export default {
 }
 /* 上传图片框 */
 .picList {
-  border: 1px solid #9a9a9a;
-  padding: 20px;
-  margin-top: 50px;
+  /* border: 1px solid #9a9a9a; */
+  padding: 10px;
+  margin-top: 30px;
 }
 /* 公共标题 */
 .title {
@@ -527,7 +532,7 @@ export default {
   width: 40%;
   margin-top: 20px;
 }
-.miaoshuBottomLeft ul h3{
+.miaoshuBottomLeft ul h3 {
   font-size: 18px;
   color: #019997;
   padding-left: 15px;
@@ -557,10 +562,10 @@ export default {
 .footer .tijiao {
   background-color: red;
 }
-.footer .tuihui {
+/* .footer .tuihui {
   background-color: #4b4b4b;
-}
-.footer .zancun{
-  background-color:rgb(239, 156, 0) ;
+} */
+.footer .zancun {
+  background-color: rgb(239, 156, 0);
 }
 </style>

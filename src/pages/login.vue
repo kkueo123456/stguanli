@@ -30,8 +30,7 @@ export default {
       user: {
         loginName: "", //账号
         password: "" //密码
-      },
-      isAdmin: 0
+      }
     };
   },
   methods: {
@@ -42,9 +41,12 @@ export default {
         params: this.user
       })
         .then(res => {
-          if (res.Status=="y") {
-            this.isAdmin = res.Data[0].RoleId;
-            localStorage.setItem("isAdmin", this.isAdmin);
+          if (res.Status == "y") {
+            //存储判断身份的
+            localStorage.setItem("isAdmin", res.Data[0].RoleId);
+            //存储ID进行路由拦截
+            // this.isId = res.Data[0].Id;
+            sessionStorage.setItem("isId", res.Data[0].Id);
             this.$router.push("/index");
             this.$message({
               message: res.Msg,

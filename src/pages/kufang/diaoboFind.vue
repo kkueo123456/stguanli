@@ -161,7 +161,7 @@ export default {
     },
     //编辑
     update(id) {
-      this.$router.push("/diaoboEdit");
+      this.$router.push("/diaoboEdit?id=" + id);
     }
     // 作废
   },

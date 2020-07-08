@@ -8,6 +8,7 @@
           <el-button type="primary" @click="Warehouse">批量入库</el-button>
         </div>-->
         <v-pi :isShow="isShow" @xuanCang="Warehouse" :diaork="true"></v-pi>
+        <!-- <search @search="headSearch"></search> -->
       </div>
     </div>
     <!-- 采购入库头部下方下拉菜单及查找 -->
@@ -24,6 +25,11 @@
           </select>
         </div>
         <div class="slect">
+          <select name="public-choice" v-model="value" id="inputselect" @change="gai">
+            <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
+          </select>
+        </div>
+          <div class="slect">
           <select name="public-choice" v-model="value" id="inputselect" @change="gai">
             <option :value="item.value" v-for="(item,index) in options" :key="index">{{item.label}}</option>
           </select>
@@ -61,10 +67,10 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" :span="2">
             <template slot-scope="scope">
+              <look :look="scope.row.id">查看</look>
+
               <el-button type="text" @click="ruku(scope.row.id)">入库</el-button>
               <!-- <el-button type="text" @click="del(scope.row.id)" style="color:red">作废</el-button> -->
-              <nullify :nullId="scope.row.id"></nullify>
-
               <el-dialog
                 title="请选择仓位"
                 :visible.sync="dialogVisible"
@@ -96,15 +102,17 @@
 <script>
 import fenye from "../../components/fenye";
 import dingdan from "../../components/dingdan";
-import nullify from "../../components/nullify";
 import vPi from "../../components/piRuku";
+import look from "../../components/look";
+import search from "../../components/search";
 export default {
   props: [],
   components: {
     dingdan,
     fenye,
     vPi,
-    nullify
+    look,
+    search
   },
   data() {
     return {
@@ -216,6 +224,10 @@ export default {
     };
   },
   methods: {
+    //头部搜索
+    headSearch(val){
+      console.log(val)
+    },
     gai() {
       console.log(this.value);
     },
@@ -276,7 +288,12 @@ export default {
   height: 60px;
   padding-top: 10px;
 }
-
+.headLeft{
+  display flex
+}
+.headLeft .sou{
+  margin-left 15px
+}
 .headLeft .rongqi .el-button--primary {
   background-color: $bg1;
   border-color: $bg1;
@@ -284,7 +301,7 @@ export default {
 
 /* 头部下方下拉菜单等样式 */
 .nav {
-   border-radius: 10px;
+  border-radius: 10px;
   background-color: white;
   padding: 12px 0 12px 12px;
   margin-bottom: 20px;

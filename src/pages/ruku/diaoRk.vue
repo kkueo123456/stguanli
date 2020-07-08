@@ -2,13 +2,11 @@
   <!-- 调拨入库 -->
   <div>
     <!-- 订单头部填写订单 -->
-    <!-- <div class="head">
+    <div class="head">
       <div class="headLeft">
-        <div class="rongqi">
-          <el-button type="primary" @click="Warehouse">批量入库</el-button>
-        </div>
+        <search @search="headSearch"></search>
       </div>
-    </div>-->
+    </div>
     <!-- 头部下方下拉菜单及查找 -->
     <div class="nav">
       <div class="navLeft">
@@ -78,6 +76,7 @@ import fenye from "../../components/fenye";
 import dingdan from "../../components/dingdan";
 import nullify from "../../components/nullify";
 import dblook from "../../components/diaoboLook";
+import search from "../../components/search";
 
 export default {
   props: [],
@@ -85,7 +84,8 @@ export default {
     dingdan,
     fenye,
     nullify,
-    dblook
+    dblook,
+    search
   },
   data() {
     return {
@@ -122,6 +122,10 @@ export default {
     };
   },
   methods: {
+    //头部搜索
+    headSearch(val) {
+      console.log(val);
+    },
     gai() {
       console.log(this.value);
     },
@@ -208,6 +212,10 @@ export default {
   width: 100%;
   height: 60px;
   padding-top: 10px;
+}
+
+.headLeft {
+  width: 30%;
 }
 
 .headLeft .rongqi .el-button--primary {

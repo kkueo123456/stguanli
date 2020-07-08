@@ -220,7 +220,7 @@
                   </div>
                 </li>
                 <li>
-                  <!-- <div class="title">
+                  <div class="title">
                     <span>
                       <i>*</i>截图凭证
                     </span>
@@ -238,7 +238,7 @@
                       <el-button size="small" type="primary">点击上传</el-button>
                       <div slot="tip" class="el-upload__tip">限制三个文件</div>
                     </el-upload>
-                  </div>-->
+                  </div>
                 </li>
               </ul>
               <!-- 客户寄卖 -->
@@ -269,7 +269,7 @@
                   </div>
                 </li>
                 <li>
-                  <!-- <div class="title">
+                  <div class="title">
                     <span>
                       <i>*</i>截图凭证
                     </span>
@@ -287,7 +287,7 @@
                       <el-button size="small" type="primary">点击上传</el-button>
                       <div slot="tip" class="el-upload__tip">限制三个文件</div>
                     </el-upload>
-                  </div>-->
+                  </div>
                 </li>
               </ul>
             </div>
@@ -300,7 +300,7 @@
           <div>
             <button class="tijiao" @click="tijiao">提交订单</button>
             <button class="zancun">暂存</button>
-            <button class="tuihui">取消退回</button>
+            <back></back>
           </div>
         </div>
       </div>
@@ -308,9 +308,12 @@
   </div>
 </template>
 <script>
+import back from "../components/back";
 export default {
   props: [],
-  components: {},
+  components: {
+    back
+  },
   data() {
     return {
       /*自主采购与客户寄卖*/
@@ -556,9 +559,9 @@ export default {
 .footer .tijiao {
   background-color: red;
 }
-.footer .tuihui {
+/* .footer .tuihui {
   background-color: #4b4b4b;
-}
+} */
 .footer .zancun {
   background-color: rgb(239, 156, 0);
 }
