@@ -215,7 +215,7 @@ export default {
 }
 
 .headLeft {
-  width: 30%;
+  width: 380px;
 }
 
 .headLeft .rongqi .el-button--primary {

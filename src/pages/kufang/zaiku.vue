@@ -23,7 +23,7 @@
               <span class="demonstration">始发仓</span>
               <el-cascader
                 :options="beginOption"
-                :props="{ multiple: true,
+                :props="{ 
                 label:'name', value:'BigId',
                 leaf:'cId'
                 }"
@@ -41,7 +41,7 @@
               <span class="demonstration">调入仓</span>
               <el-cascader
                 :options="transferOption"
-                :props="{ multiple: true ,
+                :props="{
                 label:'name', value:'BigId'
                  }"
                 v-model="transferValue"
@@ -66,7 +66,7 @@
               <span class="demonstration">选择仓位</span>
               <el-cascader
                 :options="Cangoption"
-                :props="{ multiple: true }"
+                :props="{  checkStrictly: true }"
                 v-model="Cangvalue"
                 clearable
               ></el-cascader>
@@ -151,6 +151,7 @@
                 title="确定出库？"
                 :visible.sync="centerDialogVisible"
                 :modal-append-to-body="false"
+                :modal="true"
                 width="30%"
               >
                 <!-- <span>此操作将出库，是否继续</span> -->
@@ -360,7 +361,7 @@ export default {
       centerDialogVisible: false,
       chukuid: "",
       /*选择出库原因*/
-      chukuRadio: ""
+      chukuRadio: 3
     };
   },
   methods: {
@@ -386,8 +387,15 @@ export default {
     },
     //调拨确定
     DiaodialogSure() {
-      console.log(this.beginValue.join(), this.transferValue.join());
-      this.$router.push("/diaoboPage");
+      if (this.beginValue == 0 || this.transferValue == 0) {
+        this.$message({
+          message: "请选择仓位",
+          type: "error"
+        });
+      } else {
+        console.log(this.beginValue.join(), this.transferValue.join());
+        this.$router.push("/diaoboPage");
+      }
     },
     /*头部右侧盘点*/
     pandian() {

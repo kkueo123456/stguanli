@@ -399,7 +399,11 @@ export default {
     // 提交
     tijiao() {
       if (this.radio == "") {
-        alert("未选择采购方式");
+          this.$confirm("未选择采购方式", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "error"
+        });
       }
     }
   },

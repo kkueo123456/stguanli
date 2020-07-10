@@ -6,7 +6,7 @@
         <search @search="headSearch"></search>
       </div>
     </div>
-    <!-- 销售头部下方下栏菜单及品牌筛选 -->
+    <!-- 头部下方下栏菜单及品牌筛选 -->
     <div class="nav">
       <div class="navLeft">
         <div class="slect">
@@ -33,9 +33,9 @@
         <el-button type="primary" @click="navFind">搜索</el-button>
       </div>
     </div>
-    <!-- 销售主体内容 -->
+    <!-- 主体内容 -->
     <div class="main">
-      <!-- 销售主体内容列表 -->
+      <!-- 主体内容列表 -->
       <div class="mainList-wrap" v-for="(item,index) in data" :key="index">
         <div class="listTitTop">
           <div class="listTit-Left">
@@ -111,7 +111,7 @@ export default {
     return {
       //批量出库dialog
       centerDialogVisible: false,
-      chukuRadio: null,
+      chukuRadio: 3,
       chukuId: null,
       //下拉
       options: [

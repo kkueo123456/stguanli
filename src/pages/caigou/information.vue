@@ -261,12 +261,12 @@ export default {
 
 /* 头部样式 */
 .head {
-  width: 100%;
+  // width: 100%;
   height: 60px;
    
 }
 .headLeft {
-  width: 30%;
+  width: 380px;
   line-height 60px
 }
 .headLeft .rongqi .el-button--primary {

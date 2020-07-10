@@ -74,7 +74,7 @@
           <el-table-column label="采购日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作"  :span="2">
+          <el-table-column fixed="right" label="操作" :span="2">
             <template slot-scope="scope">
               <look :look="scope.row.id" v-if="scope.row.dbzt=='已生成'"></look>
               <!-- <el-button type="text" @click="look(scope.row.id)" v-if="scope.row.dbzt=='已生成'">查看</el-button> -->
@@ -304,7 +304,7 @@ export default {
 .nav {
   border-radius: 10px;
   background-color: white;
-  padding 12px 0 12px 12px 
+  padding: 12px 0 12px 12px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;

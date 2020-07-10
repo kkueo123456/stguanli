@@ -101,7 +101,7 @@ export default {
   methods: {
     //导航栏打开触发的事件
     handleOpen(key, keyPath) {
-      console.log(keyPath)
+      // console.log(keyPath)
       sessionStorage.setItem("leftNavIndex", JSON.stringify(keyPath));
     },
     handleClose() {}

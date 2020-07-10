@@ -60,8 +60,22 @@
 
   </div>
   <script>
-    var obj={}
-    console.log(obj.__proto__)
+    function Fn() {
+      this.text1 = function () {
+        console.log('123')
+      }
+
+    }
+
+    function Dn() {
+
+    }
+    var fn1=new Fn
+    fn1.text1()
+    // console.log(fn1)
+    var arr=[1,2,3,4,5]
+    console.log(arr)
+    // console.log(Dn2.__proto__ === fn2.__proto__)
 
   </script>
 </body>

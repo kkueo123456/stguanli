@@ -1,5 +1,5 @@
 <template>
-<!-- 调拨单页 -->
+  <!-- 调拨单页 -->
   <div>
     <el-header>调拨单</el-header>
     <el-main>
@@ -81,7 +81,10 @@
             </div>
           </div>
         </div>
-
+        <div class="kuaidi">
+          <span>*快递单号<b style="color:red">(必填)</b></span>
+          <el-input placeholder="请输入快递单号" v-model="kuaidiInput" clearable></el-input>
+        </div>
         <!-- 提交订单与取消 -->
         <div class="footer">
           <div class="footer-button">
@@ -107,8 +110,8 @@ export default {
   },
   data() {
     return {
-      // 搜索
-  
+      // 快递单号
+      kuaidiInput: "",
       //扫描
       saomiao: "",
       // 主题数据
@@ -198,7 +201,17 @@ export default {
 
     //提交订单
     tijiao() {
-      console.log(this.data);
+      if (this.kuaidiInput == "") {
+        this.$confirm("还没有填写快递单号", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "error"
+        });
+      }
+      let arr = this.data.map(item => {
+        return item.id;
+      });
+      console.log(arr.join());
     },
     //暂存
     zancun() {}
@@ -374,7 +387,7 @@ export default {
 .mainRight .mainRight-ck {
   color: red;
   font-weight: normal;
-  margin-right 10px
+  margin-right: 10px;
   text-align: end;
   cursor: pointer;
 }
@@ -418,6 +431,20 @@ export default {
   cursor: pointer;
   margin-right: 15px;
   color: white;
+}
+
+.kuaidi {
+  display: flex;
+}
+
+.kuaidi span {
+  font-size: 15px;
+  line-height: 40px;
+}
+
+.kuaidi /deep/ .el-input {
+  width: 25% !important;
+  margin-left: 20px;
 }
 
 .footer .tijiao {

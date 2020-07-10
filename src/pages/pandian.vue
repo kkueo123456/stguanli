@@ -85,7 +85,7 @@ export default {
       pandianNum: "0",
       //音频
       audioUrl:
-        "http://ysb.yisell.com/yisell/ybys2018050819052088/sound/yisell_sound_201404102304403674_88366.mp3"
+        "http://ysb.yisell.com/yisell/ybys2018050819052088/sound/yisell_sound_201404281655023138_88366.mp3"
     };
   },
   methods: {
