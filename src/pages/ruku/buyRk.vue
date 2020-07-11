@@ -105,6 +105,8 @@ import dingdan from "../../components/dingdan";
 import vPi from "../../components/piRuku";
 import look from "../../components/look";
 import search from "../../components/search";
+import { mapGetters } from "vuex";
+
 export default {
   props: [],
   components: {
@@ -147,72 +149,7 @@ export default {
       Cangvalue: "0",
       /*数据*/
 
-      data: [
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "0",
-          zt: "未鉴定"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "1",
-          zt: "已退回"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "2",
-          zt: "未鉴定"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "3",
-          zt: "入库在售"
-        }
-      ],
+ 
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
@@ -268,7 +205,10 @@ export default {
     }
   },
 
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("getmainData");
+
+  },
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin == 1) {
@@ -276,7 +216,10 @@ export default {
     }
   },
   watch: {},
-  computed: {}
+  computed: {
+    ...mapGetters(["data", "session"])
+
+  }
 };
 </script>
 <style lang="stylus" scoped>

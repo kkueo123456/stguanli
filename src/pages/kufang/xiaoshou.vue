@@ -36,7 +36,7 @@
     <!-- 主体内容 -->
     <div class="main">
       <!-- 主体内容列表 -->
-      <div class="mainList-wrap" v-for="(item,index) in data" :key="index">
+      <div class="mainList-wrap" v-for="(item,index) in data2" :key="index">
         <div class="listTitTop">
           <div class="listTit-Left">
             <span>销售单号:{{item.xsnum}}</span>
@@ -46,7 +46,7 @@
           <div class="listTit-right">
             <!-- <el-button type="text" @click="del(item.xsid)" style="color:red">作废</el-button> -->
             <el-button type="text" @click="checkDing(item.xsid)">查看订单</el-button>
-            <el-button type="text" @click="allchuku(index)">批量出库</el-button>
+            <el-button type="text" @click="allchuku(item.xsid)">批量出库</el-button>
             <el-dialog
               title="确定出库？"
               :visible.sync="centerDialogVisible"
@@ -98,7 +98,7 @@ import fenye from "../../components/fenye";
 import nullify from "../../components/nullify";
 import look from "../../components/look";
 import search from "../../components/search";
-
+import {mapGetters} from "vuex";
 export default {
   props: [],
   components: {
@@ -137,120 +137,7 @@ export default {
         }
       ],
       value: "0",
-      data: [
-        {
-          xsnum: "XS202005111509",
-          xsman: "王小明",
-          xstime: "2020/05/11",
-          xsid: "0",
-          xsDetail: [
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "上海总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "0",
-              cw: "2"
-            },
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "唐山总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "1",
-              cw: "0"
-            },
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "北京总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "2",
-              cw: "1"
-            }
-          ]
-        },
-        {
-          xsnum: "XS2020051115012",
-          xsman: "王小明",
-          xstime: "2020/05/12",
-          xsid: "11",
-          xsDetail: [
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "上海总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "0",
-              cw: "2"
-            },
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "唐山总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "1",
-              cw: "0"
-            },
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "北京总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "2",
-              cw: "1"
-            }
-          ]
-        }
-      ],
+
       /*选择日期*/
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
@@ -295,15 +182,14 @@ export default {
       this.$router.push("/xiaoshouCheck?id=" + id);
     },
     /*批量出库*/
-    allchuku(index) {
+    allchuku(xsid) {
       this.centerDialogVisible = true;
-      this.chukuId = this.data[index].xsid;
+      this.chukuId = xsid
     },
     sure() {
       console.log(this.chukuId);
-      console.log(this.chukuRadio)
+      console.log(this.chukuRadio);
       this.centerDialogVisible = false;
-
     },
     /*查看信息*/
     look(id) {
@@ -315,7 +201,10 @@ export default {
       console.log(val);
     }
   },
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("getmainData");
+
+  },
   watch: {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
@@ -323,7 +212,9 @@ export default {
       next();
     }
   },
-  computed: {}
+  computed: {
+    ...mapGetters(["data", "session", "data2"])
+  }
 };
 </script>
 <style lang="stylus" scoped>

@@ -54,6 +54,7 @@
       <div class="navRight">
         <el-button type="primary" @click="navclear">清空</el-button>
         <el-button type="primary" @click="checkall">查找</el-button>
+        <div>{{session}}</div>
       </div>
     </div>
     <!-- 采购主体内容 -->
@@ -74,7 +75,7 @@
           <el-table-column label="采购日期" :span="2">
             <template slot-scope="scope">{{scope.row.time|timeFilter}}</template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" :span="2">
+          <el-table-column fixed="right" label="操作" :span="4">
             <template slot-scope="scope">
               <look :look="scope.row.id" v-if="scope.row.dbzt=='已生成'"></look>
               <!-- <el-button type="text" @click="look(scope.row.id)" v-if="scope.row.dbzt=='已生成'">查看</el-button> -->
@@ -94,6 +95,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import fenye from "../../components/fenye";
 import nullify from "../../components/nullify";
 import dingdan from "../../components/dingdan";
@@ -137,86 +139,6 @@ export default {
       value3: "0",
       //第二个下拉列表的value
       value4: "0",
-
-      data: [
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "",
-          id: "0",
-          zt: "入库在售",
-          man: "蒲子杰",
-          dbzt: "已生成",
-          zf: true
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "",
-          id: "1",
-          zt: "未定价",
-          man: "蒲子杰",
-          dbzt: "暂存",
-          zf: false
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "22",
-          zt: "已采购",
-          man: "蒲子杰",
-          dbzt: "已生成",
-          zf: true
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "31",
-          zt: "入库在售",
-          man: "蒲子杰",
-          dbzt: "暂存",
-          zf: null
-        }
-      ],
-
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       //时间列表的value
       value2: "",
@@ -234,7 +156,7 @@ export default {
       console.log(val);
     },
     checkall() {
-      console.log(this.value2);
+      console.log(this.value,this.value3,this.value4);
     },
     /*清空*/
 
@@ -251,29 +173,13 @@ export default {
     update(id) {
       this.$router.push("/allBianji?id=" + id);
     }
-    // 作废
-    // del(id) {
-    //   this.$confirm("确定作废？", "提示", {
-    //     confirmButtonText: "确定",
-    //     cancelButtonText: "取消",
-    //     type: "warning"
-    //   })
-    //     .then(() => {
-    //       this.$message({
-    //         type: "warning",
-    //         message: "删除成功!"+id
-    //       });
-    //     })
-    //     .catch(() => {
-    //       this.$message({
-    //         type: "info",
-    //         message: "已取消删除"
-    //       });
-    //     });
-    // },
+
   },
   mounted() {
     this.pageNum = 6;
+    console.log();
+    this.$store.dispatch("getmainData");
+
   },
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
@@ -282,7 +188,10 @@ export default {
     }
   },
   watch: {},
-  computed: {}
+  computed: {
+    ...mapGetters(["data", "session"])
+  
+  }
 };
 </script>
 <style lang="stylus" scoped>

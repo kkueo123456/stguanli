@@ -46,7 +46,7 @@
     </div>
     <div class="main">
       <div class="tabMain">
-        <el-table :data="tabData">
+        <el-table :data="data">
           <el-table-column prop="number" label="调拨单号" :span="2"></el-table-column>
           <el-table-column prop="fistCang" label="原始仓" :span="2"></el-table-column>
           <el-table-column prop="finCang" label="接收仓" :span="2"></el-table-column>
@@ -77,6 +77,7 @@ import dingdan from "../../components/dingdan";
 import nullify from "../../components/nullify";
 import dblook from "../../components/diaoboLook";
 import search from "../../components/search";
+import { mapGetters } from "vuex";
 
 export default {
   props: [],
@@ -118,7 +119,7 @@ export default {
       value2: "",
       isAdmin: "",
       /*表单中的信息*/
-      tabData: []
+    
     };
   },
   methods: {
@@ -151,48 +152,9 @@ export default {
     }
   },
   mounted() {
-    this.tabData = [
-      {
-        id: "0",
-        number: "18912367198311",
-        fistCang: "唐山",
-        finCang: "北京",
-        diaoboPerson: "蒲子杰",
-        rukuPerson: "蒲子杰",
-        zhuangtai: "正常",
-        time: "1589163916"
-      },
-      {
-        id: "1",
-        number: "18912367198311",
-        fistCang: "唐山",
-        finCang: "北京",
-        diaoboPerson: "蒲子杰",
-        rukuPerson: "蒲子杰",
-        zhuangtai: "不正常",
-        time: "1589163916"
-      },
-      {
-        id: "2",
-        number: "18912367198311111111111111111111111111111",
-        fistCang: "唐山",
-        finCang: "北京",
-        diaoboPerson: "蒲子杰",
-        rukuPerson: "蒲子杰",
-        zhuangtai: "货运受损严重",
-        time: "158916391611"
-      },
-      {
-        id: "46",
-        number: "18912367198311",
-        fistCang: "唐山",
-        finCang: "北京",
-        diaoboPerson: "蒲子杰",
-        rukuPerson: "蒲子杰",
-        zhuangtai: "滋滋滋滋滋",
-        time: "1589163916"
-      }
-    ];
+    this.$store.dispatch("getmainData");
+
+    
   },
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
@@ -201,7 +163,10 @@ export default {
     }
   },
   watch: {},
-  computed: {}
+  computed: {
+    ...mapGetters(["data", "session",'data2'])
+
+  }
 };
 </script>
 <style lang="stylus" scoped>

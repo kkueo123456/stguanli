@@ -70,6 +70,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import fenye from "../components/fenye";
 import dingdan from "../components/dingdan";
 import nullify from "../components/nullify";
@@ -113,76 +114,7 @@ export default {
       value3: "0",
       //第二个下拉列表的value
       value4: "0",
-      data: [
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "",
-          id: "0",
-          zt: "未鉴定",
-          man: "蒲子杰"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "",
-          id: "1",
-          zt: "已退回",
-          man: "蒲子杰"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "2",
-          zt: "未鉴定",
-          man: "蒲子杰"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "3",
-          zt: "入库在售",
-          man: "蒲子杰"
-        }
-      ],
+ 
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value2: "",
@@ -212,7 +144,10 @@ export default {
       this.$router.push("/allBianji?id=" + id);
     }
   },
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("getmainData");
+
+  },
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin == 1 || isAdmin == 2) {
@@ -220,7 +155,10 @@ export default {
     }
   },
   watch: {},
-  computed: {}
+  computed: {
+    ...mapGetters(["data", "session"])
+
+  }
 };
 </script>
 <style lang="stylus" scoped>

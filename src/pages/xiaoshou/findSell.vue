@@ -37,7 +37,7 @@
     <!-- 主体内容 -->
     <div class="main">
       <!-- 主体内容列表 -->
-      <div class="mainList-wrap" v-for="(item,index) in data" :key="index">
+      <div class="mainList-wrap" v-for="(item,index) in data2" :key="index">
         <div class="listTitTop">
           <div class="listTit-Left">
             <span>销售单号:{{item.xsnum}}</span>
@@ -78,6 +78,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import fenye from "../../components/fenye";
 import look from "../../components/look";
 import search from "../../components/search";
@@ -115,121 +116,7 @@ export default {
         }
       ],
       value: "0",
-      data: [
-        {
-          xsnum: "XS202005111509",
-          xsman: "王小明",
-          xstime: "2020/05/11",
-          xsid: "0",
-          zt: "已生成",
-          xsDetail: [
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "上海总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "0",
-              cw: "2"
-            },
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "唐山总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "1",
-              cw: "0"
-            },
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "北京总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "55",
-              cw: "1"
-            }
-          ]
-        },
-        {
-          xsnum: "XS2020051115012",
-          xsman: "王小明",
-          xstime: "2020/05/12",
-          xsid: "1",
-          xsDetail: [
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "上海总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "0",
-              cw: "2"
-            },
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "唐山总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "1",
-              cw: "0"
-            },
-            {
-              img: "",
-              name: "LV老花中号字母带",
-              biaoqian: ["在售", "直播", "微信"],
-              logo: "路易威灯/LV",
-              price: "10000",
-              lie: "pallas传奇",
-              kuan: "Palla clutch",
-              time: "1587472220",
-              cangwei: "北京总仓/C-1-20",
-              color: "95-97新",
-              num: "12345678909123",
-              finPri: "120000",
-              id: "2",
-              cw: "1"
-            }
-          ]
-        }
-      ],
+
       /*选择日期*/
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
@@ -287,7 +174,10 @@ export default {
       console.log(val);
     }
   },
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("getmainData");
+
+  },
   watch: {},
   beforeRouteEnter(to, from, next) {
     let isAdmin = localStorage.getItem("isAdmin");
@@ -295,7 +185,9 @@ export default {
       next();
     }
   },
-  computed: {}
+  computed: {
+    ...mapGetters(["data", "session", "data2"])
+  }
 };
 </script>
 <style lang="stylus" scoped>

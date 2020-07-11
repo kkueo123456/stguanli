@@ -50,6 +50,7 @@ Vue.prototype.XLSX = XLSX
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App
   },

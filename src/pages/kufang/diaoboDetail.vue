@@ -81,6 +81,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import fenye from "../../components/fenye";
 import vHead from "../../components/head";
 
@@ -116,56 +117,7 @@ export default {
         }
       ],
       value: "0",
-      data: [
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "上海总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "0",
-          cw: "2"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "1",
-          cw: "0"
-        },
-        {
-          img: "../../img/login.png",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "北京总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "2",
-          cw: "1"
-        }
-      ],
+
       /*选择日期*/
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
@@ -221,6 +173,8 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch("getmainData");
+
     console.log(this.$route.query);
   },
   watch: {},
@@ -230,7 +184,10 @@ export default {
       next();
     }
   },
-  computed: {}
+  computed: {
+    ...mapGetters(["data", "session"])
+
+  }
 };
 </script>
 <style lang="stylus" scoped>

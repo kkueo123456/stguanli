@@ -142,6 +142,8 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   props: [],
   components: {},
@@ -150,56 +152,7 @@ export default {
       //几件商品
       spNum: "0",
       // 主题数据
-      data: [
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "上海总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "123123123",
-          id: "0",
-          cw: "2"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "123123123",
-          id: "1",
-          cw: "0"
-        },
-        {
-          img: "../../img/login.png",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "北京总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "123123123",
-          id: "2",
-          cw: "1"
-        }
-      ],
+    
 
       /*付款方式客户寄卖*/
       form3: {
@@ -239,10 +192,13 @@ export default {
     zancun() {}
   },
   mounted() {
+    this.$store.dispatch("getmainData");
     this.spNum = this.data.length;
   },
   watch: {},
-  computed: {}
+  computed: {
+     ...mapGetters(["data", "session"])
+  }
 };
 </script>
 <style lang="stylus" scoped>

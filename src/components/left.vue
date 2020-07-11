@@ -10,7 +10,7 @@
           text-color="white"
           active-text-color="rgb(16,17,23)"
           background-color="rgb(25,26,35)"
-          :unique-opened="false"
+          :unique-opened="true"
           @open="handleOpen"
           :default-openeds="NavOpeneds"
           @close="handleClose"
@@ -22,7 +22,6 @@
             v-if="(isAdmin==1)||(isAdmin==2)"
           >
             <template slot="title">
-             
               <router-link to="/index/caigou" active-class="active" index="1-1">采购管理</router-link>
             </template>
             <el-menu-item-group class="caigouliebiao">
@@ -78,9 +77,10 @@
           <el-menu-item index="7" class="guanli" style="padding-left:0px">
             <router-link to="/index/tongji" active-class="active" v-if="(isAdmin==1)">数据统计</router-link>
           </el-menu-item>
-           <el-menu-item index="8" class="guanli" style="padding-left:0px">
-            <router-link to="/index/temporary" active-class="active" >暂存列表</router-link>
+          <el-menu-item index="8" class="guanli" style="padding-left:0px">
+            <router-link to="/index/temporary" active-class="active">暂存列表</router-link>
           </el-menu-item>
+       
         </el-menu>
       </el-col>
     </el-scrollbar>

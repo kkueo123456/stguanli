@@ -108,14 +108,6 @@
                 </li>
               </ul>
             </div>
-            <!-- 头部右侧底下相关操作 -->
-            <!-- <div class="headButton">
-              <span>出库</span>
-              <span>调拨</span>
-              <span>编辑</span>
-              <span>分销</span>
-              <span>调价</span>
-            </div>-->
             <div class="headRightBottom">
               <div class="headRightBottom-Left">
                 <h3>商品描述</h3>
@@ -333,7 +325,9 @@ export default {
       this.url = this.srcList[index];
     }
   },
-  mounted() {},
+  mounted() {
+    console.log(this.$route.query.id)
+  },
   watch: {},
   computed: {}
 };

@@ -56,7 +56,7 @@
     <!-- 主体内容 -->
     <div class="main">
       <div class="tabMain">
-        <el-table :data="tabData">
+        <el-table :data="data">
           <el-table-column prop="number" label="调拨单号" :span="2"></el-table-column>
           <el-table-column prop="fistCang" label="原始仓" :span="2"></el-table-column>
           <el-table-column prop="finCang" label="接收仓" :span="2"></el-table-column>
@@ -83,6 +83,7 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
 import fenye from "../../components/fenye";
 import nullify from "../../components/nullify";
 import search from "../../components/search";
@@ -119,7 +120,6 @@ export default {
       value: "0",
       /*调拨查询主要数据*/
 
-      tabData: [],
       /*选择日期*/
 
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
@@ -166,52 +166,8 @@ export default {
     // 作废
   },
   mounted() {
-    this.tabData = [
-      {
-        id: "0",
-        number: "18912367198311",
-        fistCang: "唐山",
-        finCang: "北京",
-        diaoboPerson: "蒲子杰",
-        rukuPerson: "蒲子杰",
-        zhuangtai: "正常",
-        time: "1589163916",
-        dbzt: "已生成"
-      },
-      {
-        id: "1",
-        number: "18912367198311",
-        fistCang: "唐山",
-        finCang: "北京",
-        diaoboPerson: "蒲子杰",
-        rukuPerson: "蒲子杰",
-        zhuangtai: "不正常",
-        time: "1589163916",
-        dbzt: "暂存"
-      },
-      {
-        id: "2",
-        number: "18912367198311111111111111111111111111111",
-        fistCang: "唐山",
-        finCang: "北京",
-        diaoboPerson: "蒲子杰",
-        rukuPerson: "蒲子杰",
-        zhuangtai: "货运受损严重",
-        time: "158916391611",
-        dbzt: "已生成"
-      },
-      {
-        id: "32",
-        number: "18912367198311",
-        fistCang: "唐山",
-        finCang: "北京",
-        diaoboPerson: "蒲子杰",
-        rukuPerson: "蒲子杰",
-        zhuangtai: "滋滋滋滋滋",
-        time: "1589163916",
-        dbzt: "暂存"
-      }
-    ];
+    this.$store.dispatch("getmainData");
+
   },
   watch: {},
   beforeRouteEnter(to, from, next) {
@@ -220,7 +176,9 @@ export default {
       next();
     }
   },
-  computed: {}
+  computed: {
+    ...mapGetters(["data", "session"])
+  }
 };
 </script>
 <style lang="stylus" scoped>

@@ -1,5 +1,5 @@
 <template>
-<!-- 全部货品页 -->
+  <!-- 全部货品页 -->
   <div>
     <!-- 头部搜索及功能 -->
     <div class="head">
@@ -89,6 +89,7 @@
 import fenye from "../../components/fenye";
 import look from "../../components/look";
 import search from "../../components/search";
+import { mapGetters } from "vuex";
 
 export default {
   props: [],
@@ -101,57 +102,7 @@ export default {
     return {
       //扫描
       saomiao: "",
-      data: [
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "上海总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "0",
-          cw: "2"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "唐山总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "1",
-          cw: "0"
-        },
-        {
-          img: "",
-          name: "LV老花中号字母带",
-          biaoqian: ["在售", "直播", "微信"],
-          logo: "路易威灯/LV",
-          price: "10000",
-          lie: "pallas传奇",
-          kuan: "Palla clutch",
-          time: "1587472220",
-          cangwei: "北京总仓/C-1-20",
-          color: "95-97新",
-          num: "12345678909123",
-          finPri: "120000",
-          id: "2",
-          cw: "1"
-        }
-      ],
-
+    
       /*移除的dialog及id*/
       Deldialog: false,
       delid: ""
@@ -192,6 +143,8 @@ export default {
   },
   mounted() {
     this.$refs.input.focus();
+    this.$store.dispatch("getmainData");
+
   },
   watch: {},
   beforeRouteEnter(to, from, next) {
@@ -200,7 +153,9 @@ export default {
       next();
     }
   },
-  computed: {}
+  computed: {
+    ...mapGetters(["data", "session"])
+  }
 };
 </script>
 <style lang="stylus" scoped>
